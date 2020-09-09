@@ -1,0 +1,6 @@
+# directory ignores
+dist
+target
+
+# file ignores
+Cargo.lock
