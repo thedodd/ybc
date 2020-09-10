@@ -49,10 +49,11 @@ First, add this library to your `Cargo.toml` dependencies.
 
 ```toml
 [dependencies]
-ybc = "0.1" # NOTE: this release is coming soon.
+# NOTE: a 0.1.0 is coming soon.
+ybc = { git="https://github.com/thedodd/ybc.git" }
+# NOTE: this will no longer be required once ybc=0.1.0 is released.
+yew = { git="https://github.com/yewstack/yew.git" }
 ```
-
-**NOTE WELL:** the `0.1.0` release depends upon an unreleased version of Yew, so you will also need to add the following line to your dependencies: `yew = { git="https://github.com/yewstack/yew.git" }`. This last step will be removed once the next release of Yew lands (the release following `0.17.3`).
 
 ### add bulma
 #### add bulma css (no customizations)
@@ -94,3 +95,6 @@ If you are using [Trunk](https://github.com/thedodd/trunk) to build your applica
 Now just execute `trunk serve --open`, and your application will be built and opened in your browser.
 
 If you are not using [Trunk](https://github.com/thedodd/trunk), you will need to use another mechanism for building your Rust WASM application and its assets.
+
+## web-sys & stdweb
+Currently, this library only supports the web-sys backend. Support for stdweb is not currently planned. If that is problematic, please open an issue describing why. Cheers!
