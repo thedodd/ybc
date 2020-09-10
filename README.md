@@ -17,17 +17,49 @@ YBC encapsulates all of the structure, style and functionality of the Bulma CSS 
 
 As a guiding principal, YBC does not attempt to encapsulate every single Bulma style as a Rust type, let alone the many valid style combinations. That would be far too complex, and probably limiting to the user in many ways. Instead, YBC handles strucutre, required classes, functionality, sane defaults and every component can be customized with any additional classes for an exact look and feel.
 
+What does it look like to use YBC? The following is a snippet of a component's `view` method rendering a navbar, a fluid container, and some tiles.
+
+```rust
+use ybc::NavbarFixed::Top;
+use ybc::TileCtx::{Ancestor, Child, Parent};
+use ybc::TileSize::Four;
+
+fn view(&self) -> Html {
+  html!{
+    <>
+    <ybc::Navbar fixed=Top /* .. your navbar content here .. *//>
+    <ybc::Container fluid=true>
+      <ybc::Tile ctx=Ancestor>
+        <ybc::Tile ctx=Parent vertical=true size=Four>
+          <ybc::Tile ctx=Child classes="box">
+            <p>{"Lorem ipsum dolor sit amet ..."}</p>
+          </ybc::Tile>
+          /* .. snip .. more tiles here .. */
+        </ybc::Tile>
+      </ybc::Tile>
+    </ybc::Container>
+    </>
+  }
+}
+```
+
 ## getting started
-First, add this library to your Yew project's `Cargo.toml`.
+### add ybc dependency
+First, add this library to your `Cargo.toml` dependencies.
 
 ```toml
 [dependencies]
 ybc = "0.1" # NOTE: this release is coming soon.
 ```
 
-Next, you've got a few options. This project will work perfectly well if you just include the Bulma CSS in your HTML, [as described here](https://bulma.io/documentation/overview/start/). The following link in your HTML head should do the trick: `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"/>`.
+**NOTE WELL:** the `0.1.0` release depends upon an unreleased version of Yew, so you will also need to add the following line to your dependencies: `yew = { git="https://github.com/yewstack/yew.git" }`. This last step will be removed once the next release of Yew lands (the release following `0.17.3`).
 
-However, if you want to customize Bulma, then you will need to have a copy of the Bulma SASS locally, and then import Bulma after you've defined your customizations, [as described here](https://bulma.io/documentation/customize/).
+### add bulma
+#### add bulma css (no customizations)
+This project works perfectly well if you just include the Bulma CSS in your HTML, [as described here](https://bulma.io/documentation/overview/start/). The following link in your HTML head should do the trick: `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"/>`.
+
+#### add bulma sass (allows customization & themes)
+However, if you want to customize Bulma to match your style guidelines, then you will need to have a copy of the Bulma SASS locally, and then import Bulma after you've defined your customizations, [as described here](https://bulma.io/documentation/customize/).
 
 ```scss
 // index.scss
@@ -43,7 +75,7 @@ $beige-lighter: #EFF0EB;
 @import "path/to/bulma";
 ```
 
-This pattern will work perfectly with the [Trunk project](https://github.com/thedodd/trunk). Simply point to your `index.scss` from your `index.html` file, and Trunk will handle the rest.
+If you are using [Trunk](https://github.com/thedodd/trunk) to build your application and bundle its assets, then simply point to your `index.scss` from your `index.html` file, and Trunk will handle compling your application, your sass, and will make everything available in your `dist` dir.
 
 ```html
 <!DOCTYPE html>
@@ -54,7 +86,11 @@ This pattern will work perfectly with the [Trunk project](https://github.com/the
     <link rel="stylesheet" href="index.sass"/>
   </head>
   <body>
-    ...
+    <!-- ... snip ... -->
   </body>
 </html>
 ```
+
+Now just execute `trunk serve --open`, and your application will be built and opened in your browser.
+
+If you are not using [Trunk](https://github.com/thedodd/trunk), you will need to use another mechanism for building your Rust WASM application and its assets.
