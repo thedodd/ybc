@@ -1,14 +1,20 @@
+use derive_more::Display;
 use yew::prelude::*;
 use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct HeroProps {
-    #[prop_or_default]
-    pub children: Children,
+    /// Extra classes for the hero container.
     #[prop_or_default]
     pub classes: Option<String>,
-    #[prop_or_else(|| "section".into())]
-    pub tag: String,
+    /// The contents of the hero-head section.
+    #[prop_or_default]
+    pub head: Children,
+    /// The contents of the hero-body section.
+    pub body: Children,
+    /// The contents of the hero-foot section.
+    #[prop_or_default]
+    pub foot: Children,
     /// If you are using a [fixed navbar](https://bulma.io/documentation/components/navbar/#fixed-navbar),
     /// you can use the `fixed_nav=true` modifier on the hero for it to occupy the viewport height minus
     /// the navbar height.
@@ -16,8 +22,17 @@ pub struct HeroProps {
     /// https://bulma.io/documentation/layout/hero/#fullheight-with-navbar
     #[prop_or_default]
     pub fixed_nav: bool,
+    /// Generate a subtle gradient for the hero.
+    #[prop_or_default]
+    pub bold: bool,
+    /// The size for this hero.
+    #[prop_or_default]
+    pub size: Option<HeroSize>,
 }
 
+/// An imposing hero banner to showcase something.
+///
+/// [https://bulma.io/documentation/layout/hero/](https://bulma.io/documentation/layout/hero/)
 pub struct Hero {
     props: HeroProps,
 }
@@ -26,7 +41,7 @@ impl Component for Hero {
     type Message = ();
     type Properties = HeroProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -46,148 +61,45 @@ impl Component for Hero {
         if self.props.fixed_nav {
             classes.push("is-fullheight-with-navbar");
         }
+        if self.props.bold {
+            classes.push("is-bold");
+        }
+        if let Some(size) = &self.props.size {
+            classes.push(&size.to_string());
+        }
+
+        // Build the header section.
+        let head = if self.props.head.is_empty() {
+            html!{<div class="hero-head">{self.props.head.clone()}</div>}
+        } else {
+            html!{}
+        };
+        // Build the footer section.
+        let foot = if self.props.foot.is_empty() {
+            html!{<div class="hero-foot">{self.props.foot.clone()}</div>}
+        } else {
+            html!{}
+        };
         html!{
-            <@{self.props.tag.clone()} class=classes>
-                {self.props.children.clone()}
-            </@>
+            <section class=classes>
+                {head}
+                <div class="hero-body">{self.props.body.clone()}</div>
+                {foot}
+            </section>
         }
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-
-#[derive(Clone, Debug, Properties, PartialEq)]
-pub struct HeroHeadProps {
-    #[prop_or_default]
-    pub children: Children,
-    #[prop_or_default]
-    pub classes: Option<String>,
-    #[prop_or_else(|| "div".into())]
-    pub tag: String,
-}
-
-pub struct HeroHead {
-    props: HeroHeadProps,
-}
-
-impl Component for HeroHead {
-    type Message = ();
-    type Properties = HeroHeadProps;
-
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        Self{props}
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("hero-head");
-        if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
-        }
-        html!{
-            <@{self.props.tag.clone()} class=classes>
-                {self.props.children.clone()}
-            </@>
-        }
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-
-#[derive(Clone, Debug, Properties, PartialEq)]
-pub struct HeroBodyProps {
-    #[prop_or_default]
-    pub children: Children,
-    #[prop_or_default]
-    pub classes: Option<String>,
-    #[prop_or_else(|| "div".into())]
-    pub tag: String,
-}
-
-pub struct HeroBody {
-    props: HeroBodyProps,
-}
-
-impl Component for HeroBody {
-    type Message = ();
-    type Properties = HeroBodyProps;
-
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        Self{props}
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("hero-body");
-        if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
-        }
-        html!{
-            <@{self.props.tag.clone()} class=classes>
-                {self.props.children.clone()}
-            </@>
-        }
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-
-#[derive(Clone, Debug, Properties, PartialEq)]
-pub struct HeroFootProps {
-    #[prop_or_default]
-    pub children: Children,
-    #[prop_or_default]
-    pub classes: Option<String>,
-    #[prop_or_else(|| "div".into())]
-    pub tag: String,
-}
-
-pub struct HeroFoot {
-    props: HeroFootProps,
-}
-
-impl Component for HeroFoot {
-    type Message = ();
-    type Properties = HeroFootProps;
-
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        Self{props}
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("hero-foot");
-        if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
-        }
-        html!{
-            <@{self.props.tag.clone()} class=classes>
-                {self.props.children.clone()}
-            </@>
-        }
-    }
+/// The 3 sizes available for heros.
+///
+/// [https://bulma.io/documentation/layout/hero/#sizes](https://bulma.io/documentation/layout/hero/#sizes)
+#[derive(Clone, Debug, Display, PartialEq)]
+#[display(fmt="is-{}")]
+pub enum HeroSize {
+    #[display(fmt="medium")]
+    Medium,
+    #[display(fmt="large")]
+    Large,
+    #[display(fmt="fullheight")]
+    Fullheight,
 }

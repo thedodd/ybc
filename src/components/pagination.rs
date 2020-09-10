@@ -1,6 +1,9 @@
 use derive_more::Display;
 use yew::prelude::*;
+use yew::events::MouseEvent;
 use yewtil::NeqAssign;
+
+use crate::{Alignment, Size};
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct PaginationProps {
@@ -9,10 +12,13 @@ pub struct PaginationProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The size of this component.
     #[prop_or_default]
     pub size: Option<Size>,
+    /// The alignment of this component.
     #[prop_or_default]
     pub alignment: Option<Alignment>,
+    /// Make the pagination elements rounded.
     #[prop_or_default]
     pub rounded: bool,
 
@@ -24,7 +30,7 @@ pub struct PaginationProps {
 
 /// A responsive, usable, and flexible pagination component.
 ///
-/// https://bulma.io/documentation/components/pagination/
+/// [https://bulma.io/documentation/components/pagination/](https://bulma.io/documentation/components/pagination/)
 pub struct Pagination {
     props: PaginationProps,
 }
@@ -33,7 +39,7 @@ impl Component for Pagination {
     type Message = ();
     type Properties = PaginationProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -75,22 +81,30 @@ impl Component for Pagination {
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
-pub struct PaginationLinkProps {
+pub struct PaginationItemProps {
     pub children: Children,
+    /// The pagination item type for this component.
+    pub item_type: PaginationItemType,
     /// The aria label to use for this element.
     #[prop_or_default]
-    pub label: String,
+    pub label: Option<String>,
+    /// The click handler for this component.
+    #[prop_or_default]
+    pub onclick: Option<Callback<MouseEvent>>,
 }
 
-pub struct PaginationLink {
-    props: PaginationLinkProps,
+/// A pagination element representing a link to a page number, the previous page or the next page.
+///
+/// [https://bulma.io/documentation/components/pagination/](https://bulma.io/documentation/components/pagination/)
+pub struct PaginationItem {
+    props: PaginationItemProps,
 }
 
-impl Component for PaginationLink {
+impl Component for PaginationItem {
     type Message = ();
-    type Properties = PaginationLinkProps;
+    type Properties = PaginationItemProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -104,23 +118,41 @@ impl Component for PaginationLink {
 
     fn view(&self) -> Html {
         html!{
-            <a class="pagination-link" aria-label=self.props.label.clone()>
+            <a class=self.props.item_type.to_string() aria-label?=self.props.label.clone() onclick?=self.props.onclick.clone()>
                 {self.props.children.clone()}
             </a>
         }
     }
 }
 
+/// A pagination item type.
+#[derive(Clone, Debug, Display, PartialEq)]
+#[display(fmt="pagination-{}")]
+pub enum PaginationItemType {
+    /// A pagination link for a specific page number.
+    #[display(fmt="link")]
+    Link,
+    /// A pagination button for the next page.
+    #[display(fmt="next")]
+    Next,
+    /// A pagination button for the previous page.
+    #[display(fmt="previous")]
+    Previous,
+}
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
+/// A horizontal ellipsis for pagination range separators.
+///
+/// [https://bulma.io/documentation/components/pagination/](https://bulma.io/documentation/components/pagination/)
 pub struct PaginationEllipsis;
 
 impl Component for PaginationEllipsis {
     type Message = ();
     type Properties = ();
 
-    fn create(_: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(_: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self
     }
 
@@ -140,26 +172,57 @@ impl Component for PaginationEllipsis {
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/// The three sizes available for a pagination component.
-///
-/// https://bulma.io/documentation/components/pagination/#sizes
-#[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
-pub enum Size {
-    #[display(fmt="small")]
-    Small,
-    #[display(fmt="medium")]
-    Medium,
-    #[display(fmt="large")]
-    Large,
+#[cfg(feature="router")]
+mod router {
+    use super::*;
+    use yew_router::{RouterState, Switch};
+    use yew_router::components::RouterAnchor;
+
+    #[derive(Clone, Properties, PartialEq)]
+    pub struct RouterProps<SW: Switch + Clone + PartialEq + 'static> {
+        /// The Switched item representing the route.
+        pub route: SW,
+        /// Html inside the component.
+        #[prop_or_default]
+        pub children: Children,
+        /// The pagination item type for this component.
+        pub item_type: PaginationItemType,
+    }
+
+    /// A Yew Router anchor button for use in a `Pagination` component.
+    pub struct PaginationItemRouter<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState=()> {
+        props: RouterProps<SW>,
+        marker: std::marker::PhantomData<STATE>,
+    }
+
+    impl<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState> Component for PaginationItemRouter<SW, STATE> {
+        type Message = ();
+        type Properties = RouterProps<SW>;
+
+        fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
+            Self{props, marker: std::marker::PhantomData}
+        }
+
+        fn update(&mut self, _: Self::Message) -> ShouldRender {
+            false
+        }
+
+        fn change(&mut self, props: Self::Properties) -> ShouldRender {
+            self.props.neq_assign(props)
+        }
+
+        #[allow(deprecated)]
+        fn view(&self) -> Html {
+            html!{
+                <RouterAnchor<SW, STATE>
+                    route=self.props.route.clone()
+                    children=self.props.children.clone()
+                    classes=self.props.item_type.to_string()
+                />
+            }
+        }
+    }
 }
 
-/// The different alignments available for pagination components.
-#[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
-pub enum Alignment {
-    #[display(fmt="centered")]
-    Centered,
-    #[display(fmt="right")]
-    Right,
-}
+#[cfg(feature="router")]
+pub use router::PaginationItemRouter;

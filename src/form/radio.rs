@@ -21,13 +21,18 @@ pub struct RadioProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// Disable this component.
     #[prop_or_default]
     pub disabled: bool,
 }
 
-/// The mutually exclusive **radio buttons** in their native format.
+/// The mutually exclusive radio buttons in their native format.
 ///
-/// https://bulma.io/documentation/form/radio/
+/// [https://bulma.io/documentation/form/radio/](https://bulma.io/documentation/form/radio/)
+///
+/// All YBC form components are controlled components. This means that the value of the field must
+/// be provided from a parent component, and changes to this component are propagated to the parent
+/// component via callback.
 pub struct Radio {
     props: RadioProps,
     link: ComponentLink<Self>,

@@ -1,7 +1,10 @@
-use derive_more::Display;
+#![allow(clippy::redundant_closure_call)]
+
 use yew::prelude::*;
 use yew::events::ChangeData;
 use yewtil::NeqAssign;
+
+use crate::Size;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct SelectProps {
@@ -18,17 +21,23 @@ pub struct SelectProps {
     #[prop_or_default]
     pub classes: Option<String>,
 
+    /// The size of this component.
     #[prop_or_default]
     pub size: Option<Size>,
+    /// Display a loading spinner within this component.
     #[prop_or_default]
     pub loading: bool,
 }
 
 /// A wrapper around an HTML `select` tag.
 ///
-/// https://bulma.io/documentation/form/select/
+/// [https://bulma.io/documentation/form/select/](https://bulma.io/documentation/form/select/)
 ///
-/// NOTE WELL: not all browsers will honor the value of the select element's value on initial
+/// All YBC form components are controlled components. This means that the value of the field must
+/// be provided from a parent component, and changes to this component are propagated to the parent
+/// component via callback.
+///
+/// **NOTE WELL:** not all browsers will honor the value of the select element's value on initial
 /// load. So if you have an initial `value` set for this component, ensure that the corresponding
 /// option element also has the `selected=true` attribute.
 pub struct Select {
@@ -99,19 +108,26 @@ pub struct MultiSelectProps {
     #[prop_or_default]
     pub classes: Option<String>,
 
+    /// The size of this component.
     #[prop_or_default]
     pub size: Option<Size>,
+    /// Size of the list to display.
     #[prop_or_else(|| 4)]
     pub list_size: u32,
+    /// Display a loading spinner within this component.
     #[prop_or_default]
     pub loading: bool,
 }
 
-/// A wrapper around an HTML `select` tag.
+/// A wrapper around an HTML `select` tag with the `multiple=true` attribute.
 ///
-/// https://bulma.io/documentation/form/select/
+/// [https://bulma.io/documentation/form/select/](https://bulma.io/documentation/form/select/)
 ///
-/// NOTE WELL: not all browsers will honor the value of the select element's value on initial
+/// All YBC form components are controlled components. This means that the value of the field must
+/// be provided from a parent component, and changes to this component are propagated to the parent
+/// component via callback.
+///
+/// **NOTE WELL:** not all browsers will honor the value of the select element's value on initial
 /// load. So if you have an initial `value` set for this component, ensure that the corresponding
 /// option element also has the `selected=true` attribute.
 pub struct MultiSelect {
@@ -170,18 +186,4 @@ impl Component for MultiSelect {
             </div>
         }
     }
-}
-
-/// The three sizes available for a textarea.
-///
-/// https://bulma.io/documentation/form/input/#sizes
-#[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
-pub enum Size {
-    #[display(fmt="small")]
-    Small,
-    #[display(fmt="medium")]
-    Medium,
-    #[display(fmt="large")]
-    Large,
 }

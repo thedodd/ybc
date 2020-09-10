@@ -13,14 +13,16 @@
 </div>
 <br/>
 
-**NOTE WELL:** this library is based on the [Yew branch for optional parameters here](https://github.com/yewstack/yew/pull/1537). As such, it is probably best to wait until that branch has landed before using this crate for production apps ... but that's up to you 🛑.
+YBC encapsulates all of the structure, style and functionality of the Bulma CSS framework as a set of Yew components. YBC also ships with support for the Yew Router, adding Bulma-styled components which wrap the Yew Router components for clean integration.
+
+As a guiding principal, YBC does not attempt to encapsulate every single Bulma style as a Rust type, let alone the many valid style combinations. That would be far too complex, and probably limiting to the user in many ways. Instead, YBC handles strucutre, required classes, functionality, sane defaults and every component can be customized with any additional classes for an exact look and feel.
 
 ## getting started
 First, add this library to your Yew project's `Cargo.toml`.
 
 ```toml
 [dependencies]
-ybc = "*"
+ybc = "0.1" # NOTE: this release is coming soon.
 ```
 
 Next, you've got a few options. This project will work perfectly well if you just include the Bulma CSS in your HTML, [as described here](https://bulma.io/documentation/overview/start/). The following link in your HTML head should do the trick: `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"/>`.

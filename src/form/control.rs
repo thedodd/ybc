@@ -1,3 +1,5 @@
+#![allow(clippy::redundant_closure_call)]
+
 use yew::prelude::*;
 use yewtil::NeqAssign;
 
@@ -7,12 +9,17 @@ pub struct ControlProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
+    /// A modifier to have the controlled element fill up the remaining space.
     #[prop_or_default]
     pub expanded: bool,
 }
 
+/// A container with which you can wrap the form controls.
+///
+/// [https://bulma.io/documentation/form/general/](https://bulma.io/documentation/form/general/)
 pub struct Control {
     props: ControlProps,
 }

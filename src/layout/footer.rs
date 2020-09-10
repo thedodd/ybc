@@ -9,6 +9,9 @@ pub struct FooterProps {
     pub classes: Option<String>,
 }
 
+/// A simple responsive footer which can include anything.
+///
+/// [https://bulma.io/documentation/layout/footer/](https://bulma.io/documentation/layout/footer/)
 pub struct Footer {
     props: FooterProps,
 }
@@ -17,7 +20,7 @@ impl Component for Footer {
     type Message = ();
     type Properties = FooterProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 

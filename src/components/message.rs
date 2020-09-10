@@ -9,6 +9,9 @@ pub struct MessageProps {
     pub classes: Option<String>,
 }
 
+/// Colored message blocks, to emphasize part of your page.
+///
+/// [https://bulma.io/documentation/components/message/](https://bulma.io/documentation/components/message/)
 pub struct Message {
     props: MessageProps,
 }
@@ -53,6 +56,9 @@ pub struct MessageHeaderProps {
     pub classes: Option<String>,
 }
 
+/// An optional message header that can hold a title and a delete element.
+///
+/// [https://bulma.io/documentation/components/message/](https://bulma.io/documentation/components/message/)
 pub struct MessageHeader {
     props: MessageHeaderProps,
 }
@@ -97,6 +103,9 @@ pub struct MessageBodyProps {
     pub classes: Option<String>,
 }
 
+/// A container for the body of a message.
+///
+/// [https://bulma.io/documentation/components/message/](https://bulma.io/documentation/components/message/)
 pub struct MessageBody {
     props: MessageBodyProps,
 }

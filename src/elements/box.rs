@@ -9,6 +9,9 @@ pub struct BoxProps {
     pub classes: Option<String>,
 }
 
+/// A white box to contain other elements.
+///
+/// [https://bulma.io/documentation/elements/box/](https://bulma.io/documentation/elements/box/)
 pub struct Box {
     props: BoxProps,
 }
@@ -17,7 +20,7 @@ impl Component for Box {
     type Message = ();
     type Properties = BoxProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 

@@ -1,3 +1,4 @@
+#![allow(clippy::redundant_closure_call)]
 use yew::prelude::*;
 use yew::events::MouseEvent;
 use yewtil::NeqAssign;
@@ -8,12 +9,17 @@ pub struct DeleteProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The HTML tag to use for this component.
     #[prop_or_else(|| "button".into())]
     pub tag: String,
+    /// The click handler to use for this component.
     #[prop_or_default]
     pub onclick: Option<Callback<MouseEvent>>,
 }
 
+/// A versatile delete cross.
+///
+/// [https://bulma.io/documentation/elements/delete/](https://bulma.io/documentation/elements/delete/)
 pub struct Delete {
     props: DeleteProps,
 }
@@ -22,7 +28,7 @@ impl Component for Delete {
     type Message = ();
     type Properties = DeleteProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 

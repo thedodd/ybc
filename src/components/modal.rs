@@ -27,7 +27,7 @@ pub struct ModalProps {
 
 /// A classic modal overlay, in which you can include any content you want.
 ///
-/// https://bulma.io/documentation/components/modal/
+/// [https://bulma.io/documentation/components/modal/](https://bulma.io/documentation/components/modal/)
 ///
 /// See the docs on the `ModalCloser` agent to be able to close your modal instance from anywhere
 /// in your app for maximum flexibility.
@@ -44,7 +44,7 @@ impl Component for Modal {
     type Properties = ModalProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        let callback = link.callback(|msg| ModalMsg::CloseFromAgent(msg));
+        let callback = link.callback(ModalMsg::CloseFromAgent);
         let subscription = ModalCloser::bridge(callback);
         Self{props, link, subscription, is_active: false}
     }
@@ -57,7 +57,7 @@ impl Component for Modal {
             ModalMsg::Open => {
                 self.is_active = true;
             }
-            ModalMsg::CloseFromAgent(id) => if &id.0 == &self.props.id {
+            ModalMsg::CloseFromAgent(id) => if id.0 == self.props.id {
                 self.is_active = false;
             } else {}
         }
@@ -121,7 +121,7 @@ pub struct ModalCardProps {
 
 /// A classic modal with a header, body, and footer section.
 ///
-/// https://bulma.io/documentation/components/modal/
+/// [https://bulma.io/documentation/components/modal/](https://bulma.io/documentation/components/modal/)
 ///
 /// See the docs on the `ModalCloser` agent to be able to close your modal instance from anywhere
 /// in your app for maximum flexibility.
@@ -138,7 +138,7 @@ impl Component for ModalCard {
     type Properties = ModalCardProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        let callback = link.callback(|msg| ModalMsg::CloseFromAgent(msg));
+        let callback = link.callback(ModalMsg::CloseFromAgent);
         let subscription = ModalCloser::bridge(callback);
         Self{props, link, subscription, is_active: false}
     }
@@ -151,7 +151,7 @@ impl Component for ModalCard {
             ModalMsg::Open => {
                 self.is_active = true;
             }
-            ModalMsg::CloseFromAgent(id) => if &id.0 == &self.props.id {
+            ModalMsg::CloseFromAgent(id) => if id.0 == self.props.id {
                 self.is_active = false;
             } else {}
         }

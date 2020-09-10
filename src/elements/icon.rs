@@ -1,7 +1,8 @@
-use derive_more::Display;
 use yew::prelude::*;
 use yew::events::MouseEvent;
 use yewtil::NeqAssign;
+
+use crate::{Alignment, Size};
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct IconProps {
@@ -9,14 +10,20 @@ pub struct IconProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The click handler to use for this component.
     #[prop_or_default]
     pub onclick: Option<Callback<MouseEvent>>,
+    /// The size of this component; to help prevent page "jumps" during load.
     #[prop_or_default]
     pub size: Option<Size>,
+    /// The alignment of this icon, often used within form controls.
     #[prop_or_default]
     pub alignment: Option<Alignment>,
 }
 
+/// A container for any type of icon font.
+///
+/// [https://bulma.io/documentation/elements/icon/](https://bulma.io/documentation/elements/icon/)
 pub struct Icon {
     props: IconProps,
 }
@@ -25,7 +32,7 @@ impl Component for Icon {
     type Message = ();
     type Properties = IconProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -54,28 +61,4 @@ impl Component for Icon {
             </span>
         }
     }
-}
-
-/// Available sizes for the icon container, to help prevent page "jumps" during load.
-///
-/// The set a "normal" size, simply omit the size parameter altogether, as "normal" is the default.
-#[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
-pub enum Size {
-    #[display(fmt="small")]
-    Small,
-    #[display(fmt="medium")]
-    Medium,
-    #[display(fmt="large")]
-    Large,
-}
-
-/// Possible icon alignments, often used within form controls.
-#[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
-pub enum Alignment {
-    #[display(fmt="left")]
-    Left,
-    #[display(fmt="right")]
-    Right,
 }

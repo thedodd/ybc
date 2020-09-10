@@ -2,6 +2,8 @@ use derive_more::Display;
 use yew::prelude::*;
 use yewtil::NeqAssign;
 
+use crate::Alignment;
+
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct BreadcrumbProps {
     /// The `li` child elements of this breadcrumb.
@@ -9,14 +11,20 @@ pub struct BreadcrumbProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The size of this component.
     #[prop_or_default]
-    pub size: Option<Size>,
+    pub size: Option<BreadcrumbSize>,
+    /// The alignment of this component.
     #[prop_or_default]
     pub alignment: Option<Alignment>,
+    /// The separator type to use between breadcrumb segments.
     #[prop_or_default]
-    pub separator: Option<Separator>,
+    pub separator: Option<BreadcrumbSeparator>,
 }
 
+/// A simple breadcrumb component to improve your navigation experience.
+///
+/// [https://bulma.io/documentation/components/breadcrumb/](https://bulma.io/documentation/components/breadcrumb/)
 pub struct Breadcrumb {
     props: BreadcrumbProps,
 }
@@ -25,7 +33,7 @@ impl Component for Breadcrumb {
     type Message = ();
     type Properties = BreadcrumbProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -61,12 +69,12 @@ impl Component for Breadcrumb {
     }
 }
 
-/// The three sizes available for a breadcrumb.
+/// The 3 sizes available for a breadcrumb.
 ///
 /// https://bulma.io/documentation/components/breadcrumb/#sizes
 #[derive(Clone, Debug, Display, PartialEq)]
 #[display(fmt="are-{}")]
-pub enum Size {
+pub enum BreadcrumbSize {
     #[display(fmt="small")]
     Small,
     #[display(fmt="medium")]
@@ -75,24 +83,12 @@ pub enum Size {
     Large,
 }
 
-/// The 2 additional alignments available for a breadcrumb.
-///
-/// https://bulma.io/documentation/components/breadcrumb/#alignment
-#[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
-pub enum Alignment {
-    #[display(fmt="centered")]
-    Centered,
-    #[display(fmt="right")]
-    Right,
-}
-
 /// The 4 additional separators for a breadcrump.
 ///
 /// https://bulma.io/documentation/components/breadcrumb/#alternative-separators
 #[derive(Clone, Debug, Display, PartialEq)]
 #[display(fmt="has-{}-separator")]
-pub enum Separator {
+pub enum BreadcrumbSeparator {
     #[display(fmt="arrow")]
     Arrow,
     #[display(fmt="bullet")]

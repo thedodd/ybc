@@ -1,4 +1,7 @@
+#![allow(clippy::redundant_closure_call)]
+
 use yew::prelude::*;
+use yew::events::MouseEvent;
 use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -7,10 +10,14 @@ pub struct PanelProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The HTML content of this panel's heading; it is automatically wrapped in a `p.panel-heading`.
     #[prop_or_default]
     pub heading: Html,
 }
 
+/// A composable panel, for compact controls.
+///
+/// [https://bulma.io/documentation/components/panel/](https://bulma.io/documentation/components/panel/)
 pub struct Panel {
     props: PanelProps,
 }
@@ -19,7 +26,7 @@ impl Component for Panel {
     type Message = ();
     type Properties = PanelProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -54,6 +61,9 @@ pub struct PanelTabsProps {
     pub children: Children,
 }
 
+/// A container for the navigation tabs of a panel.
+///
+/// [https://bulma.io/documentation/components/panel/](https://bulma.io/documentation/components/panel/)
 pub struct PanelTabs {
     props: PanelTabsProps,
 }
@@ -62,7 +72,7 @@ impl Component for PanelTabs {
     type Message = ();
     type Properties = PanelTabsProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -90,12 +100,20 @@ impl Component for PanelTabs {
 pub struct PanelBlockProps {
     #[prop_or_default]
     pub children: Children,
+    /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
+    /// Make this element the active / highlighted element.
     #[prop_or_default]
     pub active: bool,
+    /// The click handler for this element.
+    #[prop_or_default]
+    pub onclick: Option<Callback<MouseEvent>>,
 }
 
+/// An individual element of the panel.
+///
+/// [https://bulma.io/documentation/components/panel/](https://bulma.io/documentation/components/panel/)
 pub struct PanelBlock {
     props: PanelBlockProps,
 }
@@ -104,7 +122,7 @@ impl Component for PanelBlock {
     type Message = ();
     type Properties = PanelBlockProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -123,7 +141,7 @@ impl Component for PanelBlock {
         }
         let tag = self.props.tag.clone();
         html!{
-            <@{tag} class=classes>
+            <@{tag} class=classes onclick?=self.props.onclick.clone()>
                 {self.props.children.clone()}
             </@>
         }

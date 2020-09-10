@@ -9,6 +9,9 @@ pub struct NotificationProps {
     pub classes: Option<String>,
 }
 
+/// Bold notification blocks, to alert your users of something.
+///
+/// [https://bulma.io/documentation/elements/notification/](https://bulma.io/documentation/elements/notification/)
 pub struct Notification {
     props: NotificationProps,
 }
@@ -17,7 +20,7 @@ impl Component for Notification {
     type Message = ();
     type Properties = NotificationProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 

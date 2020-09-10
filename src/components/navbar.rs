@@ -15,23 +15,23 @@ pub struct NavbarProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// Make the navbar fixed to the top or bottom of the UI.
     #[prop_or_default]
     pub fixed: Option<NavbarFixed>,
     /// Seamlessly integrate the navbar in any visual context.
     ///
-    /// https://bulma.io/documentation/components/navbar/#transparent-navbar
+    /// [https://bulma.io/documentation/components/navbar/#transparent-navbar](https://bulma.io/documentation/components/navbar/#transparent-navbar)
     #[prop_or_default]
     pub transparent: bool,
     /// Sets **top** and **bottom** paddings with **1rem**, **left** and **right** paddings with **2rem**.
     ///
-    /// https://bulma.io/documentation/components/navbar/#navbar-helper-classes
+    /// [https://bulma.io/documentation/components/navbar/#navbar-helper-classes](https://bulma.io/documentation/components/navbar/#navbar-helper-classes)
     #[prop_or_default]
     pub spaced: bool,
-
     /// The contents of the navbar brand. The `navbar-burger` is automatically appended to the
     /// end of this content.
     ///
-    /// https://bulma.io/documentation/components/navbar/#navbar-brand
+    /// [https://bulma.io/documentation/components/navbar/#navbar-brand](https://bulma.io/documentation/components/navbar/#navbar-brand)
     pub navbrand: Html,
     /// The contents of the `navbar-start` section of the navbar.
     pub navstart: Html,
@@ -39,6 +39,9 @@ pub struct NavbarProps {
     pub navend: Html,
 }
 
+/// A responsive horizontal navbar that can support images, links, buttons, and dropdowns.
+///
+/// [https://bulma.io/documentation/components/navbar/](https://bulma.io/documentation/components/navbar/)
 pub struct Navbar {
     props: NavbarProps,
     link: ComponentLink<Self>,
@@ -115,7 +118,7 @@ impl Component for Navbar {
 
 /// The 2 possible fixed positions available for a navbar.
 ///
-/// https://bulma.io/documentation/components/navbar/#fixed-navbar
+/// [https://bulma.io/documentation/components/navbar/#fixed-navbar](https://bulma.io/documentation/components/navbar/#fixed-navbar)
 ///
 /// NOTE WELL: in order to work properly, the root `html` or `body` element must be configured with
 /// the corresponding `has-navbar-fixed-top` or `has-navbar-fixed-bottom` class.
@@ -133,7 +136,7 @@ pub enum NavbarFixed {
 
 /// The two HTML tags allowed for a navbar-item.
 ///
-/// https://bulma.io/documentation/components/navbar/#navbar-item
+/// [https://bulma.io/documentation/components/navbar/#navbar-item](https://bulma.io/documentation/components/navbar/#navbar-item)
 #[derive(Clone, Debug, Display, PartialEq)]
 pub enum NavbarItemTag {
     #[display(fmt="a")]
@@ -165,6 +168,9 @@ pub struct NavbarItemProps {
     pub active: bool,
 }
 
+/// A single element of the navbar.
+///
+/// [https://bulma.io/documentation/components/navbar/](https://bulma.io/documentation/components/navbar/)
 pub struct NavbarItem {
     props: NavbarItemProps,
 }
@@ -173,7 +179,7 @@ impl Component for NavbarItem {
     type Message = ();
     type Properties = NavbarItemProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -223,7 +229,7 @@ pub struct NavbarDividerProps {
 
 /// An element to display a horizontal rule in a navbar-dropdown.
 ///
-/// https://bulma.io/documentation/components/navbar/#dropdown-menu
+/// [https://bulma.io/documentation/components/navbar/#dropdown-menu](https://bulma.io/documentation/components/navbar/#dropdown-menu)
 pub struct NavbarDivider {
     props: NavbarDividerProps,
 }
@@ -232,7 +238,7 @@ impl Component for NavbarDivider {
     type Message = ();
     type Properties = NavbarDividerProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -265,10 +271,8 @@ pub struct NavbarDropdownProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
-
     /// The contents of the navbar-link used for triggering the dropdown menu.
     pub navlink: Html,
-
     /// Make this dropdown triggerable based on hover.
     #[prop_or_default]
     pub hoverable: bool,
@@ -291,7 +295,7 @@ pub struct NavbarDropdownProps {
 /// This component is a composite of all of the elements needed in order to properly generate
 /// a navbar dropdown component.
 ///
-/// https://bulma.io/documentation/components/navbar/#dropdown-menu
+/// [https://bulma.io/documentation/components/navbar/#dropdown-menu](https://bulma.io/documentation/components/navbar/#dropdown-menu)
 pub struct NavbarDropdown {
     props: NavbarDropdownProps,
     link: ComponentLink<Self>,

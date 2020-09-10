@@ -1,3 +1,5 @@
+#![allow(clippy::redundant_closure_call)]
+
 use derive_more::Display;
 use yew::prelude::*;
 use yewtil::NeqAssign;
@@ -8,13 +10,14 @@ pub struct TileProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
     /// The context modifier to use for this tile element, else none.
     ///
     /// https://bulma.io/documentation/layout/tiles/#modifiers
     #[prop_or_default]
-    pub ctx: Option<Ctx>,
+    pub ctx: Option<TileCtx>,
     /// Stack tiles vertically.
     ///
     /// https://bulma.io/documentation/layout/tiles/#modifiers
@@ -24,9 +27,12 @@ pub struct TileProps {
     ///
     /// https://bulma.io/documentation/layout/tiles/#modifiers
     #[prop_or_default]
-    pub size: Option<Size>,
+    pub size: Option<TileSize>,
 }
 
+/// A single tile element to build 2-dimensional whatever-you-like grids.
+///
+/// [https://bulma.io/documentation/layout/tiles/](https://bulma.io/documentation/layout/tiles/)
 pub struct Tile {
     props: TileProps,
 }
@@ -35,7 +41,7 @@ impl Component for Tile {
     type Message = ();
     type Properties = TileProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -74,7 +80,7 @@ impl Component for Tile {
 /// https://bulma.io/documentation/layout/tiles/#modifiers
 #[derive(Clone, Debug, Display, PartialEq)]
 #[display(fmt="is-{}")]
-pub enum Ctx {
+pub enum TileCtx {
     #[display(fmt="ancestor")]
     Ancestor,
     #[display(fmt="parent")]
@@ -88,7 +94,7 @@ pub enum Ctx {
 /// https://bulma.io/documentation/layout/tiles/#modifiers
 #[derive(Clone, Debug, Display, PartialEq)]
 #[display(fmt="is-{}")]
-pub enum Size {
+pub enum TileSize {
     #[display(fmt="1")]
     One,
     #[display(fmt="2")]

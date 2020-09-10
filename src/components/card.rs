@@ -9,6 +9,9 @@ pub struct CardProps {
     pub classes: Option<String>,
 }
 
+/// An all-around flexible and composable component; this is the card container.
+///
+/// [https://bulma.io/documentation/components/card/](https://bulma.io/documentation/components/card/)
 pub struct Card {
     props: CardProps,
 }
@@ -17,7 +20,7 @@ impl Component for Card {
     type Message = ();
     type Properties = CardProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -53,6 +56,9 @@ pub struct CardHeaderProps {
     pub classes: Option<String>,
 }
 
+/// A container for card header content; rendered as a horizontal bar with a shadow.
+///
+/// [https://bulma.io/documentation/components/card/](https://bulma.io/documentation/components/card/)
 pub struct CardHeader {
     props: CardHeaderProps,
 }
@@ -61,7 +67,7 @@ impl Component for CardHeader {
     type Message = ();
     type Properties = CardHeaderProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -97,6 +103,9 @@ pub struct CardImageProps {
     pub classes: Option<String>,
 }
 
+/// A fullwidth container for a responsive image.
+///
+/// [https://bulma.io/documentation/components/card/](https://bulma.io/documentation/components/card/)
 pub struct CardImage {
     props: CardImageProps,
 }
@@ -105,7 +114,7 @@ impl Component for CardImage {
     type Message = ();
     type Properties = CardImageProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -141,6 +150,9 @@ pub struct CardContentProps {
     pub classes: Option<String>,
 }
 
+/// A container for any other content as the body of the card.
+///
+/// [https://bulma.io/documentation/components/card/](https://bulma.io/documentation/components/card/)
 pub struct CardContent {
     props: CardContentProps,
 }
@@ -149,7 +161,7 @@ impl Component for CardContent {
     type Message = ();
     type Properties = CardContentProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -185,6 +197,9 @@ pub struct CardFooterProps {
     pub classes: Option<String>,
 }
 
+/// A container for card footer content; rendered as a horizontal list of controls.
+///
+/// [https://bulma.io/documentation/components/card/](https://bulma.io/documentation/components/card/)
 pub struct CardFooter {
     props: CardFooterProps,
 }
@@ -193,7 +208,7 @@ impl Component for CardFooter {
     type Message = ();
     type Properties = CardFooterProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 

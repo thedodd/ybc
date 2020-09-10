@@ -13,10 +13,18 @@ pub struct CheckboxProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// Disable this component.
     #[prop_or_default]
     pub disabled: bool,
 }
 
+/// The 2-state checkbox in its native format.
+///
+/// [https://bulma.io/documentation/form/checkbox/](https://bulma.io/documentation/form/checkbox/)
+///
+/// All YBC form components are controlled components. This means that the value of the field must
+/// be provided from a parent component, and changes to this component are propagated to the parent
+/// component via callback.
 pub struct Checkbox {
     props: CheckboxProps,
     link: ComponentLink<Self>,

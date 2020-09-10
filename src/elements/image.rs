@@ -8,10 +8,14 @@ pub struct ImageProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The size of this component.
     #[prop_or_default]
-    pub size: Option<Size>,
+    pub size: Option<ImageSize>,
 }
 
+/// A container for responsive images.
+///
+/// [https://bulma.io/documentation/elements/image/](https://bulma.io/documentation/elements/image/)
 pub struct Image {
     props: ImageProps,
 }
@@ -20,7 +24,7 @@ impl Component for Image {
     type Message = ();
     type Properties = ImageProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -53,7 +57,7 @@ impl Component for Image {
 /// https://bulma.io/documentation/elements/image/
 #[derive(Clone, Debug, Display, PartialEq)]
 #[display(fmt="is-{}")]
-pub enum Size {
+pub enum ImageSize {
     #[display(fmt="16x16")]
     Is16x16,
     #[display(fmt="24x24")]

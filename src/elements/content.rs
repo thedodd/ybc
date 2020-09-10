@@ -1,3 +1,5 @@
+#![allow(clippy::redundant_closure_call)]
+
 use yew::prelude::*;
 use yewtil::NeqAssign;
 
@@ -7,10 +9,14 @@ pub struct ContentProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
-    #[prop_or_else(|| "p".into())]
+    /// The HTML tag to use for this component.
+    #[prop_or_else(|| "div".into())]
     pub tag: String,
 }
 
+/// A single component to wrap WYSIWYG generated content, where only HTML tags are available.
+///
+/// [https://bulma.io/documentation/elements/content/](https://bulma.io/documentation/elements/content/)
 pub struct Content {
     props: ContentProps,
 }
@@ -19,7 +25,7 @@ impl Component for Content {
     type Message = ();
     type Properties = ContentProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 

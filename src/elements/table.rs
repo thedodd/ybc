@@ -7,10 +7,29 @@ pub struct TableProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// Add borders to all the cells.
     #[prop_or_default]
-    pub with_container: bool,
+    pub bordered: bool,
+    /// Add stripes to the table.
+    #[prop_or_default]
+    pub striped: bool,
+    /// Make the cells narrower.
+    #[prop_or_default]
+    pub narrow: bool,
+    /// Add a hover effect on each row.
+    #[prop_or_default]
+    pub hoverable: bool,
+    /// Make the table fullwidth.
+    #[prop_or_default]
+    pub fullwidth: bool,
+    /// Make the table scrollable, wrapping the table in a `div.table-container`.
+    #[prop_or_default]
+    pub scrollable: bool,
 }
 
+/// An HTML table component.
+///
+/// [https://bulma.io/documentation/elements/table/](https://bulma.io/documentation/elements/table/)
 pub struct Table {
     props: TableProps,
 }
@@ -19,7 +38,7 @@ impl Component for Table {
     type Message = ();
     type Properties = TableProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -36,7 +55,22 @@ impl Component for Table {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        if self.props.with_container {
+        if self.props.bordered {
+            classes.push("is-bordered");
+        }
+        if self.props.striped {
+            classes.push("is-striped");
+        }
+        if self.props.narrow {
+            classes.push("is-narrow");
+        }
+        if self.props.hoverable {
+            classes.push("is-hoverable");
+        }
+        if self.props.fullwidth {
+            classes.push("is-fullwidth");
+        }
+        if self.props.scrollable {
             html!{
                 <div class="table-container">
                     <table class=classes>
