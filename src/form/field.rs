@@ -4,35 +4,46 @@ use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct FieldProps {
-    /// These should all be `Control` components.
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// A text label for the field.
     #[prop_or_default]
     pub label: Option<String>,
+    /// Extra classes for the label container.
     #[prop_or_default]
     pub label_classes: Option<String>,
+    /// A help message for the field.
     #[prop_or_default]
     pub help: Option<String>,
+    /// Extra classes for the help message container.
     #[prop_or_default]
     pub help_classes: Option<String>,
+    /// Has icons on the left of the field's controls.
     #[prop_or_default]
     pub icons_left: bool,
+    /// Has icons on the right of the field's controls.
     #[prop_or_default]
     pub icons_right: bool,
+    /// Allow addons to the field's controls.
     #[prop_or_default]
     pub addons: bool,
+    /// Alignment for the field's addons.
     #[prop_or_default]
     pub addons_align: Option<AddonsAlign>,
+    /// All controls in this field should be grouped.
     #[prop_or_default]
     pub grouped: bool,
+    /// Alignment for grouped controls.
     #[prop_or_default]
     pub grouped_align: Option<GroupedAlign>,
+    /// Allow the grouped controls to span multiple lines.
     #[prop_or_default]
     pub multiline: bool,
 }
 
+/// A container for form controls
 pub struct Field {
     props: FieldProps,
 }
@@ -41,7 +52,7 @@ impl Component for Field {
     type Message = ();
     type Properties = FieldProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -121,18 +132,19 @@ impl Component for Field {
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct FieldHorizontalProps {
-    /// The contents of the field body.
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The text label for the field.
     #[prop_or_default]
     pub label: String,
+    /// The size of the contents for the field.
     #[prop_or_default]
     pub label_size: Option<LabelSize>,
 }
 
-/// A field wrapper which causes a field to be horizontal.
+/// A field wrapper to create horizontal fields.
 ///
 /// https://bulma.io/documentation/form/general/#horizontal-form
 pub struct FieldHorizontal {
@@ -143,7 +155,7 @@ impl Component for FieldHorizontal {
     type Message = ();
     type Properties = FieldHorizontalProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 

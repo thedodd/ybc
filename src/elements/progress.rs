@@ -5,12 +5,17 @@ use yewtil::NeqAssign;
 pub struct ProgressProps {
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The maximum amount of progress; the 100% value.
     #[prop_or_default]
     pub max: Option<f32>,
+    /// The amount of progress which has been made.
     #[prop_or_default]
     pub value: Option<f32>,
 }
 
+/// A native HTML progress bar.
+///
+/// [https://bulma.io/documentation/elements/progress/](https://bulma.io/documentation/elements/progress/)
 pub struct Progress {
     props: ProgressProps,
 }
@@ -19,7 +24,7 @@ impl Component for Progress {
     type Message = ();
     type Properties = ProgressProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -42,7 +47,7 @@ impl Component for Progress {
             .map(|val| html!{{format!("{}%", val)}})
             .unwrap_or_else(|| html!{});
         html!{
-            <progress class=classes max?=max value?=value.clone()>
+            <progress class=classes max?=max value?=value>
                 {value_txt}
             </progress>
         }

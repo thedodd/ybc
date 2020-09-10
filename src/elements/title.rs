@@ -1,3 +1,5 @@
+#![allow(clippy::redundant_closure_call)]
+
 use derive_more::Display;
 use yew::prelude::*;
 use yewtil::NeqAssign;
@@ -8,14 +10,20 @@ pub struct TitleProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The HTML tag to use for this component.
     #[prop_or_else(|| "h3".into())]
     pub tag: String,
+    /// Maintain the normal spacing between titles and subtitles.
     #[prop_or_default]
     pub is_spaced: bool,
+    /// The size of this component.
     #[prop_or_default]
-    pub size: Option<Size>,
+    pub size: Option<HeaderSize>,
 }
 
+/// A simple heading to add depth to your page.
+///
+/// [https://bulma.io/documentation/elements/title/](https://bulma.io/documentation/elements/title/)
 pub struct Title {
     props: TitleProps,
 }
@@ -24,7 +32,7 @@ impl Component for Title {
     type Message = ();
     type Properties = TitleProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -56,18 +64,26 @@ impl Component for Title {
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct SubtitleProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The HTML tag to use for this component.
     #[prop_or_else(|| "h3".into())]
     pub tag: String,
+    /// The size of this component.
     #[prop_or_default]
-    pub size: Option<Size>,
+    pub size: Option<HeaderSize>,
 }
 
+/// A simple heading to add depth to your page.
+///
+/// [https://bulma.io/documentation/elements/title/](https://bulma.io/documentation/elements/title/)
 pub struct Subtitle {
     props: SubtitleProps,
 }
@@ -76,7 +92,7 @@ impl Component for Subtitle {
     type Message = ();
     type Properties = SubtitleProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -110,7 +126,7 @@ impl Component for Subtitle {
 /// https://bulma.io/documentation/elements/title/#sizes
 #[derive(Clone, Debug, Display, PartialEq)]
 #[display(fmt="is-{}")]
-pub enum Size {
+pub enum HeaderSize {
     #[display(fmt="1")]
     Is1,
     #[display(fmt="2")]

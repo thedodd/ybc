@@ -1,6 +1,7 @@
-use derive_more::Display;
 use yew::prelude::*;
 use yewtil::NeqAssign;
+
+use crate::{Alignment, Size};
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct TabsProps {
@@ -8,20 +9,32 @@ pub struct TabsProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The alignment of this component.
     #[prop_or_default]
     pub alignment: Option<Alignment>,
+    /// The size of this component.
     #[prop_or_default]
     pub size: Option<Size>,
+    /// Add a more classic style with borders to this component.
     #[prop_or_default]
     pub boxed: bool,
+    /// Add the "radio button" style to the elements of this component.
     #[prop_or_default]
     pub toggle: bool,
+    /// Make the tab elements of this component rounded.
     #[prop_or_default]
     pub rounded: bool,
+    /// Make this component fullwidth.
     #[prop_or_default]
     pub fullwidth: bool,
 }
 
+/// Simple responsive horizontal navigation tabs, with different styles.
+///
+/// [https://bulma.io/documentation/components/tabs/](https://bulma.io/documentation/components/tabs/)
+///
+/// For integration with Yew Router, it is recommended that the `RouterButton` or `RouterAnchor`
+/// components be used as the individual tab elements for this component.
 pub struct Tabs {
     props: TabsProps,
 }
@@ -30,7 +43,7 @@ impl Component for Tabs {
     type Message = ();
     type Properties = TabsProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -73,30 +86,4 @@ impl Component for Tabs {
             </div>
         }
     }
-}
-
-/// The 2 additional alignments available for tabs.
-///
-/// https://bulma.io/documentation/components/tabs/#alignment
-#[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
-pub enum Alignment {
-    #[display(fmt="centered")]
-    Centered,
-    #[display(fmt="right")]
-    Right,
-}
-
-/// The three sizes available for tabs.
-///
-/// https://bulma.io/documentation/components/tabs/#sizes
-#[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
-pub enum Size {
-    #[display(fmt="small")]
-    Small,
-    #[display(fmt="medium")]
-    Medium,
-    #[display(fmt="large")]
-    Large,
 }

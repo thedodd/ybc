@@ -9,6 +9,9 @@ pub struct MenuProps {
     pub classes: Option<String>,
 }
 
+/// A simple menu, for any type of vertical navigation.
+///
+/// [https://bulma.io/documentation/components/menu/](https://bulma.io/documentation/components/menu/)
 pub struct Menu {
     props: MenuProps,
 }
@@ -54,6 +57,9 @@ pub struct MenuListProps {
     pub classes: Option<String>,
 }
 
+/// A container for menu list `li` elements.
+///
+/// [https://bulma.io/documentation/components/menu/](https://bulma.io/documentation/components/menu/)
 pub struct MenuList {
     props: MenuListProps,
 }
@@ -94,10 +100,14 @@ impl Component for MenuList {
 pub struct MenuLabelProps {
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The text of the label.
     #[prop_or_default]
     pub text: String,
 }
 
+/// A label for a section of the menu.
+///
+/// [https://bulma.io/documentation/components/menu/](https://bulma.io/documentation/components/menu/)
 pub struct MenuLabel {
     props: MenuLabelProps,
 }

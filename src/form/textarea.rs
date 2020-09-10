@@ -1,7 +1,8 @@
-use derive_more::Display;
 use yew::prelude::*;
 use yew::events::InputData;
 use yewtil::NeqAssign;
+
+use crate::Size;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct TextAreaProps {
@@ -14,25 +15,40 @@ pub struct TextAreaProps {
 
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The placeholder value for this component.
     #[prop_or_default]
     pub placeholder: Option<String>,
+    /// The number of rows to which this component will be locked.
     #[prop_or_default]
     pub rows: u32,
 
+    /// The size of this component.
     #[prop_or_default]
     pub size: Option<Size>,
+    /// Fix the size of this component.
     #[prop_or_default]
     pub fixed_size: bool,
+    /// Display a loading spinner within this component.
     #[prop_or_default]
     pub loading: bool,
+    /// Disable this component.
     #[prop_or_default]
     pub disabled: bool,
+    /// Make this component read-only.
     #[prop_or_default]
     pub readonly: bool,
+    /// Make this component static.
     #[prop_or_default]
     pub r#static: bool,
 }
 
+/// A multiline textarea component.
+///
+/// [https://bulma.io/documentation/form/textarea/](https://bulma.io/documentation/form/textarea/)
+///
+/// All YBC form components are controlled components. This means that the value of the field must
+/// be provided from a parent component, and changes to this component are propagated to the parent
+/// component via callback.
 pub struct TextArea {
     props: TextAreaProps,
     link: ComponentLink<Self>,
@@ -85,18 +101,4 @@ impl Component for TextArea {
                 />
         }
     }
-}
-
-/// The three sizes available for a textarea.
-///
-/// https://bulma.io/documentation/form/input/#sizes
-#[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
-pub enum Size {
-    #[display(fmt="small")]
-    Small,
-    #[display(fmt="medium")]
-    Medium,
-    #[display(fmt="large")]
-    Large,
 }

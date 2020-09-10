@@ -7,10 +7,14 @@ pub struct ContainerProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// Add a `32px` margin to the left and right sides of the container.
     #[prop_or_default]
     pub fluid: bool,
 }
 
+/// A simple container to center your content horizontally.
+///
+/// [https://bulma.io/documentation/layout/container/](https://bulma.io/documentation/layout/container/)
 pub struct Container {
     props: ContainerProps,
 }
@@ -19,7 +23,7 @@ impl Component for Container {
     type Message = ();
     type Properties = ContainerProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 

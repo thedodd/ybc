@@ -7,4 +7,5 @@ pub mod image;
 pub mod notification;
 pub mod progress;
 pub mod table;
+pub mod tag;
 pub mod title;

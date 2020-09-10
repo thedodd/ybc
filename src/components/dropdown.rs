@@ -15,7 +15,6 @@ pub struct DropdownProps {
     /// Make this dropdown triggerable based on hover.
     #[prop_or_default]
     pub hoverable: bool,
-
     /// Any additional classes to use for the trigger button.
     #[prop_or_default]
     pub button_classes: Option<String>,
@@ -32,7 +31,7 @@ pub enum DropdownMsg {
 
 /// An interactive dropdown menu for discoverable content.
 ///
-/// https://bulma.io/documentation/components/dropdown/
+/// [https://bulma.io/documentation/components/dropdown/](https://bulma.io/documentation/components/dropdown/)
 pub struct Dropdown {
     link: ComponentLink<Self>,
     props: DropdownProps,

@@ -1,8 +1,11 @@
-use derive_more::Display;
+#![allow(clippy::redundant_closure_call)]
+
 use web_sys::File as SysFile;
 use yew::prelude::*;
 use yew::events::ChangeData;
 use yewtil::NeqAssign;
+
+use crate::{Alignment, Size};
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct FileProps {
@@ -27,20 +30,33 @@ pub struct FileProps {
     /// placeholder until files are selected.
     #[prop_or_default]
     pub has_name: Option<String>,
+    /// Move the CTA element to the right side of the component.
     #[prop_or_default]
     pub right: bool,
+    /// Expand the file display name to the full width of the parent.
     #[prop_or_default]
     pub fullwidth: bool,
+    /// Display as a boxed block.
     #[prop_or_default]
     pub boxed: bool,
+    /// Allow multiple files to be selected.
     #[prop_or_default]
     pub multiple: bool,
+    /// The size of this component.
     #[prop_or_default]
     pub size: Option<Size>,
+    /// The alignment of this component within its parent.
     #[prop_or_default]
     pub alignment: Option<Alignment>,
 }
 
+/// A custom file upload input.
+///
+/// [https://bulma.io/documentation/form/file/](https://bulma.io/documentation/form/file/)
+///
+/// All YBC form components are controlled components. This means that the value of the field must
+/// be provided from a parent component, and changes to this component are propagated to the parent
+/// component via callback.
 pub struct File {
     props: FileProps,
     link: ComponentLink<Self>,
@@ -117,30 +133,4 @@ impl Component for File {
             </div>
         }
     }
-}
-
-/// The three sizes available for a file input.
-///
-/// https://bulma.io/documentation/form/file/#sizes
-#[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
-pub enum Size {
-    #[display(fmt="small")]
-    Small,
-    #[display(fmt="medium")]
-    Medium,
-    #[display(fmt="large")]
-    Large,
-}
-
-/// The two alignments available for a file input.
-///
-/// https://bulma.io/documentation/form/file/#alignment
-#[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
-pub enum Alignment {
-    #[display(fmt="centered")]
-    Centered,
-    #[display(fmt="right")]
-    Right,
 }

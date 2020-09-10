@@ -9,10 +9,14 @@ pub struct ButtonsProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The size for all buttons within this group.
     #[prop_or_default]
-    pub are: Option<ButtonGroupSize>,
+    pub size: Option<ButtonGroupSize>,
 }
 
+/// A container for a group of buttons.
+///
+/// [https://bulma.io/documentation/elements/button/](https://bulma.io/documentation/elements/button/)
 pub struct Buttons {
     props: ButtonsProps,
 }
@@ -21,7 +25,7 @@ impl Component for Buttons {
     type Message = ();
     type Properties = ButtonsProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -38,8 +42,8 @@ impl Component for Buttons {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        if let Some(are) = &self.props.are {
-            classes.push(&are.to_string());
+        if let Some(size) = &self.props.size {
+            classes.push(&size.to_string());
         }
         html!{
             <div class=classes>
@@ -49,7 +53,7 @@ impl Component for Buttons {
     }
 }
 
-/// The three sizes available for a button group.
+/// The 3 sizes available for a button group.
 ///
 /// https://bulma.io/documentation/elements/button/#sizes
 #[derive(Clone, Debug, Display, PartialEq)]
@@ -72,16 +76,23 @@ pub struct ButtonProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The click handler to use for this component.
     #[prop_or_default]
     pub onclick: Option<Callback<MouseEvent>>,
+    /// Render a loading spinner within this component.
     #[prop_or_default]
     pub loading: bool,
+    /// Make this component static.
     #[prop_or_default]
     pub r#static: bool,
+    /// Disable this component.
     #[prop_or_default]
     pub disabled: bool,
 }
 
+/// A button element.
+///
+/// [https://bulma.io/documentation/elements/button/](https://bulma.io/documentation/elements/button/)
 pub struct Button {
     props: ButtonProps,
 }
@@ -90,7 +101,7 @@ impl Component for Button {
     type Message = ();
     type Properties = ButtonProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -134,7 +145,7 @@ mod router {
     use yew_router::components::{RouterAnchor, RouterButton as RouterBtn};
 
     #[derive(Clone, Properties, PartialEq)]
-    pub struct RouterProps<SW: Switch + Clone + PartialEq + 'static> {
+    pub struct ButtonRouterProps<SW: Switch + Clone + PartialEq + 'static> {
         /// The Switched item representing the route.
         pub route: SW,
         /// Html inside the component.
@@ -143,22 +154,26 @@ mod router {
         /// Classes to be added to component.
         #[prop_or_default]
         pub classes: Option<String>,
+        /// Render a loading spinner within this component.
         #[prop_or_default]
         pub loading: bool,
+        /// Make this component static.
         #[prop_or_default]
         pub r#static: bool,
+        /// Disable this component.
         #[prop_or_default]
         pub disabled: bool,
     }
 
-    pub struct RouterButton<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState=()> {
-        props: RouterProps<SW>,
+    /// A Yew Router button element with Bulma styling.
+    pub struct ButtonRouter<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState=()> {
+        props: ButtonRouterProps<SW>,
         marker: std::marker::PhantomData<STATE>,
     }
 
-    impl<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState> Component for RouterButton<SW, STATE> {
+    impl<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState> Component for ButtonRouter<SW, STATE> {
         type Message = ();
-        type Properties = RouterProps<SW>;
+        type Properties = ButtonRouterProps<SW>;
 
         fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
             Self{props, marker: std::marker::PhantomData}
@@ -192,14 +207,15 @@ mod router {
         }
     }
 
-    pub struct RouterAnchorButton<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState=()> {
-        props: RouterProps<SW>,
+    /// A Yew Router anchor button element with Bulma styling.
+    pub struct ButtonAnchorRouter<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState=()> {
+        props: ButtonRouterProps<SW>,
         marker: std::marker::PhantomData<STATE>,
     }
 
-    impl<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState> Component for RouterAnchorButton<SW, STATE> {
+    impl<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState> Component for ButtonAnchorRouter<SW, STATE> {
         type Message = ();
-        type Properties = RouterProps<SW>;
+        type Properties = ButtonRouterProps<SW>;
 
         fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
             Self{props, marker: std::marker::PhantomData}
@@ -235,39 +251,46 @@ mod router {
 }
 
 #[cfg(feature="router")]
-pub use router::RouterButton;
-pub use router::RouterAnchorButton;
+pub use router::{ButtonRouter, ButtonAnchorRouter, ButtonRouterProps};
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
-pub struct AnchorButtonProps {
+pub struct ButtonAnchorProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
-    #[prop_or_default]
-    pub onclick: Option<Callback<MouseEvent>>,
+    /// The `href` attribute value to use for this component.
     #[prop_or_default]
     pub href: Option<String>,
+    /// The click handler to use for this component.
+    #[prop_or_default]
+    pub onclick: Option<Callback<MouseEvent>>,
+    /// Render a loading spinner within this component.
     #[prop_or_default]
     pub loading: bool,
+    /// Make this component static.
     #[prop_or_default]
     pub r#static: bool,
+    /// Disable this component.
     #[prop_or_default]
     pub disabled: bool,
 }
 
-pub struct AnchorButton {
-    props: AnchorButtonProps,
+/// An anchor element styled as a button.
+///
+/// [https://bulma.io/documentation/elements/button/](https://bulma.io/documentation/elements/button/)
+pub struct ButtonAnchor {
+    props: ButtonAnchorProps,
 }
 
-impl Component for AnchorButton {
+impl Component for ButtonAnchor {
     type Message = ();
-    type Properties = AnchorButtonProps;
+    type Properties = ButtonAnchorProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -305,28 +328,35 @@ impl Component for AnchorButton {
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
-pub struct InputSubmitButtonProps {
+pub struct ButtonInputSubmitProps {
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The submit handler to use for this component.
     #[prop_or_default]
     pub onsubmit: Option<Callback<FocusEvent>>,
+    /// Render a loading spinner within this component.
     #[prop_or_default]
     pub loading: bool,
+    /// Make this component static.
     #[prop_or_default]
     pub r#static: bool,
+    /// Disable this component.
     #[prop_or_default]
     pub disabled: bool,
 }
 
-pub struct InputSubmitButton {
-    props: InputSubmitButtonProps,
+/// An input element with `type="submit"` styled as a button.
+///
+/// [https://bulma.io/documentation/elements/button/](https://bulma.io/documentation/elements/button/)
+pub struct ButtonInputSubmit {
+    props: ButtonInputSubmitProps,
 }
 
-impl Component for InputSubmitButton {
+impl Component for ButtonInputSubmit {
     type Message = ();
-    type Properties = InputSubmitButtonProps;
+    type Properties = ButtonInputSubmitProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
@@ -362,28 +392,35 @@ impl Component for InputSubmitButton {
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
-pub struct InputResetButtonProps {
+pub struct ButtonInputResetProps {
     #[prop_or_default]
     pub classes: Option<String>,
+    /// The reset handler to use for this component.
     #[prop_or_default]
     pub onreset: Option<Callback<Event>>,
+    /// Render a loading spinner within this component.
     #[prop_or_default]
     pub loading: bool,
+    /// Make this component static.
     #[prop_or_default]
     pub r#static: bool,
+    /// Disable this component.
     #[prop_or_default]
     pub disabled: bool,
 }
 
-pub struct InputResetButton {
-    props: InputResetButtonProps,
+/// An input element with `type="reset"` styled as a button.
+///
+/// [https://bulma.io/documentation/elements/button/](https://bulma.io/documentation/elements/button/)
+pub struct ButtonInputReset {
+    props: ButtonInputResetProps,
 }
 
-impl Component for InputResetButton {
+impl Component for ButtonInputReset {
     type Message = ();
-    type Properties = InputResetButtonProps;
+    type Properties = ButtonInputResetProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self{props}
     }
 
