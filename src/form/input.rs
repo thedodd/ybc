@@ -1,8 +1,8 @@
 #![allow(clippy::redundant_closure_call)]
 
 use derive_more::Display;
-use yew::prelude::*;
 use yew::events::InputData;
+use yew::prelude::*;
 use yewtil::NeqAssign;
 
 use crate::Size;
@@ -23,7 +23,7 @@ pub struct InputProps {
     pub r#type: InputType,
     /// The placeholder value for this component.
     #[prop_or_default]
-    pub placeholder: Option<String>,
+    pub placeholder: String,
     /// The size of this component.
     #[prop_or_default]
     pub size: Option<Size>,
@@ -61,7 +61,7 @@ impl Component for Input {
     type Properties = InputProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self{props, link}
+        Self { props, link }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -90,14 +90,14 @@ impl Component for Input {
         if self.props.r#static {
             classes.push("is-static");
         }
-        html!{
+        html! {
             <input
                 name=self.props.name.clone()
                 value=self.props.value.clone()
                 oninput=self.link.callback(|input: InputData| input.value)
                 class=classes
                 type=self.props.r#type.to_string()
-                placeholder?=self.props.placeholder.clone()
+                placeholder=self.props.placeholder.clone()
                 disabled=self.props.disabled
                 readonly=self.props.readonly
                 />
@@ -110,12 +110,12 @@ impl Component for Input {
 /// https://bulma.io/documentation/form/input/
 #[derive(Clone, Debug, Display, PartialEq)]
 pub enum InputType {
-    #[display(fmt="text")]
+    #[display(fmt = "text")]
     Text,
-    #[display(fmt="password")]
+    #[display(fmt = "password")]
     Password,
-    #[display(fmt="email")]
+    #[display(fmt = "email")]
     Email,
-    #[display(fmt="tel")]
+    #[display(fmt = "tel")]
     Tel,
 }

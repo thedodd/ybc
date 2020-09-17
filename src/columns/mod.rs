@@ -21,7 +21,7 @@ impl Component for Columns {
     type Properties = ColumnsProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -37,7 +37,7 @@ impl Component for Columns {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <div class=classes>
                 {self.props.children.clone()}
             </div>
@@ -72,7 +72,7 @@ impl Component for Column {
     type Properties = ColumnProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -88,7 +88,7 @@ impl Component for Column {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <div class=classes>
                 {self.props.children.clone()}
             </div>

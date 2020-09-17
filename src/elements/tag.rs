@@ -15,8 +15,8 @@ pub struct TagProps {
     #[prop_or_else(|| "span".into())]
     pub tag: String,
     /// The click handler for this component.
-    #[prop_or_default]
-    pub onclick: Option<Callback<MouseEvent>>,
+    #[prop_or_else(Callback::noop)]
+    pub onclick: Callback<MouseEvent>,
     /// Make this tag rounded.
     #[prop_or_default]
     pub rounded: bool,
@@ -40,7 +40,7 @@ impl Component for Tag {
     type Properties = TagProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -66,8 +66,8 @@ impl Component for Tag {
             classes.push(&size.to_string());
         }
         let tag = self.props.tag.clone();
-        html!{
-            <@{tag} class=classes onclick?=self.props.onclick.clone()>
+        html! {
+            <@{tag} class=classes onclick=self.props.onclick.clone()>
                 {self.props.children.clone()}
             </@>
         }
@@ -100,7 +100,7 @@ impl Component for Tags {
     type Properties = TagsProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -119,7 +119,7 @@ impl Component for Tags {
         if self.props.has_addons {
             classes.push("has-addons");
         }
-        html!{
+        html! {
             <div class=classes>
                 {self.props.children.clone()}
             </div>

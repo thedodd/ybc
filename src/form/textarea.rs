@@ -1,5 +1,5 @@
-use yew::prelude::*;
 use yew::events::InputData;
+use yew::prelude::*;
 use yewtil::NeqAssign;
 
 use crate::Size;
@@ -17,7 +17,7 @@ pub struct TextAreaProps {
     pub classes: Option<String>,
     /// The placeholder value for this component.
     #[prop_or_default]
-    pub placeholder: Option<String>,
+    pub placeholder: String,
     /// The number of rows to which this component will be locked.
     #[prop_or_default]
     pub rows: u32,
@@ -59,7 +59,7 @@ impl Component for TextArea {
     type Properties = TextAreaProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self{props, link}
+        Self { props, link }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -88,14 +88,14 @@ impl Component for TextArea {
         if self.props.fixed_size {
             classes.push("has-fixed-size");
         }
-        html!{
+        html! {
             <textarea
                 name=self.props.name.clone()
                 value=self.props.value.clone()
                 oninput=self.link.callback(|input: InputData| input.value)
                 class=classes
                 rows=self.props.rows
-                placeholder?=self.props.placeholder.clone()
+                placeholder=self.props.placeholder.clone()
                 disabled=self.props.disabled
                 readonly=self.props.readonly
                 />

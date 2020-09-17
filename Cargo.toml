@@ -15,9 +15,9 @@ anyhow = "1"
 derive_more = "0.99.9"
 mixin = "0.2.0"
 web-sys = { version="0.3", features=["Element", "File", "HtmlCollection", "HtmlSelectElement"] }
-yew = { git="https://github.com/yewstack/yew.git", features=["web_sys"] }
-yewtil = { git="https://github.com/yewstack/yew.git", features=["neq"] }
-yew-router = { git="https://github.com/yewstack/yew.git", features=["web_sys"], optional=true }
+yew = { version="0.17.3", features=["web_sys"] }
+yewtil = { version="0.3.2", features=["neq"] }
+yew-router = { version="0.14.0", features=["web_sys"], optional=true }
 
 [features]
 default = ["router"]

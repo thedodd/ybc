@@ -1,5 +1,5 @@
-use yew::prelude::*;
 use yew::events::InputData;
+use yew::prelude::*;
 use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -43,7 +43,7 @@ impl Component for Radio {
     type Properties = RadioProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self{props, link}
+        Self { props, link }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -60,7 +60,7 @@ impl Component for Radio {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <label class=classes disabled=self.props.disabled>
                 <input
                     type="radio"

@@ -1,6 +1,6 @@
 use derive_more::Display;
-use yew::prelude::*;
 use yew::events::MouseEvent;
+use yew::prelude::*;
 use yewtil::NeqAssign;
 
 use crate::{Alignment, Size};
@@ -40,7 +40,7 @@ impl Component for Pagination {
     type Properties = PaginationProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -65,7 +65,7 @@ impl Component for Pagination {
         if self.props.rounded {
             classes.push("is-rounded");
         }
-        html!{
+        html! {
             <nav class=classes role="navigation" aria-label="pagination">
                 {self.props.previous.clone()}
                 {self.props.next.clone()}
@@ -87,10 +87,10 @@ pub struct PaginationItemProps {
     pub item_type: PaginationItemType,
     /// The aria label to use for this element.
     #[prop_or_default]
-    pub label: Option<String>,
+    pub label: String,
     /// The click handler for this component.
-    #[prop_or_default]
-    pub onclick: Option<Callback<MouseEvent>>,
+    #[prop_or_else(Callback::noop)]
+    pub onclick: Callback<MouseEvent>,
 }
 
 /// A pagination element representing a link to a page number, the previous page or the next page.
@@ -105,7 +105,7 @@ impl Component for PaginationItem {
     type Properties = PaginationItemProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -117,8 +117,8 @@ impl Component for PaginationItem {
     }
 
     fn view(&self) -> Html {
-        html!{
-            <a class=self.props.item_type.to_string() aria-label?=self.props.label.clone() onclick?=self.props.onclick.clone()>
+        html! {
+            <a class=self.props.item_type.to_string() aria-label=self.props.label.clone() onclick=self.props.onclick.clone()>
                 {self.props.children.clone()}
             </a>
         }
@@ -127,16 +127,16 @@ impl Component for PaginationItem {
 
 /// A pagination item type.
 #[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="pagination-{}")]
+#[display(fmt = "pagination-{}")]
 pub enum PaginationItemType {
     /// A pagination link for a specific page number.
-    #[display(fmt="link")]
+    #[display(fmt = "link")]
     Link,
     /// A pagination button for the next page.
-    #[display(fmt="next")]
+    #[display(fmt = "next")]
     Next,
     /// A pagination button for the previous page.
-    #[display(fmt="previous")]
+    #[display(fmt = "previous")]
     Previous,
 }
 
@@ -165,18 +165,18 @@ impl Component for PaginationEllipsis {
     }
 
     fn view(&self) -> Html {
-        html!{<span class="pagination-ellipsis">{"&hellip;"}</span>}
+        html! {<span class="pagination-ellipsis">{"&hellip;"}</span>}
     }
 }
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-#[cfg(feature="router")]
+#[cfg(feature = "router")]
 mod router {
     use super::*;
-    use yew_router::{RouterState, Switch};
     use yew_router::components::RouterAnchor;
+    use yew_router::{RouterState, Switch};
 
     #[derive(Clone, Properties, PartialEq)]
     pub struct RouterProps<SW: Switch + Clone + PartialEq + 'static> {
@@ -190,7 +190,7 @@ mod router {
     }
 
     /// A Yew Router anchor button for use in a `Pagination` component.
-    pub struct PaginationItemRouter<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState=()> {
+    pub struct PaginationItemRouter<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState = ()> {
         props: RouterProps<SW>,
         marker: std::marker::PhantomData<STATE>,
     }
@@ -200,7 +200,10 @@ mod router {
         type Properties = RouterProps<SW>;
 
         fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-            Self{props, marker: std::marker::PhantomData}
+            Self {
+                props,
+                marker: std::marker::PhantomData,
+            }
         }
 
         fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -213,7 +216,7 @@ mod router {
 
         #[allow(deprecated)]
         fn view(&self) -> Html {
-            html!{
+            html! {
                 <RouterAnchor<SW, STATE>
                     route=self.props.route.clone()
                     children=self.props.children.clone()
@@ -224,5 +227,5 @@ mod router {
     }
 }
 
-#[cfg(feature="router")]
+#[cfg(feature = "router")]
 pub use router::PaginationItemRouter;

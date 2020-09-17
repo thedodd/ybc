@@ -21,7 +21,7 @@ impl Component for Menu {
     type Properties = MenuProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -37,7 +37,7 @@ impl Component for Menu {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <aside class=classes>
                 {self.props.children.clone()}
             </aside>
@@ -69,7 +69,7 @@ impl Component for MenuList {
     type Properties = MenuListProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -85,7 +85,7 @@ impl Component for MenuList {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <ul class=classes>
                 {self.props.children.clone()}
             </ul>
@@ -117,7 +117,7 @@ impl Component for MenuLabel {
     type Properties = MenuLabelProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -133,7 +133,7 @@ impl Component for MenuLabel {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <p class=classes>
                 {self.props.text.clone()}
             </p>

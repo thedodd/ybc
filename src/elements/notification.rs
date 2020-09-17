@@ -21,7 +21,7 @@ impl Component for Notification {
     type Properties = NotificationProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -37,7 +37,7 @@ impl Component for Notification {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <div class=classes>
                 {self.props.children.clone()}
             </div>

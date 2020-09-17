@@ -21,7 +21,7 @@ impl Component for Message {
     type Properties = MessageProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -37,7 +37,7 @@ impl Component for Message {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <article class=classes>
                 {self.props.children.clone()}
             </article>
@@ -68,7 +68,7 @@ impl Component for MessageHeader {
     type Properties = MessageHeaderProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -84,7 +84,7 @@ impl Component for MessageHeader {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <div class=classes>
                 {self.props.children.clone()}
             </div>
@@ -115,7 +115,7 @@ impl Component for MessageBody {
     type Properties = MessageBodyProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -131,7 +131,7 @@ impl Component for MessageBody {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <div class=classes>
                 {self.props.children.clone()}
             </div>

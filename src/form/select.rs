@@ -1,7 +1,7 @@
 #![allow(clippy::redundant_closure_call)]
 
-use yew::prelude::*;
 use yew::events::ChangeData;
+use yew::prelude::*;
 use yewtil::NeqAssign;
 
 use crate::Size;
@@ -11,7 +11,7 @@ pub struct SelectProps {
     /// The `name` attribute for this form element.
     pub name: String,
     /// The controlled value of this form element.
-    pub value: Option<String>,
+    pub value: String,
     /// The callback to be used for propagating changes to this element's value.
     pub update: Callback<String>,
 
@@ -50,7 +50,7 @@ impl Component for Select {
     type Properties = SelectProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self{props, link}
+        Self { props, link }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -73,11 +73,11 @@ impl Component for Select {
         if self.props.loading {
             classes.push("is-loading");
         }
-        html!{
+        html! {
             <div class=classes>
                 <select
                     name=self.props.name.clone()
-                    value?=self.props.value.clone()
+                    value=self.props.value.clone()
                     onchange=self.link.callback(|change: ChangeData| match change {
                         ChangeData::Select(data) => data.value(),
                         _ => unreachable!("invariant violation: received non-select change event from a select element"),
@@ -140,7 +140,7 @@ impl Component for MultiSelect {
     type Properties = MultiSelectProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self{props, link}
+        Self { props, link }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -163,7 +163,7 @@ impl Component for MultiSelect {
         if self.props.loading {
             classes.push("is-loading");
         }
-        html!{
+        html! {
             <div class=classes>
                 <select
                     multiple=true

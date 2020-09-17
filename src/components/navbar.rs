@@ -53,7 +53,11 @@ impl Component for Navbar {
     type Properties = NavbarProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self{props, link, is_menu_open: false}
+        Self {
+            props,
+            link,
+            is_menu_open: false,
+        }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -80,15 +84,15 @@ impl Component for Navbar {
         }
 
         // navbar-menu classes
-        let mut navclasses= Classes::from("navbar-menu");
-        let mut burgerclasses= Classes::from("navbar-burger");
+        let mut navclasses = Classes::from("navbar-menu");
+        let mut burgerclasses = Classes::from("navbar-burger");
         if self.is_menu_open {
             navclasses.push("is-active");
             burgerclasses.push("is-active");
         }
         let togglecb = self.link.callback(|_| NavbarMsg::ToggleMenu);
 
-        html!{
+        html! {
             <nav class=classes role="navigation" aria-label="main navigation">
                 <div class="navbar-brand">
                     {self.props.navbrand.clone()}
@@ -123,11 +127,11 @@ impl Component for Navbar {
 /// NOTE WELL: in order to work properly, the root `html` or `body` element must be configured with
 /// the corresponding `has-navbar-fixed-top` or `has-navbar-fixed-bottom` class.
 #[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
+#[display(fmt = "is-{}")]
 pub enum NavbarFixed {
-    #[display(fmt="fixed-top")]
+    #[display(fmt = "fixed-top")]
     Top,
-    #[display(fmt="fixed-bottom")]
+    #[display(fmt = "fixed-bottom")]
     Bottom,
 }
 
@@ -139,9 +143,9 @@ pub enum NavbarFixed {
 /// [https://bulma.io/documentation/components/navbar/#navbar-item](https://bulma.io/documentation/components/navbar/#navbar-item)
 #[derive(Clone, Debug, Display, PartialEq)]
 pub enum NavbarItemTag {
-    #[display(fmt="a")]
+    #[display(fmt = "a")]
     A,
-    #[display(fmt="div")]
+    #[display(fmt = "div")]
     Div,
 }
 
@@ -180,7 +184,7 @@ impl Component for NavbarItem {
     type Properties = NavbarItemProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -210,7 +214,7 @@ impl Component for NavbarItem {
             classes.push("is-active");
         }
         let tag = self.props.tag.to_string();
-        html!{
+        html! {
             <@{tag} class=classes>
                 {self.props.children.clone()}
             </@>
@@ -239,7 +243,7 @@ impl Component for NavbarDivider {
     type Properties = NavbarDividerProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -255,7 +259,7 @@ impl Component for NavbarDivider {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <hr class=classes/>
         }
     }
@@ -307,7 +311,11 @@ impl Component for NavbarDropdown {
     type Properties = NavbarDropdownProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self{props, link, is_menu_active: false}
+        Self {
+            props,
+            link,
+            is_menu_active: false,
+        }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -346,26 +354,26 @@ impl Component for NavbarDropdown {
 
         // navbar-link classes
         let mut linkclasses = Classes::from("navbar-link");
-        if self.props.arrowless{
+        if self.props.arrowless {
             linkclasses.push("is-arrowless");
         }
 
         let opencb = if self.props.hoverable {
             classes.push("is-hoverable");
-            None
+            Callback::noop()
         } else {
-            Some(self.link.callback(|_| DropdownMsg::Open))
+            self.link.callback(|_| DropdownMsg::Open)
         };
         let overlay = if self.is_menu_active {
             classes.push("is-active");
-            html!{<div onclick=self.link.callback(|_| DropdownMsg::Close) style="z-index:10;background-color:rgba(0,0,0,0);position:fixed;top:0;bottom:0;left:0;right:0;"></div>}
+            html! {<div onclick=self.link.callback(|_| DropdownMsg::Close) style="z-index:10;background-color:rgba(0,0,0,0);position:fixed;top:0;bottom:0;left:0;right:0;"></div>}
         } else {
-            html!{}
+            html! {}
         };
-        html!{
+        html! {
             <div class=classes>
                 {overlay}
-                <a class=linkclasses onclick?=opencb>{self.props.navlink.clone()}</a>
+                <a class=linkclasses onclick=opencb>{self.props.navlink.clone()}</a>
                 <div class=dropclasses>
                     {self.props.children.clone()}
                 </div>

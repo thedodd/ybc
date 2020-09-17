@@ -53,7 +53,7 @@ impl Component for Field {
     type Properties = FieldProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -97,11 +97,11 @@ impl Component for Field {
                 Some(label_classes_str) => {
                     let mut label_classes = Classes::from(label_classes_str);
                     label_classes.push("label");
-                    html!{<label class=label_classes>{label_content.clone()}</label>}
+                    html! {<label class=label_classes>{label_content.clone()}</label>}
                 }
-                None => html!{<label class="label">{label_content.clone()}</label>}
-            }
-            None => html!{},
+                None => html! {<label class="label">{label_content.clone()}</label>},
+            },
+            None => html! {},
         };
 
         // Build the help label if present.
@@ -110,14 +110,14 @@ impl Component for Field {
                 Some(help_classes_str) => {
                     let mut help_classes = Classes::from(help_classes_str);
                     help_classes.push("help");
-                    html!{<label class=help_classes>{help_content.clone()}</label>}
+                    html! {<label class=help_classes>{help_content.clone()}</label>}
                 }
-                None => html!{<label class="help">{help_content.clone()}</label>}
-            }
-            None => html!{},
+                None => html! {<label class="help">{help_content.clone()}</label>},
+            },
+            None => html! {},
         };
 
-        html!{
+        html! {
             <div class=classes>
                 {label}
                 {self.props.children.clone()}
@@ -156,7 +156,7 @@ impl Component for FieldHorizontal {
     type Properties = FieldHorizontalProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -180,7 +180,7 @@ impl Component for FieldHorizontal {
             labelclasses.push(&size.to_string());
         }
 
-        html!{
+        html! {
             <div class=classes>
                 <div class=labelclasses>
                     <label class="label">{self.props.label.clone()}</label>
@@ -197,11 +197,11 @@ impl Component for FieldHorizontal {
 ///
 /// https://bulma.io/documentation/form/general/
 #[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="has-addons-{}")]
+#[display(fmt = "has-addons-{}")]
 pub enum AddonsAlign {
-    #[display(fmt="centered")]
+    #[display(fmt = "centered")]
     Centered,
-    #[display(fmt="right")]
+    #[display(fmt = "right")]
     Right,
 }
 
@@ -209,11 +209,11 @@ pub enum AddonsAlign {
 ///
 /// https://bulma.io/documentation/form/general/
 #[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-grouped-{}")]
+#[display(fmt = "is-grouped-{}")]
 pub enum GroupedAlign {
-    #[display(fmt="centered")]
+    #[display(fmt = "centered")]
     Centered,
-    #[display(fmt="right")]
+    #[display(fmt = "right")]
     Right,
 }
 
@@ -221,12 +221,12 @@ pub enum GroupedAlign {
 ///
 /// https://bulma.io/documentation/form/general/#horizontal-form
 #[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
+#[display(fmt = "is-{}")]
 pub enum LabelSize {
-    #[display(fmt="small")]
+    #[display(fmt = "small")]
     Small,
-    #[display(fmt="medium")]
+    #[display(fmt = "medium")]
     Medium,
-    #[display(fmt="large")]
+    #[display(fmt = "large")]
     Large,
 }

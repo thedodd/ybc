@@ -24,7 +24,7 @@ impl Component for Container {
     type Properties = ContainerProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -43,7 +43,7 @@ impl Component for Container {
         if self.props.fluid {
             classes.push("is-fluid");
         }
-        html!{
+        html! {
             <div class=classes>
                 {self.props.children.clone()}
             </div>

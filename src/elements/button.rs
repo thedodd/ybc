@@ -1,6 +1,6 @@
 use derive_more::Display;
-use yew::prelude::*;
 use yew::events::{Event, FocusEvent, MouseEvent};
+use yew::prelude::*;
 use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -26,7 +26,7 @@ impl Component for Buttons {
     type Properties = ButtonsProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -45,7 +45,7 @@ impl Component for Buttons {
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
         }
-        html!{
+        html! {
             <div class=classes>
                 {self.props.children.clone()}
             </div>
@@ -57,13 +57,13 @@ impl Component for Buttons {
 ///
 /// https://bulma.io/documentation/elements/button/#sizes
 #[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="are-{}")]
+#[display(fmt = "are-{}")]
 pub enum ButtonGroupSize {
-    #[display(fmt="small")]
+    #[display(fmt = "small")]
     Small,
-    #[display(fmt="medium")]
+    #[display(fmt = "medium")]
     Medium,
-    #[display(fmt="large")]
+    #[display(fmt = "large")]
     Large,
 }
 
@@ -77,8 +77,8 @@ pub struct ButtonProps {
     #[prop_or_default]
     pub classes: Option<String>,
     /// The click handler to use for this component.
-    #[prop_or_default]
-    pub onclick: Option<Callback<MouseEvent>>,
+    #[prop_or_else(Callback::noop)]
+    pub onclick: Callback<MouseEvent>,
     /// Render a loading spinner within this component.
     #[prop_or_default]
     pub loading: bool,
@@ -102,7 +102,7 @@ impl Component for Button {
     type Properties = ButtonProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -127,8 +127,8 @@ impl Component for Button {
         if self.props.disabled {
             classes.push("is-disabled")
         }
-        html!{
-            <button class=classes onclick?=self.props.onclick.clone()>
+        html! {
+            <button class=classes onclick=self.props.onclick.clone()>
                 {self.props.children.clone()}
             </button>
         }
@@ -138,11 +138,11 @@ impl Component for Button {
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-#[cfg(feature="router")]
+#[cfg(feature = "router")]
 mod router {
     use super::*;
-    use yew_router::{RouterState, Switch};
     use yew_router::components::{RouterAnchor, RouterButton as RouterBtn};
+    use yew_router::{RouterState, Switch};
 
     #[derive(Clone, Properties, PartialEq)]
     pub struct ButtonRouterProps<SW: Switch + Clone + PartialEq + 'static> {
@@ -166,7 +166,7 @@ mod router {
     }
 
     /// A Yew Router button element with Bulma styling.
-    pub struct ButtonRouter<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState=()> {
+    pub struct ButtonRouter<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState = ()> {
         props: ButtonRouterProps<SW>,
         marker: std::marker::PhantomData<STATE>,
     }
@@ -176,7 +176,10 @@ mod router {
         type Properties = ButtonRouterProps<SW>;
 
         fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-            Self{props, marker: std::marker::PhantomData}
+            Self {
+                props,
+                marker: std::marker::PhantomData,
+            }
         }
 
         fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -196,7 +199,7 @@ mod router {
             if self.props.loading {
                 classes.push("is-loading");
             }
-            html!{
+            html! {
                 <RouterBtn<SW, STATE>
                     route=self.props.route.clone()
                     disabled=self.props.disabled
@@ -208,7 +211,7 @@ mod router {
     }
 
     /// A Yew Router anchor button element with Bulma styling.
-    pub struct ButtonAnchorRouter<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState=()> {
+    pub struct ButtonAnchorRouter<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState = ()> {
         props: ButtonRouterProps<SW>,
         marker: std::marker::PhantomData<STATE>,
     }
@@ -218,7 +221,10 @@ mod router {
         type Properties = ButtonRouterProps<SW>;
 
         fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-            Self{props, marker: std::marker::PhantomData}
+            Self {
+                props,
+                marker: std::marker::PhantomData,
+            }
         }
 
         fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -238,7 +244,7 @@ mod router {
             if self.props.loading {
                 classes.push("is-loading");
             }
-            html!{
+            html! {
                 <RouterAnchor<SW, STATE>
                     route=self.props.route.clone()
                     disabled=self.props.disabled
@@ -250,8 +256,8 @@ mod router {
     }
 }
 
-#[cfg(feature="router")]
-pub use router::{ButtonRouter, ButtonAnchorRouter, ButtonRouterProps};
+#[cfg(feature = "router")]
+pub use router::{ButtonAnchorRouter, ButtonRouter, ButtonRouterProps};
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -264,10 +270,10 @@ pub struct ButtonAnchorProps {
     pub classes: Option<String>,
     /// The `href` attribute value to use for this component.
     #[prop_or_default]
-    pub href: Option<String>,
+    pub href: String,
     /// The click handler to use for this component.
-    #[prop_or_default]
-    pub onclick: Option<Callback<MouseEvent>>,
+    #[prop_or_else(Callback::noop)]
+    pub onclick: Callback<MouseEvent>,
     /// Render a loading spinner within this component.
     #[prop_or_default]
     pub loading: bool,
@@ -291,7 +297,7 @@ impl Component for ButtonAnchor {
     type Properties = ButtonAnchorProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -316,8 +322,8 @@ impl Component for ButtonAnchor {
         if self.props.disabled {
             classes.push("is-disabled")
         }
-        html!{
-            <a class=classes onclick?=self.props.onclick.clone() href?=self.props.href.clone()>
+        html! {
+            <a class=classes onclick=self.props.onclick.clone() href=self.props.href.clone()>
                 {self.props.children.clone()}
             </a>
         }
@@ -332,8 +338,8 @@ pub struct ButtonInputSubmitProps {
     #[prop_or_default]
     pub classes: Option<String>,
     /// The submit handler to use for this component.
-    #[prop_or_default]
-    pub onsubmit: Option<Callback<FocusEvent>>,
+    #[prop_or_else(Callback::noop)]
+    pub onsubmit: Callback<FocusEvent>,
     /// Render a loading spinner within this component.
     #[prop_or_default]
     pub loading: bool,
@@ -357,7 +363,7 @@ impl Component for ButtonInputSubmit {
     type Properties = ButtonInputSubmitProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -382,8 +388,8 @@ impl Component for ButtonInputSubmit {
         if self.props.disabled {
             classes.push("is-disabled")
         }
-        html!{
-            <input type="submit" class=classes onsubmit?=self.props.onsubmit.clone()/>
+        html! {
+            <input type="submit" class=classes onsubmit=self.props.onsubmit.clone()/>
         }
     }
 }
@@ -396,8 +402,8 @@ pub struct ButtonInputResetProps {
     #[prop_or_default]
     pub classes: Option<String>,
     /// The reset handler to use for this component.
-    #[prop_or_default]
-    pub onreset: Option<Callback<Event>>,
+    #[prop_or_else(Callback::noop)]
+    pub onreset: Callback<Event>,
     /// Render a loading spinner within this component.
     #[prop_or_default]
     pub loading: bool,
@@ -421,7 +427,7 @@ impl Component for ButtonInputReset {
     type Properties = ButtonInputResetProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -446,8 +452,8 @@ impl Component for ButtonInputReset {
         if self.props.disabled {
             classes.push("is-disabled")
         }
-        html!{
-            <input type="reset" class=classes onreset?=self.props.onreset.clone()/>
+        html! {
+            <input type="reset" class=classes onreset=self.props.onreset.clone()/>
         }
     }
 }

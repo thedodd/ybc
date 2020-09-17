@@ -1,8 +1,8 @@
 #![allow(clippy::redundant_closure_call)]
 
 use web_sys::File as SysFile;
-use yew::prelude::*;
 use yew::events::ChangeData;
+use yew::prelude::*;
 use yewtil::NeqAssign;
 
 use crate::{Alignment, Size};
@@ -67,7 +67,7 @@ impl Component for File {
     type Properties = FileProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self{props, link}
+        Self { props, link }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -102,10 +102,13 @@ impl Component for File {
         if let Some(alignment) = &self.props.alignment {
             classes.push(&alignment.to_string());
         }
-        let filenames = self.props.files.iter()
-            .map(|file| html!{<span class="file-name">{file.name()}</span>})
+        let filenames = self
+            .props
+            .files
+            .iter()
+            .map(|file| html! {<span class="file-name">{file.name()}</span>})
             .collect::<Vec<_>>();
-        html!{
+        html! {
             <div class=classes>
                 <label class="file-label">
                     <input

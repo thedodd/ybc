@@ -55,10 +55,7 @@ First, add this library to your `Cargo.toml` dependencies.
 
 ```toml
 [dependencies]
-# NOTE: a 0.1.0 is coming soon.
-ybc = { git="https://github.com/thedodd/ybc.git" }
-# NOTE: this will no longer be required once ybc=0.1.0 is released.
-yew = { git="https://github.com/yewstack/yew.git" }
+ybc = "0.1.0"
 ```
 
 ### add bulma

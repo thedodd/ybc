@@ -29,7 +29,7 @@ impl Component for Control {
     type Properties = ControlProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -49,7 +49,7 @@ impl Component for Control {
             classes.push("is-expanded");
         }
         let tag = self.props.tag.clone();
-        html!{
+        html! {
             <@{tag} class=classes>
                 {self.props.children.clone()}
             </@>

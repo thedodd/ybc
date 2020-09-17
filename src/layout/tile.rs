@@ -42,7 +42,7 @@ impl Component for Tile {
     type Properties = TileProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -67,7 +67,7 @@ impl Component for Tile {
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
         }
-        html!{
+        html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}
             </@>
@@ -79,13 +79,13 @@ impl Component for Tile {
 ///
 /// https://bulma.io/documentation/layout/tiles/#modifiers
 #[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
+#[display(fmt = "is-{}")]
 pub enum TileCtx {
-    #[display(fmt="ancestor")]
+    #[display(fmt = "ancestor")]
     Ancestor,
-    #[display(fmt="parent")]
+    #[display(fmt = "parent")]
     Parent,
-    #[display(fmt="child")]
+    #[display(fmt = "child")]
     Child,
 }
 
@@ -93,30 +93,30 @@ pub enum TileCtx {
 ///
 /// https://bulma.io/documentation/layout/tiles/#modifiers
 #[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
+#[display(fmt = "is-{}")]
 pub enum TileSize {
-    #[display(fmt="1")]
+    #[display(fmt = "1")]
     One,
-    #[display(fmt="2")]
+    #[display(fmt = "2")]
     Two,
-    #[display(fmt="3")]
+    #[display(fmt = "3")]
     Three,
-    #[display(fmt="4")]
+    #[display(fmt = "4")]
     Four,
-    #[display(fmt="5")]
+    #[display(fmt = "5")]
     Five,
-    #[display(fmt="6")]
+    #[display(fmt = "6")]
     Six,
-    #[display(fmt="7")]
+    #[display(fmt = "7")]
     Seven,
-    #[display(fmt="8")]
+    #[display(fmt = "8")]
     Eight,
-    #[display(fmt="9")]
+    #[display(fmt = "9")]
     Nine,
-    #[display(fmt="10")]
+    #[display(fmt = "10")]
     Ten,
-    #[display(fmt="11")]
+    #[display(fmt = "11")]
     Eleven,
-    #[display(fmt="12")]
+    #[display(fmt = "12")]
     Twelve,
 }

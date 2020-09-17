@@ -39,7 +39,7 @@ impl Component for Table {
     type Properties = TableProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -71,7 +71,7 @@ impl Component for Table {
             classes.push("is-fullwidth");
         }
         if self.props.scrollable {
-            html!{
+            html! {
                 <div class="table-container">
                     <table class=classes>
                         {self.props.children.clone()}
@@ -79,7 +79,7 @@ impl Component for Table {
                 </div>
             }
         } else {
-            html!{
+            html! {
                 <table class=classes>
                     {self.props.children.clone()}
                 </table>

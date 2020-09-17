@@ -26,7 +26,7 @@ impl Component for Level {
     type Properties = LevelProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -42,7 +42,7 @@ impl Component for Level {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}
             </@>
@@ -76,7 +76,7 @@ impl Component for LevelLeft {
     type Properties = LevelLeftProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -92,7 +92,7 @@ impl Component for LevelLeft {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}
             </@>
@@ -126,7 +126,7 @@ impl Component for LevelRight {
     type Properties = LevelRightProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -142,7 +142,7 @@ impl Component for LevelRight {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}
             </@>
@@ -176,7 +176,7 @@ impl Component for LevelItem {
     type Properties = LevelItemProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -192,7 +192,7 @@ impl Component for LevelItem {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}
             </@>
