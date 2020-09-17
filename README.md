@@ -3,9 +3,9 @@
 
 [![Build Status](https://github.com/thedodd/ybc/workflows/ci/badge.svg?branch=master)](https://github.com/thedodd/ybc/actions)
 [![Crates.io](https://img.shields.io/crates/v/ybc.svg)](https://crates.io/crates/ybc)
+[![docs.rs](https://docs.rs/ybc/badge.svg)](https://docs.rs/ybc)
 [![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue)](LICENSE)
 ![Crates.io](https://img.shields.io/crates/d/ybc.svg)
-![Crates.io](https://img.shields.io/crates/dv/ybc.svg)
 
   <strong>
     A <a href="https://yew.rs">Yew</a> component library based on the <a href="https://bulma.io">Bulma CSS</a> framework.
