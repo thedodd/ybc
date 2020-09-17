@@ -2,26 +2,26 @@ use derive_more::Display;
 
 /// Common alignment classes.
 #[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
+#[display(fmt = "is-{}")]
 pub enum Alignment {
-    #[display(fmt="left")]
+    #[display(fmt = "left")]
     Left,
-    #[display(fmt="centered")]
+    #[display(fmt = "centered")]
     Centered,
-    #[display(fmt="right")]
+    #[display(fmt = "right")]
     Right,
 }
 
 /// Common size classes.
 #[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
+#[display(fmt = "is-{}")]
 pub enum Size {
-    #[display(fmt="small")]
+    #[display(fmt = "small")]
     Small,
-    #[display(fmt="normal")]
+    #[display(fmt = "normal")]
     Normal,
-    #[display(fmt="medium")]
+    #[display(fmt = "medium")]
     Medium,
-    #[display(fmt="large")]
+    #[display(fmt = "large")]
     Large,
 }

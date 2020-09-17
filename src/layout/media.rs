@@ -26,7 +26,7 @@ impl Component for Media {
     type Properties = MediaProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -42,7 +42,7 @@ impl Component for Media {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}
             </@>
@@ -76,7 +76,7 @@ impl Component for MediaLeft {
     type Properties = MediaLeftProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -92,7 +92,7 @@ impl Component for MediaLeft {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}
             </@>
@@ -126,7 +126,7 @@ impl Component for MediaRight {
     type Properties = MediaRightProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -142,7 +142,7 @@ impl Component for MediaRight {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}
             </@>
@@ -176,7 +176,7 @@ impl Component for MediaContent {
     type Properties = MediaContentProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -192,7 +192,7 @@ impl Component for MediaContent {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}
             </@>

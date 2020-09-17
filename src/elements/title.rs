@@ -33,7 +33,7 @@ impl Component for Title {
     type Properties = TitleProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -56,7 +56,7 @@ impl Component for Title {
             classes.push("is-spaced");
         }
         let tag = self.props.tag.clone();
-        html!{
+        html! {
             <@{tag} class=classes>
                 {self.props.children.clone()}
             </@>
@@ -93,7 +93,7 @@ impl Component for Subtitle {
     type Properties = SubtitleProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -113,7 +113,7 @@ impl Component for Subtitle {
             classes.push(&size.to_string());
         }
         let tag = self.props.tag.clone();
-        html!{
+        html! {
             <@{tag} class=classes>
                 {self.props.children.clone()}
             </@>
@@ -125,18 +125,18 @@ impl Component for Subtitle {
 ///
 /// https://bulma.io/documentation/elements/title/#sizes
 #[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
+#[display(fmt = "is-{}")]
 pub enum HeaderSize {
-    #[display(fmt="1")]
+    #[display(fmt = "1")]
     Is1,
-    #[display(fmt="2")]
+    #[display(fmt = "2")]
     Is2,
-    #[display(fmt="3")]
+    #[display(fmt = "3")]
     Is3,
-    #[display(fmt="4")]
+    #[display(fmt = "4")]
     Is4,
-    #[display(fmt="5")]
+    #[display(fmt = "5")]
     Is5,
-    #[display(fmt="6")]
+    #[display(fmt = "6")]
     Is6,
 }

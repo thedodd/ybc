@@ -35,7 +35,7 @@ impl Component for Checkbox {
     type Properties = CheckboxProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self{props, link}
+        Self { props, link }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -53,7 +53,7 @@ impl Component for Checkbox {
             classes = classes.extend(extra);
         }
         let checked = self.props.checked;
-        html!{
+        html! {
             <label class=classes disabled=self.props.disabled>
                 <input
                     type="checkbox"

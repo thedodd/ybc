@@ -26,7 +26,7 @@ impl Component for Content {
     type Properties = ContentProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -43,7 +43,7 @@ impl Component for Content {
             classes = classes.extend(extra);
         }
         let tag = self.props.tag.clone();
-        html!{
+        html! {
             <@{tag} class=classes>
                 {self.props.children.clone()}
             </@>

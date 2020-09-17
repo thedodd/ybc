@@ -25,7 +25,7 @@ impl Component for Section {
     type Properties = SectionProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -44,7 +44,7 @@ impl Component for Section {
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
         }
-        html!{
+        html! {
             <section class=classes>
                 {self.props.children.clone()}
             </section>
@@ -56,10 +56,10 @@ impl Component for Section {
 ///
 /// [https://bulma.io/documentation/layout/section/](https://bulma.io/documentation/layout/section/)
 #[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
+#[display(fmt = "is-{}")]
 pub enum SectionSize {
-    #[display(fmt="medium")]
+    #[display(fmt = "medium")]
     Medium,
-    #[display(fmt="large")]
+    #[display(fmt = "large")]
     Large,
 }

@@ -43,7 +43,11 @@ impl Component for Dropdown {
     type Properties = DropdownProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self{link, props, is_menu_active: false}
+        Self {
+            link,
+            props,
+            is_menu_active: false,
+        }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -68,17 +72,17 @@ impl Component for Dropdown {
         }
         let opencb = if self.props.hoverable {
             classes.push("is-hoverable");
-            None
+            Callback::noop()
         } else {
-            Some(self.link.callback(|_| DropdownMsg::Open))
+            self.link.callback(|_| DropdownMsg::Open)
         };
         let overlay = if self.is_menu_active {
             classes.push("is-active");
-            html!{<div onclick=self.link.callback(|_| DropdownMsg::Close) style="z-index:10;background-color:rgba(0,0,0,0);position:fixed;top:0;bottom:0;left:0;right:0;"></div>}
+            html! {<div onclick=self.link.callback(|_| DropdownMsg::Close) style="z-index:10;background-color:rgba(0,0,0,0);position:fixed;top:0;bottom:0;left:0;right:0;"></div>}
         } else {
-            html!{}
+            html! {}
         };
-        html!{
+        html! {
             <div class=classes>
                 {overlay}
                 <div class="dropdown-trigger">

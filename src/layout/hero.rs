@@ -42,7 +42,7 @@ impl Component for Hero {
     type Properties = HeroProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -70,17 +70,17 @@ impl Component for Hero {
 
         // Build the header section.
         let head = if self.props.head.is_empty() {
-            html!{<div class="hero-head">{self.props.head.clone()}</div>}
+            html! {<div class="hero-head">{self.props.head.clone()}</div>}
         } else {
-            html!{}
+            html! {}
         };
         // Build the footer section.
         let foot = if self.props.foot.is_empty() {
-            html!{<div class="hero-foot">{self.props.foot.clone()}</div>}
+            html! {<div class="hero-foot">{self.props.foot.clone()}</div>}
         } else {
-            html!{}
+            html! {}
         };
-        html!{
+        html! {
             <section class=classes>
                 {head}
                 <div class="hero-body">{self.props.body.clone()}</div>
@@ -94,12 +94,12 @@ impl Component for Hero {
 ///
 /// [https://bulma.io/documentation/layout/hero/#sizes](https://bulma.io/documentation/layout/hero/#sizes)
 #[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="is-{}")]
+#[display(fmt = "is-{}")]
 pub enum HeroSize {
-    #[display(fmt="medium")]
+    #[display(fmt = "medium")]
     Medium,
-    #[display(fmt="large")]
+    #[display(fmt = "large")]
     Large,
-    #[display(fmt="fullheight")]
+    #[display(fmt = "fullheight")]
     Fullheight,
 }

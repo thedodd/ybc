@@ -44,7 +44,7 @@ impl Component for Tabs {
     type Properties = TabsProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -78,7 +78,7 @@ impl Component for Tabs {
         if self.props.fullwidth {
             classes.push("is-fullwidth");
         }
-        html!{
+        html! {
             <div class=classes>
                 <ul>
                     {self.props.children.clone()}

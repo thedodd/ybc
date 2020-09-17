@@ -1,7 +1,7 @@
 #![allow(clippy::redundant_closure_call)]
 
-use yew::prelude::*;
 use yew::events::MouseEvent;
+use yew::prelude::*;
 use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -27,7 +27,7 @@ impl Component for Panel {
     type Properties = PanelProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -43,7 +43,7 @@ impl Component for Panel {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <nav class=classes>
                 <p class="panel-heading">{self.props.heading.clone()}</p>
                 {self.props.children.clone()}
@@ -73,7 +73,7 @@ impl Component for PanelTabs {
     type Properties = PanelTabsProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -85,7 +85,7 @@ impl Component for PanelTabs {
     }
 
     fn view(&self) -> Html {
-        html!{
+        html! {
             <p class="panel-tabs">
                 {self.props.children.clone()}
             </p>
@@ -107,8 +107,8 @@ pub struct PanelBlockProps {
     #[prop_or_default]
     pub active: bool,
     /// The click handler for this element.
-    #[prop_or_default]
-    pub onclick: Option<Callback<MouseEvent>>,
+    #[prop_or_else(Callback::noop)]
+    pub onclick: Callback<MouseEvent>,
 }
 
 /// An individual element of the panel.
@@ -123,7 +123,7 @@ impl Component for PanelBlock {
     type Properties = PanelBlockProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -140,8 +140,8 @@ impl Component for PanelBlock {
             classes.push("is-active");
         }
         let tag = self.props.tag.clone();
-        html!{
-            <@{tag} class=classes onclick?=self.props.onclick.clone()>
+        html! {
+            <@{tag} class=classes onclick=self.props.onclick.clone()>
                 {self.props.children.clone()}
             </@>
         }

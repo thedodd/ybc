@@ -1,5 +1,5 @@
-use yew::prelude::*;
 use yew::events::MouseEvent;
+use yew::prelude::*;
 use yewtil::NeqAssign;
 
 use crate::{Alignment, Size};
@@ -11,8 +11,8 @@ pub struct IconProps {
     #[prop_or_default]
     pub classes: Option<String>,
     /// The click handler to use for this component.
-    #[prop_or_default]
-    pub onclick: Option<Callback<MouseEvent>>,
+    #[prop_or_else(Callback::noop)]
+    pub onclick: Callback<MouseEvent>,
     /// The size of this component; to help prevent page "jumps" during load.
     #[prop_or_default]
     pub size: Option<Size>,
@@ -33,7 +33,7 @@ impl Component for Icon {
     type Properties = IconProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -55,8 +55,8 @@ impl Component for Icon {
         if let Some(alignment) = &self.props.alignment {
             classes.push(&alignment.to_string());
         }
-        html!{
-            <span class=classes onclick?=self.props.onclick.clone()>
+        html! {
+            <span class=classes onclick=self.props.onclick.clone()>
                 {self.props.children.clone()}
             </span>
         }

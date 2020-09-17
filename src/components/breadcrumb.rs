@@ -34,7 +34,7 @@ impl Component for Breadcrumb {
     type Properties = BreadcrumbProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -59,7 +59,7 @@ impl Component for Breadcrumb {
         if let Some(separator) = &self.props.separator {
             classes.push(&separator.to_string());
         }
-        html!{
+        html! {
             <nav class=classes aria-label="breadcrumbs">
                 <ul>
                     {self.props.children.clone()}
@@ -73,13 +73,13 @@ impl Component for Breadcrumb {
 ///
 /// https://bulma.io/documentation/components/breadcrumb/#sizes
 #[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="are-{}")]
+#[display(fmt = "are-{}")]
 pub enum BreadcrumbSize {
-    #[display(fmt="small")]
+    #[display(fmt = "small")]
     Small,
-    #[display(fmt="medium")]
+    #[display(fmt = "medium")]
     Medium,
-    #[display(fmt="large")]
+    #[display(fmt = "large")]
     Large,
 }
 
@@ -87,14 +87,14 @@ pub enum BreadcrumbSize {
 ///
 /// https://bulma.io/documentation/components/breadcrumb/#alternative-separators
 #[derive(Clone, Debug, Display, PartialEq)]
-#[display(fmt="has-{}-separator")]
+#[display(fmt = "has-{}-separator")]
 pub enum BreadcrumbSeparator {
-    #[display(fmt="arrow")]
+    #[display(fmt = "arrow")]
     Arrow,
-    #[display(fmt="bullet")]
+    #[display(fmt = "bullet")]
     Bullet,
-    #[display(fmt="dot")]
+    #[display(fmt = "dot")]
     Dot,
-    #[display(fmt="succeeds")]
+    #[display(fmt = "succeeds")]
     Succeeds,
 }

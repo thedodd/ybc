@@ -46,7 +46,12 @@ impl Component for Modal {
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
         let callback = link.callback(ModalMsg::CloseFromAgent);
         let subscription = ModalCloser::bridge(callback);
-        Self{props, link, subscription, is_active: false}
+        Self {
+            props,
+            link,
+            subscription,
+            is_active: false,
+        }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -57,9 +62,12 @@ impl Component for Modal {
             ModalMsg::Open => {
                 self.is_active = true;
             }
-            ModalMsg::CloseFromAgent(id) => if id.0 == self.props.id {
-                self.is_active = false;
-            } else {}
+            ModalMsg::CloseFromAgent(id) => {
+                if id.0 == self.props.id {
+                    self.is_active = false;
+                } else {
+                }
+            }
         }
         true
     }
@@ -75,21 +83,21 @@ impl Component for Modal {
         }
         let (opencb, closecb) = if self.is_active {
             classes.push("is-active");
-            (None, Some(self.link.callback(|_| ModalMsg::Close)))
+            (Callback::noop(), self.link.callback(|_| ModalMsg::Close))
         } else {
-            (Some(self.link.callback(|_| ModalMsg::Open)), None)
+            (self.link.callback(|_| ModalMsg::Open), Callback::noop())
         };
-        html!{
+        html! {
             <>
-            <div onclick?=opencb>
+            <div onclick=opencb>
                 {self.props.trigger.clone()}
             </div>
             <div id=self.props.id.clone() class=classes>
-                <div class="modal-background" onclick?=closecb.clone()></div>
+                <div class="modal-background" onclick=closecb.clone()></div>
                 <div class="modal-content">
                     {self.props.children.clone()}
                 </div>
-                <button class="modal-close is-large" aria-label="close" onclick?=closecb></button>
+                <button class="modal-close is-large" aria-label="close" onclick=closecb></button>
             </div>
             </>
         }
@@ -140,7 +148,12 @@ impl Component for ModalCard {
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
         let callback = link.callback(ModalMsg::CloseFromAgent);
         let subscription = ModalCloser::bridge(callback);
-        Self{props, link, subscription, is_active: false}
+        Self {
+            props,
+            link,
+            subscription,
+            is_active: false,
+        }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -151,9 +164,12 @@ impl Component for ModalCard {
             ModalMsg::Open => {
                 self.is_active = true;
             }
-            ModalMsg::CloseFromAgent(id) => if id.0 == self.props.id {
-                self.is_active = false;
-            } else {}
+            ModalMsg::CloseFromAgent(id) => {
+                if id.0 == self.props.id {
+                    self.is_active = false;
+                } else {
+                }
+            }
         }
         true
     }
@@ -169,21 +185,21 @@ impl Component for ModalCard {
         }
         let (opencb, closecb) = if self.is_active {
             classes.push("is-active");
-            (None, Some(self.link.callback(|_| ModalMsg::Close)))
+            (Callback::noop(), self.link.callback(|_| ModalMsg::Close))
         } else {
-            (Some(self.link.callback(|_| ModalMsg::Open)), None)
+            (self.link.callback(|_| ModalMsg::Open), Callback::noop())
         };
-        html!{
+        html! {
             <>
-            <div onclick?=opencb>
+            <div onclick=opencb>
                 {self.props.trigger.clone()}
             </div>
             <div id=self.props.id.clone() class=classes>
-                <div class="modal-background" onclick?=closecb.clone()></div>
+                <div class="modal-background" onclick=closecb.clone()></div>
                 <div class="modal-card">
                     <header class="modal-card-head">
                         <p class="modal-card-title">{self.props.title.clone()}</p>
-                        <button class="delete" aria-label="close" onclick?=closecb.clone()></button>
+                        <button class="delete" aria-label="close" onclick=closecb.clone()></button>
                     </header>
                     <section class="modal-card-body">
                         {self.props.body.clone()}
@@ -192,7 +208,7 @@ impl Component for ModalCard {
                         {self.props.footer.clone()}
                     </footer>
                 </div>
-                <button class="modal-close is-large" aria-label="close" onclick?=closecb.clone()></button>
+                <button class="modal-close is-large" aria-label="close" onclick=closecb.clone()></button>
             </div>
             </>
         }
@@ -258,7 +274,10 @@ impl Agent for ModalCloser {
     type Output = ModalCloseMsg; // The agent forwards the input to all registered modals.
 
     fn create(link: AgentLink<Self>) -> Self {
-        Self{link, subscribers: HashSet::new()}
+        Self {
+            link,
+            subscribers: HashSet::new(),
+        }
     }
 
     fn update(&mut self, _: Self::Message) {}

@@ -1,6 +1,6 @@
 #![allow(clippy::redundant_closure_call)]
-use yew::prelude::*;
 use yew::events::MouseEvent;
+use yew::prelude::*;
 use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -13,8 +13,8 @@ pub struct DeleteProps {
     #[prop_or_else(|| "button".into())]
     pub tag: String,
     /// The click handler to use for this component.
-    #[prop_or_default]
-    pub onclick: Option<Callback<MouseEvent>>,
+    #[prop_or_else(Callback::noop)]
+    pub onclick: Callback<MouseEvent>,
 }
 
 /// A versatile delete cross.
@@ -29,7 +29,7 @@ impl Component for Delete {
     type Properties = DeleteProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -46,8 +46,8 @@ impl Component for Delete {
             classes = classes.extend(extra);
         }
         let tag = self.props.tag.clone();
-        html!{
-            <@{tag} class=classes onclick?=self.props.onclick.clone()>
+        html! {
+            <@{tag} class=classes onclick=self.props.onclick.clone()>
                 {self.props.children.clone()}
             </@>
         }

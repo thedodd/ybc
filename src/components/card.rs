@@ -21,7 +21,7 @@ impl Component for Card {
     type Properties = CardProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -37,7 +37,7 @@ impl Component for Card {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <div class=classes>
                 {self.props.children.clone()}
             </div>
@@ -68,7 +68,7 @@ impl Component for CardHeader {
     type Properties = CardHeaderProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -84,7 +84,7 @@ impl Component for CardHeader {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <header class=classes>
                 {self.props.children.clone()}
             </header>
@@ -115,7 +115,7 @@ impl Component for CardImage {
     type Properties = CardImageProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -131,7 +131,7 @@ impl Component for CardImage {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <div class=classes>
                 {self.props.children.clone()}
             </div>
@@ -162,7 +162,7 @@ impl Component for CardContent {
     type Properties = CardContentProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -178,7 +178,7 @@ impl Component for CardContent {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <div class=classes>
                 {self.props.children.clone()}
             </div>
@@ -209,7 +209,7 @@ impl Component for CardFooter {
     type Properties = CardFooterProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self{props}
+        Self { props }
     }
 
     fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -225,7 +225,7 @@ impl Component for CardFooter {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
-        html!{
+        html! {
             <footer class=classes>
                 {self.props.children.clone()}
             </footer>
