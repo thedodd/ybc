@@ -7,6 +7,15 @@ pub struct ColumnsProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    /// Align child columns vertically.
+    #[prop_or_default]
+    pub vcentered: bool,
+    /// Allow for multiline rows.
+    #[prop_or_default]
+    pub multiline: bool,
+    /// Center all child columns within their row.
+    #[prop_or_default]
+    pub centered: bool,
 }
 
 /// The container for a set of responsive columns.
@@ -36,6 +45,15 @@ impl Component for Columns {
         let mut classes = Classes::from("columns");
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
+        }
+        if self.props.vcentered {
+            classes.push("is-vcentered");
+        }
+        if self.props.multiline {
+            classes.push("is-multiline");
+        }
+        if self.props.centered {
+            classes.push("is-centered");
         }
         html! {
             <div class=classes>
