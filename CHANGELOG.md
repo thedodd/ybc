@@ -3,6 +3,8 @@ changelog
 This changelog follows the patterns described here: https://keepachangelog.com/en/1.0.0/.
 
 ## Unreleased
+
+## 0.1.3
 ### fixed
 - Removed `Children` props from Hero & made header & footer optional.
 
