@@ -12,11 +12,15 @@ jobs:
           toolchain: stable
           target: wasm32-unknown-unknown
           default: true
-          components: clippy
+          components: clippy, rustfmt
       - uses: actions-rs/cargo@v1
         with:
           command: clippy
           args: -- -D warnings
+      - uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: -- --check
       - uses: actions-rs/cargo@v1
         with:
           command: build
