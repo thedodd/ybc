@@ -9,12 +9,12 @@ pub struct HeroProps {
     pub classes: Option<String>,
     /// The contents of the hero-head section.
     #[prop_or_default]
-    pub head: Children,
+    pub head: Option<Html>,
     /// The contents of the hero-body section.
-    pub body: Children,
+    pub body: Html,
     /// The contents of the hero-foot section.
     #[prop_or_default]
-    pub foot: Children,
+    pub foot: Option<Html>,
     /// If you are using a [fixed navbar](https://bulma.io/documentation/components/navbar/#fixed-navbar),
     /// you can use the `fixed_nav=true` modifier on the hero for it to occupy the viewport height minus
     /// the navbar height.
@@ -69,14 +69,14 @@ impl Component for Hero {
         }
 
         // Build the header section.
-        let head = if self.props.head.is_empty() {
-            html! {<div class="hero-head">{self.props.head.clone()}</div>}
+        let head = if let Some(head) = &self.props.head {
+            html! {<div class="hero-head">{head.clone()}</div>}
         } else {
             html! {}
         };
         // Build the footer section.
-        let foot = if self.props.foot.is_empty() {
-            html! {<div class="hero-foot">{self.props.foot.clone()}</div>}
+        let foot = if let Some(foot) = &self.props.foot {
+            html! {<div class="hero-foot">{foot.clone()}</div>}
         } else {
             html! {}
         };
