@@ -283,6 +283,12 @@ pub struct ButtonAnchorProps {
     /// Disable this component.
     #[prop_or_default]
     pub disabled: bool,
+    /// An optional `rel` for when this element is using the `a` tag.
+    #[prop_or_default]
+    pub rel: Option<String>,
+    /// An optional `target` for when this element is using the `a` tag.
+    #[prop_or_default]
+    pub target: Option<String>,
 }
 
 /// An anchor element styled as a button.
@@ -323,7 +329,13 @@ impl Component for ButtonAnchor {
             classes.push("is-disabled")
         }
         html! {
-            <a class=classes onclick=self.props.onclick.clone() href=self.props.href.clone()>
+            <a
+                class=classes
+                onclick=self.props.onclick.clone()
+                href=self.props.href.clone()
+                rel=self.props.rel.clone().unwrap_or_default()
+                target=self.props.target.clone().unwrap_or_default()
+            >
                 {self.props.children.clone()}
             </a>
         }
