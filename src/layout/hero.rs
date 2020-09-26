@@ -90,7 +90,7 @@ impl Component for Hero {
     }
 }
 
-/// The 3 sizes available for heros.
+/// The 4 sizes available for heros.
 ///
 /// [https://bulma.io/documentation/layout/hero/#sizes](https://bulma.io/documentation/layout/hero/#sizes)
 #[derive(Clone, Debug, Display, PartialEq)]
@@ -102,4 +102,6 @@ pub enum HeroSize {
     Large,
     #[display(fmt = "fullheight")]
     Fullheight,
+    #[display(fmt = "fullheight-with-navbar")]
+    FullheightWithNavbar,
 }

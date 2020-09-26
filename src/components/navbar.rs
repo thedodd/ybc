@@ -1,3 +1,5 @@
+#![allow(clippy::redundant_closure_call)]
+
 use derive_more::Display;
 use yew::prelude::*;
 use yewtil::NeqAssign;
@@ -32,6 +34,9 @@ pub struct NavbarProps {
     /// end of this content.
     ///
     /// [https://bulma.io/documentation/components/navbar/#navbar-brand](https://bulma.io/documentation/components/navbar/#navbar-brand)
+    /// If true, the contents of the navbar will be wrapped in a container.
+    #[prop_or_default]
+    pub padded: bool,
     pub navbrand: Html,
     /// The contents of the `navbar-start` section of the navbar.
     pub navstart: Html,
@@ -91,31 +96,42 @@ impl Component for Navbar {
             burgerclasses.push("is-active");
         }
         let togglecb = self.link.callback(|_| NavbarMsg::ToggleMenu);
+        let contents = html! {
+            <>
+            <div class="navbar-brand">
+                {self.props.navbrand.clone()}
+                <a class=burgerclasses onclick=togglecb
+                    role="button" aria-label="menu"
+                    aria-expanded={if self.is_menu_open { "true" } else { "false" }}
+                >
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
 
-        html! {
-            <nav class=classes role="navigation" aria-label="main navigation">
-                <div class="navbar-brand">
-                    {self.props.navbrand.clone()}
-                    <a class=burgerclasses onclick=togglecb
-                        role="button" aria-label="menu"
-                        aria-expanded={if self.is_menu_open { "true" } else { "false" }}
-                    >
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </a>
+            <div class=navclasses>
+                <div class="navbar-start">
+                    {self.props.navstart.clone()}
                 </div>
 
-                <div class=navclasses>
-                    <div class="navbar-start">
-                        {self.props.navstart.clone()}
-                    </div>
-
-                    <div class="navbar-end">
-                        {self.props.navend.clone()}
-                    </div>
+                <div class="navbar-end">
+                    {self.props.navend.clone()}
                 </div>
-            </nav>
+            </div>
+            </>
+        };
+
+        if self.props.padded {
+            html! {
+                <nav class=classes role="navigation" aria-label="main navigation">
+                    <div class="container">{contents}</div>
+                </nav>
+            }
+        } else {
+            html! {
+                <nav class=classes role="navigation" aria-label="main navigation">{contents}</nav>
+            }
         }
     }
 }
@@ -156,6 +172,7 @@ pub struct NavbarItemProps {
     #[prop_or_default]
     pub classes: Option<String>,
     /// The HTML tag to use for this component.
+    #[prop_or_else(|| NavbarItemTag::Div)]
     pub tag: NavbarItemTag,
     /// Add the `has-dropdown` class to this element, indicating that it is the parent
     /// of a dropdown menu.
@@ -170,6 +187,15 @@ pub struct NavbarItemProps {
     /// Show the bottom border when `is_tab=true`.
     #[prop_or_default]
     pub active: bool,
+    /// An optional `href` for when this element is using the `a` tag.
+    #[prop_or_default]
+    pub href: Option<String>,
+    /// An optional `rel` for when this element is using the `a` tag.
+    #[prop_or_default]
+    pub rel: Option<String>,
+    /// An optional `target` for when this element is using the `a` tag.
+    #[prop_or_default]
+    pub target: Option<String>,
 }
 
 /// A single element of the navbar.
@@ -213,11 +239,26 @@ impl Component for NavbarItem {
         if self.props.active {
             classes.push("is-active");
         }
-        let tag = self.props.tag.to_string();
-        html! {
-            <@{tag} class=classes>
-                {self.props.children.clone()}
-            </@>
+        match self.props.tag {
+            NavbarItemTag::A => {
+                html! {
+                    <a
+                        class=classes
+                        href=self.props.href.clone().unwrap_or_default()
+                        rel=self.props.rel.clone().unwrap_or_default()
+                        target=self.props.target.clone().unwrap_or_default()
+                    >
+                        {self.props.children.clone()}
+                    </a>
+                }
+            }
+            NavbarItemTag::Div => {
+                html! {
+                    <div class=classes>
+                        {self.props.children.clone()}
+                    </div>
+                }
+            }
         }
     }
 }
