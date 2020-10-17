@@ -232,6 +232,9 @@ pub struct ModalCloseMsg(pub String);
 ///
 /// First, in your component which is using this modal, configure a `ModalCloser` dispatcher.
 /// ```rust
+/// use yew::agent::Dispatcher;
+/// use yew::prelude::*;
+/// // .. snip ..
 /// fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
 ///     let bridge = ModalCloser::dispatcher();
 ///     Self{link, props, bridge}
@@ -260,7 +263,7 @@ pub struct ModalCloseMsg(pub String);
 /// }
 /// ```
 ///
-/// This pattern allows you to communicate with a modal by the ID which you have to it, allowing
+/// This pattern allows you to communicate with a modal by its given ID, allowing
 /// you to close the modal from anywhere in your application.
 pub struct ModalCloser {
     link: AgentLink<Self>,
