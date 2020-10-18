@@ -124,11 +124,8 @@ impl Component for Button {
         if self.props.r#static {
             classes.push("is-static")
         }
-        if self.props.disabled {
-            classes.push("is-disabled")
-        }
         html! {
-            <button class=classes onclick=self.props.onclick.clone()>
+            <button class=classes onclick=self.props.onclick.clone() disabled=self.props.disabled>
                 {self.props.children.clone()}
             </button>
         }
@@ -325,9 +322,6 @@ impl Component for ButtonAnchor {
         if self.props.r#static {
             classes.push("is-static")
         }
-        if self.props.disabled {
-            classes.push("is-disabled")
-        }
         html! {
             <a
                 class=classes
@@ -335,6 +329,7 @@ impl Component for ButtonAnchor {
                 href=self.props.href.clone()
                 rel=self.props.rel.clone().unwrap_or_default()
                 target=self.props.target.clone().unwrap_or_default()
+                disabled=self.props.disabled
             >
                 {self.props.children.clone()}
             </a>
@@ -397,11 +392,8 @@ impl Component for ButtonInputSubmit {
         if self.props.r#static {
             classes.push("is-static")
         }
-        if self.props.disabled {
-            classes.push("is-disabled")
-        }
         html! {
-            <input type="submit" class=classes onsubmit=self.props.onsubmit.clone()/>
+            <input type="submit" class=classes onsubmit=self.props.onsubmit.clone() disabled=self.props.disabled/>
         }
     }
 }
@@ -461,11 +453,8 @@ impl Component for ButtonInputReset {
         if self.props.r#static {
             classes.push("is-static")
         }
-        if self.props.disabled {
-            classes.push("is-disabled")
-        }
         html! {
-            <input type="reset" class=classes onreset=self.props.onreset.clone()/>
+            <input type="reset" class=classes onreset=self.props.onreset.clone() disabled=self.props.disabled/>
         }
     }
 }

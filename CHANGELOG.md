@@ -4,6 +4,11 @@ This changelog follows the patterns described here: https://keepachangelog.com/e
 
 ## Unreleased
 
+## 0.1.5
+### fixed
+- Fixed a few of the button & button-like components to use the HTML `disabled` attribute instead of the Bulma `is-disabled` CSS class. The latter has been deprecated for some time.
+- Update docs in the README to point to the latest Bulma 0.9.1 release.
+
 ## 0.1.4
 ### added
 - Add prop `padded` to Navbar. Setting this to true will wrap the contents of the navbar in a container to add padding to the contents under some circumstances.
