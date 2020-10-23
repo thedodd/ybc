@@ -37,11 +37,18 @@ pub struct NavbarProps {
     /// If true, the contents of the navbar will be wrapped in a container.
     #[prop_or_default]
     pub padded: bool,
-    pub navbrand: Html,
+    /// The contents of the `navbar-brand` section of the navbar.
+    #[prop_or_default]
+    pub navbrand: Option<Html>,
     /// The contents of the `navbar-start` section of the navbar.
-    pub navstart: Html,
+    #[prop_or_default]
+    pub navstart: Option<Html>,
     /// The contents of the `navbar-end` section of the navbar.
-    pub navend: Html,
+    #[prop_or_default]
+    pub navend: Option<Html>,
+    /// A bool controlling if the navbar should have a navbar burger for smaller viewports.
+    #[prop_or_else(|| true)]
+    pub navburger: bool,
 }
 
 /// A responsive horizontal navbar that can support images, links, buttons, and dropdowns.
@@ -96,28 +103,45 @@ impl Component for Navbar {
             burgerclasses.push("is-active");
         }
         let togglecb = self.link.callback(|_| NavbarMsg::ToggleMenu);
+        let navbrand = if let Some(navbrand) = &self.props.navbrand {
+            html! {
+                <div class="navbar-brand">
+                    {navbrand.clone()}
+                    {if self.props.navburger {
+                        html! {
+                            <a class=burgerclasses onclick=togglecb
+                                role="button" aria-label="menu"
+                                aria-expanded={if self.is_menu_open { "true" } else { "false" }}
+                            >
+                                <span aria-hidden="true"></span>
+                                <span aria-hidden="true"></span>
+                                <span aria-hidden="true"></span>
+                            </a>
+                        }
+                    } else {
+                        html! {}
+                    }}
+                </div>
+            }
+        } else {
+            html! {}
+        };
+        let navstart = if let Some(navstart) = &self.props.navstart {
+            html! {<div class="navbar-start">{navstart.clone()}</div>}
+        } else {
+            html! {}
+        };
+        let navend = if let Some(navend) = &self.props.navend {
+            html! {<div class="navbar-end">{navend.clone()}</div>}
+        } else {
+            html! {}
+        };
         let contents = html! {
             <>
-            <div class="navbar-brand">
-                {self.props.navbrand.clone()}
-                <a class=burgerclasses onclick=togglecb
-                    role="button" aria-label="menu"
-                    aria-expanded={if self.is_menu_open { "true" } else { "false" }}
-                >
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-            </div>
-
+            {navbrand}
             <div class=navclasses>
-                <div class="navbar-start">
-                    {self.props.navstart.clone()}
-                </div>
-
-                <div class="navbar-end">
-                    {self.props.navend.clone()}
-                </div>
+                {navstart}
+                {navend}
             </div>
             </>
         };

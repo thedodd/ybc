@@ -4,6 +4,12 @@ This changelog follows the patterns described here: https://keepachangelog.com/e
 
 ## Unreleased
 
+## 0.1.6
+### changed
+- Updates to the `Navbar` component:
+    - `navbrand`, `navstart`, `navend` are now all optional.
+    - a new `navburger: bool` property has been added. This bool controls whether or not a `navbar-burger` will be rendered inside of the navbar when being rendered within smaller viewports. This value defaults to `true`, maintaining backwards compatibility.
+
 ## 0.1.5
 ### fixed
 - Fixed a few of the button & button-like components to use the HTML `disabled` attribute instead of the Bulma `is-disabled` CSS class. The latter has been deprecated for some time.
