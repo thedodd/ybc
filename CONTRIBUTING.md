@@ -16,4 +16,3 @@ We follow [semver](https://semver.org/spec/v2.0.0.html) for versioning this syst
     - all release tags should start with the letter `v` followed by a semver version.
 - [ ] CI is configured for release tags and will create a new Github release.
 - [ ] once CI for the tag has finished successfully, update the new release page with details on the changes made, which should reflect the content of the `CHANGELOG.md`.
-- [ ] lastly, `cargo publish`.

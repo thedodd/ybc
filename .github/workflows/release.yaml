@@ -5,28 +5,39 @@ on:
     - 'v*'
 
 jobs:
-  release:
+  publish:
     runs-on: ubuntu-latest
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
-      - uses: actions/checkout@v2
-      - run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}
-      - uses: actions-rs/toolchain@v1
+      - name: Setup | Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup | Rust
+        uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release
-      - name: create release
-        id: create_release
+          profile: minimal
+          override: true
+
+      - name: Build | Publish
+        run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
+
+  release:
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup | Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup | Create Release Log
+        run: cat CHANGELOG.md | tail -n +7 | head -n 25 > RELEASE_LOG.md
+
+      - name: Create Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
-          body: ""
+          body_path: RELEASE_LOG.md
           draft: true
           prerelease: false
