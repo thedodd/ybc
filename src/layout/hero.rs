@@ -10,11 +10,20 @@ pub struct HeroProps {
     /// The contents of the hero-head section.
     #[prop_or_default]
     pub head: Option<Html>,
+    /// Optional classes to add to the hero-head container.
+    #[prop_or_default]
+    pub head_classes: Option<String>,
     /// The contents of the hero-body section.
     pub body: Html,
+    /// Optional classes to add to the hero-body container.
+    #[prop_or_default]
+    pub body_classes: Option<String>,
     /// The contents of the hero-foot section.
     #[prop_or_default]
     pub foot: Option<Html>,
+    /// Optional classes to add to the hero-foot container.
+    #[prop_or_default]
+    pub foot_classes: Option<String>,
     /// If you are using a [fixed navbar](https://bulma.io/documentation/components/navbar/#fixed-navbar),
     /// you can use the `fixed_nav=true` modifier on the hero for it to occupy the viewport height minus
     /// the navbar height.
@@ -70,20 +79,33 @@ impl Component for Hero {
 
         // Build the header section.
         let head = if let Some(head) = &self.props.head {
-            html! {<div class="hero-head">{head.clone()}</div>}
+            let mut classes = Classes::from("hero-head");
+            if let Some(extra) = self.props.head_classes.as_ref() {
+                classes.push(extra);
+            }
+            html! {<div class=classes>{head.clone()}</div>}
         } else {
             html! {}
         };
         // Build the footer section.
         let foot = if let Some(foot) = &self.props.foot {
-            html! {<div class="hero-foot">{foot.clone()}</div>}
+            let mut classes = Classes::from("hero-foot");
+            if let Some(extra) = self.props.foot_classes.as_ref() {
+                classes.push(extra);
+            }
+            html! {<div class=classes>{foot.clone()}</div>}
         } else {
             html! {}
         };
+
+        let mut body_classes = Classes::from("hero-body");
+        if let Some(extra) = self.props.body_classes.as_ref() {
+            body_classes.push(extra);
+        }
         html! {
             <section class=classes>
                 {head}
-                <div class="hero-body">{self.props.body.clone()}</div>
+                <div class=body_classes>{self.props.body.clone()}</div>
                 {foot}
             </section>
         }

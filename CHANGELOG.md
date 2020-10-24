@@ -4,6 +4,10 @@ This changelog follows the patterns described here: https://keepachangelog.com/e
 
 ## Unreleased
 
+## 0.2.0
+### added
+- Added `head_classes`, `body_classes` & `foot_classes` optional properties to the `Hero` component. These extra classes will be added to the stanard classes assigned to each of the corresponding hero component sections.
+
 ## 0.1.6
 ### changed
 - Updates to the `Navbar` component:
