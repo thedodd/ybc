@@ -49,6 +49,9 @@ pub struct NavbarProps {
     /// A bool controlling if the navbar should have a navbar burger for smaller viewports.
     #[prop_or_else(|| true)]
     pub navburger: bool,
+    /// Extra classes for the navbar burger.
+    #[prop_or_default]
+    pub navburger_classes: Option<String>,
 }
 
 /// A responsive horizontal navbar that can support images, links, buttons, and dropdowns.
@@ -98,6 +101,9 @@ impl Component for Navbar {
         // navbar-menu classes
         let mut navclasses = Classes::from("navbar-menu");
         let mut burgerclasses = Classes::from("navbar-burger");
+        if let Some(burger_extra) = self.props.navburger_classes.as_ref() {
+            burgerclasses.push(burger_extra);
+        }
         if self.is_menu_open {
             navclasses.push("is-active");
             burgerclasses.push("is-active");
