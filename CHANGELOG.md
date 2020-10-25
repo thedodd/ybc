@@ -9,6 +9,7 @@ This changelog follows the patterns described here: https://keepachangelog.com/e
 - Added `head_classes`, `body_classes` & `foot_classes` optional properties to the `Hero` component. These extra classes will be added to the stanard classes assigned to each of the corresponding hero component sections.
 - Added `navburger_classes` prop to the `Navbar` component. These extra classes will be added to the standard classes for the `navbar-burger` element.
 - Added `help_has_error` prop to the `Field` component. This `bool` prop will add the `is-danger` class to the field's help text when `true`.
+- Added `disabled` prop to the `Select` & `MultiSelect` components.
 
 ## 0.1.6
 ### changed
