@@ -20,6 +20,9 @@ pub struct FieldProps {
     /// Extra classes for the help message container.
     #[prop_or_default]
     pub help_classes: Option<String>,
+    /// A convenience bool to add the `is-danger` class to the help classes when `true`.
+    #[prop_or_default]
+    pub help_has_error: bool,
     /// Has icons on the left of the field's controls.
     #[prop_or_default]
     pub icons_left: bool,
@@ -110,6 +113,9 @@ impl Component for Field {
                 Some(help_classes_str) => {
                     let mut help_classes = Classes::from(help_classes_str);
                     help_classes.push("help");
+                    if self.props.help_has_error {
+                        help_classes.push("is-danger");
+                    }
                     html! {<label class=help_classes>{help_content.clone()}</label>}
                 }
                 None => html! {<label class="help">{help_content.clone()}</label>},
