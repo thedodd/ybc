@@ -53,7 +53,7 @@ pub use elements::title::{HeaderSize, Subtitle, SubtitleProps, Title, TitleProps
 // form
 pub use form::checkbox::{Checkbox, CheckboxProps};
 pub use form::control::{Control, ControlProps};
-pub use form::field::{AddonsAlign, Field, FieldHorizontal, FieldHorizontalProps, FieldProps, GroupedAlign, LabelSize};
+pub use form::field::{AddonsAlign, Field, FieldProps, GroupedAlign, LabelSize};
 pub use form::file::{File, FileProps};
 pub use form::input::{Input, InputProps, InputType};
 pub use form::radio::{Radio, RadioProps};
