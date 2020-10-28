@@ -7,6 +7,8 @@ pub struct ContainerProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// Add a `32px` margin to the left and right sides of the container.
     #[prop_or_default]
     pub fluid: bool,
@@ -43,8 +45,9 @@ impl Component for Container {
         if self.props.fluid {
             classes.push("is-fluid");
         }
+        let id = &self.props.id;
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 {self.props.children.clone()}
             </div>
         }

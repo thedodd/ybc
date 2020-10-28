@@ -20,6 +20,8 @@ pub struct SelectProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
 
     /// The size of this component.
     #[prop_or_default]
@@ -73,8 +75,9 @@ impl Component for Select {
         if self.props.loading {
             classes.push("is-loading");
         }
+        let id = &self.props.id;
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 <select
                     name=self.props.name.clone()
                     value=self.props.value.clone()
@@ -90,7 +93,6 @@ impl Component for Select {
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]

@@ -18,6 +18,8 @@ pub struct InputProps {
 
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The input type of this component.
     #[prop_or_else(|| InputType::Text)]
     pub r#type: InputType,
@@ -90,12 +92,14 @@ impl Component for Input {
         if self.props.r#static {
             classes.push("is-static");
         }
+        let id = &self.props.id;
         html! {
             <input
                 name=self.props.name.clone()
                 value=self.props.value.clone()
                 oninput=self.link.callback(|input: InputData| input.value)
                 class=classes
+                id=id
                 type=self.props.r#type.to_string()
                 placeholder=self.props.placeholder.clone()
                 disabled=self.props.disabled

@@ -9,6 +9,8 @@ pub struct TabsProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The alignment of this component.
     #[prop_or_default]
     pub alignment: Option<Alignment>,
@@ -78,8 +80,9 @@ impl Component for Tabs {
         if self.props.fullwidth {
             classes.push("is-fullwidth");
         }
+        let id = &self.props.id;
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 <ul>
                     {self.props.children.clone()}
                 </ul>

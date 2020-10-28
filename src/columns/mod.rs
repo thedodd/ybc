@@ -7,6 +7,8 @@ pub struct ColumnsProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// Align child columns vertically.
     #[prop_or_default]
     pub vcentered: bool,
@@ -55,15 +57,15 @@ impl Component for Columns {
         if self.props.centered {
             classes.push("is-centered");
         }
+        let id = &self.props.id;
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 {self.props.children.clone()}
             </div>
         }
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -72,6 +74,8 @@ pub struct ColumnProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
 }
 
 /// A flexbox-based responsive column.
@@ -106,8 +110,9 @@ impl Component for Column {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 {self.props.children.clone()}
             </div>
         }

@@ -7,6 +7,8 @@ pub struct CardProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
 }
 
 /// An all-around flexible and composable component; this is the card container.
@@ -37,15 +39,15 @@ impl Component for Card {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 {self.props.children.clone()}
             </div>
         }
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -54,6 +56,8 @@ pub struct CardHeaderProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
 }
 
 /// A container for card header content; rendered as a horizontal bar with a shadow.
@@ -84,15 +88,15 @@ impl Component for CardHeader {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <header class=classes>
+            <header class=classes id=id>
                 {self.props.children.clone()}
             </header>
         }
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -101,6 +105,8 @@ pub struct CardImageProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
 }
 
 /// A fullwidth container for a responsive image.
@@ -131,15 +137,15 @@ impl Component for CardImage {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 {self.props.children.clone()}
             </div>
         }
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -148,6 +154,8 @@ pub struct CardContentProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
 }
 
 /// A container for any other content as the body of the card.
@@ -178,15 +186,15 @@ impl Component for CardContent {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 {self.props.children.clone()}
             </div>
         }
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -195,6 +203,8 @@ pub struct CardFooterProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
 }
 
 /// A container for card footer content; rendered as a horizontal list of controls.
@@ -225,8 +235,9 @@ impl Component for CardFooter {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <footer class=classes>
+            <footer class=classes id=id>
                 {self.props.children.clone()}
             </footer>
         }

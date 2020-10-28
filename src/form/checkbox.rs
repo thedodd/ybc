@@ -13,6 +13,8 @@ pub struct CheckboxProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// Disable this component.
     #[prop_or_default]
     pub disabled: bool,
@@ -53,8 +55,9 @@ impl Component for Checkbox {
             classes = classes.extend(extra);
         }
         let checked = self.props.checked;
+        let id = &self.props.id;
         html! {
-            <label class=classes disabled=self.props.disabled>
+            <label class=classes id=id disabled=self.props.disabled>
                 <input
                     type="checkbox"
                     checked=self.props.checked

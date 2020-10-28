@@ -15,6 +15,8 @@ pub struct TextAreaProps {
 
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The placeholder value for this component.
     #[prop_or_default]
     pub placeholder: String,
@@ -88,12 +90,14 @@ impl Component for TextArea {
         if self.props.fixed_size {
             classes.push("has-fixed-size");
         }
+        let id = &self.props.id;
         html! {
             <textarea
                 name=self.props.name.clone()
                 value=self.props.value.clone()
                 oninput=self.link.callback(|input: InputData| input.value)
                 class=classes
+                id=id
                 rows=self.props.rows
                 placeholder=self.props.placeholder.clone()
                 disabled=self.props.disabled

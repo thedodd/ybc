@@ -8,6 +8,8 @@ pub struct ImageProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The size of this component.
     #[prop_or_default]
     pub size: Option<ImageSize>,
@@ -44,8 +46,9 @@ impl Component for Image {
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
         }
+        let id = &self.props.id;
         html! {
-            <figure class=classes>
+            <figure class=classes id=id>
                 {self.props.children.clone()}
             </figure>
         }

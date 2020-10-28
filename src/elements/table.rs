@@ -7,6 +7,8 @@ pub struct TableProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// Add borders to all the cells.
     #[prop_or_default]
     pub bordered: bool,
@@ -70,17 +72,18 @@ impl Component for Table {
         if self.props.fullwidth {
             classes.push("is-fullwidth");
         }
+        let id = &self.props.id;
         if self.props.scrollable {
             html! {
                 <div class="table-container">
-                    <table class=classes>
+                    <table class=classes id=id>
                         {self.props.children.clone()}
                     </table>
                 </div>
             }
         } else {
             html! {
-                <table class=classes>
+                <table class=classes id=id>
                     {self.props.children.clone()}
                 </table>
             }

@@ -7,6 +7,8 @@ pub struct NotificationProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
 }
 
 /// Bold notification blocks, to alert your users of something.
@@ -37,8 +39,9 @@ impl Component for Notification {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 {self.props.children.clone()}
             </div>
         }

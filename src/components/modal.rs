@@ -105,7 +105,6 @@ impl Component for Modal {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct ModalCardProps {
@@ -216,7 +215,6 @@ impl Component for ModalCard {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
 
 /// A request to close a modal instance by ID.
 ///
@@ -237,12 +235,12 @@ pub struct ModalCloseMsg(pub String);
 /// // .. snip ..
 /// fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
 ///     let bridge = ModalCloser::dispatcher();
-///     Self{link, props, bridge}
+///     Self { link, props, bridge }
 /// }
 /// ```
 ///
-/// Next, in your component's `view` method, setup a callback to handle your component's close event.
-/// ```rust
+/// Next, in your component's `view` method, setup a callback to handle your component's close
+/// event. ```rust
 /// let closer = self.link.callback(|_| ModalCloseMsg("modal-0".into()));
 /// // ... snip ...
 /// <ModalCard
@@ -253,7 +251,7 @@ pub struct ModalCloseMsg(pub String);
 ///     }
 /// />
 /// ```
-///
+/// 
 /// Finally, in your component's `update` method, send the `ModalCloseMsg` over to the agent which
 /// will forward the message to the modal to cause it to close.
 /// ```rust
@@ -262,7 +260,7 @@ pub struct ModalCloseMsg(pub String);
 ///     true
 /// }
 /// ```
-///
+/// 
 /// This pattern allows you to communicate with a modal by its given ID, allowing
 /// you to close the modal from anywhere in your application.
 pub struct ModalCloser {
@@ -271,10 +269,13 @@ pub struct ModalCloser {
 }
 
 impl Agent for ModalCloser {
-    type Reach = Context<Self>;
+    type Input = ModalCloseMsg;
     type Message = ();
-    type Input = ModalCloseMsg; // The agent receives requests to close modals by ID.
-    type Output = ModalCloseMsg; // The agent forwards the input to all registered modals.
+    // The agent receives requests to close modals by ID.
+    type Output = ModalCloseMsg;
+    type Reach = Context<Self>;
+
+    // The agent forwards the input to all registered modals.
 
     fn create(link: AgentLink<Self>) -> Self {
         Self {

@@ -7,6 +7,8 @@ pub struct FooterProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
 }
 
 /// A simple responsive footer which can include anything.
@@ -37,8 +39,9 @@ impl Component for Footer {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <footer class=classes>
+            <footer class=classes id=id>
                 {self.props.children.clone()}
             </footer>
         }

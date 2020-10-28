@@ -10,6 +10,8 @@ pub struct TitleProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "h3".into())]
     pub tag: String,
@@ -56,15 +58,15 @@ impl Component for Title {
             classes.push("is-spaced");
         }
         let tag = self.props.tag.clone();
+        let id = &self.props.id;
         html! {
-            <@{tag} class=classes>
+            <@{tag} class=classes id=id>
                 {self.props.children.clone()}
             </@>
         }
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -73,6 +75,8 @@ pub struct SubtitleProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "h3".into())]
     pub tag: String,
@@ -113,8 +117,9 @@ impl Component for Subtitle {
             classes.push(&size.to_string());
         }
         let tag = self.props.tag.clone();
+        let id = &self.props.id;
         html! {
-            <@{tag} class=classes>
+            <@{tag} class=classes id=id>
                 {self.props.children.clone()}
             </@>
         }

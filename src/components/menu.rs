@@ -7,6 +7,8 @@ pub struct MenuProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
 }
 
 /// A simple menu, for any type of vertical navigation.
@@ -37,15 +39,15 @@ impl Component for Menu {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <aside class=classes>
+            <aside class=classes id=id>
                 {self.props.children.clone()}
             </aside>
         }
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -55,6 +57,8 @@ pub struct MenuListProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
 }
 
 /// A container for menu list `li` elements.
@@ -85,8 +89,9 @@ impl Component for MenuList {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <ul class=classes>
+            <ul class=classes id=id>
                 {self.props.children.clone()}
             </ul>
         }
@@ -94,12 +99,13 @@ impl Component for MenuList {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct MenuLabelProps {
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The text of the label.
     #[prop_or_default]
     pub text: String,
@@ -133,8 +139,9 @@ impl Component for MenuLabel {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <p class=classes>
+            <p class=classes id=id>
                 {self.props.text.clone()}
             </p>
         }

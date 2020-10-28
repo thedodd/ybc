@@ -10,6 +10,8 @@ pub struct IconProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The click handler to use for this component.
     #[prop_or_else(Callback::noop)]
     pub onclick: Callback<MouseEvent>,
@@ -55,8 +57,9 @@ impl Component for Icon {
         if let Some(alignment) = &self.props.alignment {
             classes.push(&alignment.to_string());
         }
+        let id = &self.props.id;
         html! {
-            <span class=classes onclick=self.props.onclick.clone()>
+            <span class=classes id=id onclick=self.props.onclick.clone()>
                 {self.props.children.clone()}
             </span>
         }

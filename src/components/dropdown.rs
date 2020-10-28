@@ -12,6 +12,8 @@ pub struct DropdownProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// Make this dropdown triggerable based on hover.
     #[prop_or_default]
     pub hoverable: bool,
@@ -82,8 +84,9 @@ impl Component for Dropdown {
         } else {
             html! {}
         };
+        let id = &self.props.id;
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 {overlay}
                 <div class="dropdown-trigger">
                     <Button classes=self.props.button_classes.clone() onclick=opencb>
