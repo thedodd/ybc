@@ -251,7 +251,7 @@ pub struct ModalCloseMsg(pub String);
 ///     }
 /// />
 /// ```
-/// 
+///
 /// Finally, in your component's `update` method, send the `ModalCloseMsg` over to the agent which
 /// will forward the message to the modal to cause it to close.
 /// ```rust
@@ -260,7 +260,7 @@ pub struct ModalCloseMsg(pub String);
 ///     true
 /// }
 /// ```
-/// 
+///
 /// This pattern allows you to communicate with a modal by its given ID, allowing
 /// you to close the modal from anywhere in your application.
 pub struct ModalCloser {
