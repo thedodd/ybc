@@ -1,0 +1,15 @@
+[package]
+name = "todo-mvc"
+version = "0.1.0"
+authors = ["Anthony Dodd <dodd.anthonyjosiah@gmail.com>", "Joseph R. Quinn <423821+quinnjr@users.noreply.github.com>"]
+edition = "2018"
+
+[dependencies]
+serde = { version = "1.0.117", features=["derive"] }
+strum = "0.19.5"
+strum_macros = "0.19.4"
+ybc = { path = "../../" }
+yew = { version="0.17.3", features=["web_sys"] }
+
+[dev-dependencies]
+trunk = "0.7.4"
