@@ -25,6 +25,7 @@ pub enum AppMsg {
     Toggle(usize),
     ClearCompleted,
     Focus,
+    Noop,
 }
 
 pub struct App {
@@ -89,6 +90,7 @@ impl Component for App {
                     input.focus().unwrap();
                 }
             }
+            AppMsg::Noop => (),
         }
         true
     }
@@ -102,59 +104,57 @@ impl Component for App {
 
         html! {
         <>
-        <ybc::Columns>
-            <ybc::Column classes="is-half is-offset-one-quarter">
-                <ybc::Section>
-                    <ybc::Card>
-                        <ybc::CardHeader>
-                            <p class="card-header-title">
-                                {"TodoMVC"}
-                            </p>
-                        </ybc::CardHeader>
-                        <ybc::CardContent>
-                            { self.view_input() }
-                        </ybc::CardContent>
-                        <ybc::CardFooter>
-                            <p class="card-footer-item">
-                                <strong>{ self.state.total() }</strong>
-                                { " item(s) left" }
-                            </p>
-                        </ybc::CardFooter>
-                    </ybc::Card>
-                </ybc::Section>
-                <ybc::Section classes=is_hidden>
-                    {
-                        for self.state.entries.iter()
-                            .filter(|entry| self.state.filter.fits(entry))
-                            .enumerate()
-                            .map(|entry| self.view_entry(entry))
-                    }
-                    <hr />
-                    <ybc::Level>
-                        <ybc::LevelLeft>
-                            {
-                                for Filter::iter()
-                                .map(|filter| self.view_filter(filter))
-                            }
-                        </ybc::LevelLeft>
-                        <ybc::LevelRight>
-                            <ybc::Button classes="card-footer-item is-danger"
-                                onclick=self.link.callback(|_| AppMsg::ClearCompleted)>
+            <ybc::Columns>
+                <ybc::Column classes="is-half is-offset-one-quarter">
+                    <ybc::Section>
+                        <ybc::Card>
+                            <ybc::CardHeader>
+                                <p class="card-header-title">
+                                    {"TodoMVC"}
+                                </p>
+                            </ybc::CardHeader>
+                            <ybc::CardContent>
+                                { self.view_input() }
+                            </ybc::CardContent>
+                            <ybc::CardFooter>
+                                <p class="card-footer-item">
+                                    <strong>{ self.state.total() }</strong>
+                                    { " item(s) left" }
+                                </p>
+                            </ybc::CardFooter>
+                        </ybc::Card>
+                    </ybc::Section>
+                    <ybc::Section classes=is_hidden>
+                        {
+                            for self.state.entries.iter()
+                                .filter(|entry| self.state.filter.fits(entry))
+                                .enumerate()
+                                .map(|entry| self.view_entry(entry))
+                        }
+                        <hr />
+                        <ybc::Level>
+                            <ybc::LevelLeft>
                                 {
-                                    format!("Clear completed ({})", self.state.total_completed())
+                                    for Filter::iter()
+                                    .map(|filter| self.view_filter(filter))
                                 }
-                            </ybc::Button>
-                        </ybc::LevelRight>
-                    </ybc::Level>
-                </ybc::Section>
-            </ybc::Column>
-        </ybc::Columns>
-        <ybc::Section>
-        <ybc::Footer>
+                            </ybc::LevelLeft>
+                            <ybc::LevelRight>
+                                <ybc::Button classes="card-footer-item is-danger"
+                                    onclick=self.link.callback(|_| AppMsg::ClearCompleted)>
+                                    {
+                                        format!("Clear completed ({})", self.state.total_completed())
+                                    }
+                                </ybc::Button>
+                            </ybc::LevelRight>
+                        </ybc::Level>
+                    </ybc::Section>
+                </ybc::Column>
+            </ybc::Columns>
+            <ybc::Footer classes="has-text-centered">
                 <p>{"Double-click to edit a todo"}</p>
                 <p><a href="https://github.com/thedodd/ybc">{"❤️ YBC ❤️"}</a></p>
             </ybc::Footer>
-        </ybc::Section>
         </>
         }
     }
@@ -184,7 +184,8 @@ impl App {
                 value=&self.state.value
                 oninput=self.link.callback(|ev: InputData| AppMsg::Update(ev.value))
                 onkeypress=self.link.batch_callback(|event: KeyboardEvent| {
-                    if event.key() == "Enter" { Some(AppMsg::Add) } else { None }
+                    //@TODO: Change AppMsg to be returned as an Option once Yew releases
+                    if event.key() == "Enter" { vec![AppMsg::Add] } else { vec![AppMsg::Noop] }
                 })
             />
         }
@@ -217,6 +218,7 @@ impl App {
     fn view_entry_edit_input(&self, (idx, entry): (usize, &Entry)) -> Html {
         if entry.editing {
             html! {
+
                 <input name="edit-input"
                     class="input"
                     type="text"
@@ -225,9 +227,10 @@ impl App {
                     onmouseover=self.link.callback(|_| AppMsg::Focus)
                     oninput=self.link.callback(|ev: InputData| AppMsg::UpdateEdit(ev.value))
                     onblur=self.link.callback(move |_| AppMsg::Edit(idx))
-                    // onkeypress=self.link.batch_callback(move |ev: KeyboardEvent| {
-                    //     if ev.key() == "Enter" { Some(AppMsg::Edit(idx)) } else { None }
-                    // })
+                    onkeypress=self.link.batch_callback(move |ev: KeyboardEvent| {
+                        //@TODO: Change AppMsg to be returned as an Option once Yew releases
+                        if ev.key() == "Enter" { vec![AppMsg::Edit(idx)] } else { vec![AppMsg::Noop] }
+                    })
                 />
             }
         } else {

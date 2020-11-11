@@ -1,5 +1,5 @@
-use serde::{ Deserialize, Serialize };
-use strum_macros::{ EnumIter, ToString };
+use serde::{Deserialize, Serialize};
+use strum_macros::{EnumIter, ToString};
 
 use crate::entry::Entry;
 

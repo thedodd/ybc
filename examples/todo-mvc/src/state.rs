@@ -1,9 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    entry::Entry,
-    filter::Filter
-};
+use crate::{entry::Entry, filter::Filter};
 
 #[derive(Deserialize, Serialize)]
 pub struct State {
@@ -19,35 +16,26 @@ impl State {
     }
 
     pub fn total_completed(&self) -> usize {
-        self.entries.iter()
-            .filter(|entry| Filter::Completed.fits(entry))
-            .count()
+        self.entries.iter().filter(|entry| Filter::Completed.fits(entry)).count()
     }
 
     pub fn is_all_completed(&self) -> bool {
-        let mut filtered_iter = self.entries.iter()
-            .filter(|entry| self.filter.fits(entry))
-            .peekable();
+        let mut filtered_iter = self.entries.iter().filter(|entry| self.filter.fits(entry)).peekable();
 
         match filtered_iter.peek() {
             Some(_) => filtered_iter.all(|entry| entry.completed),
-            None => false
+            None => false,
         }
     }
 
     pub fn clear_completed(&mut self) {
-        let entries = self.entries.drain(..)
-            .filter(|entry| Filter::Active.fits(entry))
-            .collect();
+        let entries = self.entries.drain(..).filter(|entry| Filter::Active.fits(entry)).collect();
         self.entries = entries;
     }
 
     pub fn toggle(&mut self, idx: usize) {
         let filter = self.filter;
-        let entry = self.entries.iter_mut()
-            .filter(|entry| filter.fits(entry))
-            .nth(idx)
-            .unwrap();
+        let entry = self.entries.iter_mut().filter(|entry| filter.fits(entry)).nth(idx).unwrap();
         entry.completed = !entry.completed;
     }
 
@@ -61,10 +49,7 @@ impl State {
 
     pub fn toggle_edit(&mut self, idx: usize) {
         let filter = self.filter;
-        let entry = self.entries.iter_mut()
-            .filter(|entry| filter.fits(entry))
-            .nth(idx)
-            .unwrap();
+        let entry = self.entries.iter_mut().filter(|entry| filter.fits(entry)).nth(idx).unwrap();
         entry.editing = !entry.editing;
     }
 
@@ -79,10 +64,7 @@ impl State {
             self.remove(idx);
         } else {
             let filter = self.filter;
-            let entry = self.entries.iter_mut()
-                .filter(|entry| filter.fits(entry))
-                .nth(idx)
-                .unwrap();
+            let entry = self.entries.iter_mut().filter(|entry| filter.fits(entry)).nth(idx).unwrap();
             entry.description = val;
             entry.editing = !entry.editing;
         }
