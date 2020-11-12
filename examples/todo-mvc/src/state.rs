@@ -35,8 +35,9 @@ impl State {
 
     pub fn toggle(&mut self, idx: usize) {
         let filter = self.filter;
-        let entry = self.entries.iter_mut().filter(|entry| filter.fits(entry)).nth(idx).unwrap();
-        entry.completed = !entry.completed;
+        if let Some(entry) = self.entries.iter_mut().filter(|entry| filter.fits(entry)).nth(idx) {
+            entry.completed = !entry.completed;
+        }
     }
 
     pub fn toggle_all(&mut self, value: bool) {
