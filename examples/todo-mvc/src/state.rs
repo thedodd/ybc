@@ -50,8 +50,9 @@ impl State {
 
     pub fn toggle_edit(&mut self, idx: usize) {
         let filter = self.filter;
-        let entry = self.entries.iter_mut().filter(|entry| filter.fits(entry)).nth(idx).unwrap();
-        entry.editing = !entry.editing;
+        if let Some(entry) = self.entries.iter_mut().filter(|entry| filter.fits(entry)).nth(idx) {
+            entry.editing = !entry.editing;
+        }
     }
 
     pub fn clear_all_edit(&mut self) {
@@ -65,20 +66,21 @@ impl State {
             self.remove(idx);
         } else {
             let filter = self.filter;
-            let entry = self.entries.iter_mut().filter(|entry| filter.fits(entry)).nth(idx).unwrap();
-            entry.description = val;
-            entry.editing = !entry.editing;
+            if let Some(entry) = self.entries.iter_mut().filter(|entry| filter.fits(entry)).nth(idx) {
+                entry.description = val;
+                entry.editing = !entry.editing;
+            }
         }
     }
 
     pub fn remove(&mut self, filter_idx: usize) {
         let idx_opt = self
-                .entries
-                .iter()
-                .enumerate()
-                .filter(|&(_, entry)| self.filter.fits(entry))
-                .map(|(idx, _)| idx)
-                .nth(filter_idx);
+            .entries
+            .iter()
+            .enumerate()
+            .filter(|&(_, entry)| self.filter.fits(entry))
+            .map(|(idx, _)| idx)
+            .nth(filter_idx);
         if let Some(idx) = idx_opt {
             self.entries.remove(idx);
         };
