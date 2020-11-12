@@ -2,7 +2,10 @@
 
 use strum::IntoEnumIterator;
 use yew::{
-    events::KeyboardEvent, html, web_sys::HtmlInputElement as InputElement, Classes, Component, ComponentLink, Html, InputData, NodeRef, ShouldRender,
+    events::KeyboardEvent,
+    html::InputData,
+    prelude::*,
+    web_sys::HtmlInputElement as InputElement
 };
 
 mod entry;
