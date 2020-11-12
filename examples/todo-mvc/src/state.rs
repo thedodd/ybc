@@ -71,17 +71,16 @@ impl State {
         }
     }
 
-    pub fn remove(&mut self, idx: usize) {
-        let idx = {
-            let entries = self
+    pub fn remove(&mut self, filter_idx: usize) {
+        let idx_opt = self
                 .entries
                 .iter()
                 .enumerate()
                 .filter(|&(_, entry)| self.filter.fits(entry))
-                .collect::<Vec<_>>();
-            let &(idx, _) = entries.get(idx).unwrap();
-            idx
+                .map(|(idx, _)| idx)
+                .nth(filter_idx);
+        if let Some(idx) = idx_opt {
+            self.entries.remove(idx);
         };
-        self.entries.remove(idx);
     }
 }
