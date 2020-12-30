@@ -2,10 +2,11 @@
 <div align="center">
 
 [![Build Status](https://github.com/thedodd/ybc/workflows/ci/badge.svg?branch=master)](https://github.com/thedodd/ybc/actions)
-[![Crates.io](https://img.shields.io/crates/v/ybc.svg)](https://crates.io/crates/ybc)
-[![docs.rs](https://docs.rs/ybc/badge.svg)](https://docs.rs/ybc)
-[![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue)](LICENSE)
-![Crates.io](https://img.shields.io/crates/d/ybc.svg)
+[![Crates.io](https://img.shields.io/crates/v/ybc.svg?style=flat-square)](https://crates.io/crates/ybc)
+[![docs.rs](https://docs.rs/ybc/badge.svg?style=flat-square)](https://docs.rs/ybc)
+[![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue?style=flat-square)](LICENSE)
+[![Discord Chat](https://img.shields.io/discord/793890238267260958?logo=discord&style=flat-square)](https://discord.gg/JEPdBujTDr)
+![Crates.io](https://img.shields.io/crates/d/ybc.svg?style=flat-square)
 
   <strong>
     A <a href="https://yew.rs">Yew</a> component library based on the <a href="https://bulma.io">Bulma CSS</a> framework.
