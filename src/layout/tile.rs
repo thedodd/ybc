@@ -10,6 +10,8 @@ pub struct TileProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -67,8 +69,9 @@ impl Component for Tile {
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
         }
+        let id = &self.props.id;
         html! {
-            <@{self.props.tag.clone()} class=classes>
+            <@{self.props.tag.clone()} class=classes id=id>
                 {self.props.children.clone()}
             </@>
         }

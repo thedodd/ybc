@@ -9,6 +9,8 @@ pub struct DeleteProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "button".into())]
     pub tag: String,
@@ -46,8 +48,9 @@ impl Component for Delete {
             classes = classes.extend(extra);
         }
         let tag = self.props.tag.clone();
+        let id = &self.props.id;
         html! {
-            <@{tag} class=classes onclick=self.props.onclick.clone()>
+            <@{tag} class=classes id=id onclick=self.props.onclick.clone()>
                 {self.props.children.clone()}
             </@>
         }

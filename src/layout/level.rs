@@ -9,6 +9,8 @@ pub struct LevelProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "nav".into())]
     pub tag: String,
@@ -42,15 +44,15 @@ impl Component for Level {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <@{self.props.tag.clone()} class=classes>
+            <@{self.props.tag.clone()} class=classes id=id>
                 {self.props.children.clone()}
             </@>
         }
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -101,7 +103,6 @@ impl Component for LevelLeft {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct LevelRightProps {
@@ -150,7 +151,6 @@ impl Component for LevelRight {
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]

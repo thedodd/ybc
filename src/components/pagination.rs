@@ -12,6 +12,8 @@ pub struct PaginationProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The size of this component.
     #[prop_or_default]
     pub size: Option<Size>,
@@ -65,8 +67,9 @@ impl Component for Pagination {
         if self.props.rounded {
             classes.push("is-rounded");
         }
+        let id = &self.props.id;
         html! {
-            <nav class=classes role="navigation" aria-label="pagination">
+            <nav class=classes id=id role="navigation" aria-label="pagination">
                 {self.props.previous.clone()}
                 {self.props.next.clone()}
                 <ul class="pagination-list">
@@ -77,7 +80,6 @@ impl Component for Pagination {
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -141,7 +143,6 @@ pub enum PaginationItemType {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
 
 /// A horizontal ellipsis for pagination range separators.
 ///
@@ -169,7 +170,6 @@ impl Component for PaginationEllipsis {
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[cfg(feature = "router")]

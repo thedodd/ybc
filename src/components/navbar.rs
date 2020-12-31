@@ -17,6 +17,8 @@ pub struct NavbarProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// Make the navbar fixed to the top or bottom of the UI.
     #[prop_or_default]
     pub fixed: Option<NavbarFixed>,
@@ -25,7 +27,8 @@ pub struct NavbarProps {
     /// [https://bulma.io/documentation/components/navbar/#transparent-navbar](https://bulma.io/documentation/components/navbar/#transparent-navbar)
     #[prop_or_default]
     pub transparent: bool,
-    /// Sets **top** and **bottom** paddings with **1rem**, **left** and **right** paddings with **2rem**.
+    /// Sets **top** and **bottom** paddings with **1rem**, **left** and **right** paddings with
+    /// **2rem**.
     ///
     /// [https://bulma.io/documentation/components/navbar/#navbar-helper-classes](https://bulma.io/documentation/components/navbar/#navbar-helper-classes)
     #[prop_or_default]
@@ -94,6 +97,7 @@ impl Component for Navbar {
         if let Some(fixed) = &self.props.fixed {
             classes.push(&fixed.to_string());
         }
+        let id = &self.props.id;
 
         // navbar-menu classes
         let mut navclasses = Classes::from("navbar-menu");
@@ -148,13 +152,13 @@ impl Component for Navbar {
 
         if self.props.padded {
             html! {
-                <nav class=classes role="navigation" aria-label="main navigation">
+                <nav class=classes id=id role="navigation" aria-label="main navigation">
                     <div class="container">{contents}</div>
                 </nav>
             }
         } else {
             html! {
-                <nav class=classes role="navigation" aria-label="main navigation">{contents}</nav>
+                <nav class=classes id=id role="navigation" aria-label="main navigation">{contents}</nav>
             }
         }
     }
@@ -176,7 +180,6 @@ pub enum NavbarFixed {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
 
 /// The two HTML tags allowed for a navbar-item.
 ///
@@ -193,6 +196,8 @@ pub enum NavbarItemTag {
 pub struct NavbarItemProps {
     #[prop_or_default]
     pub children: Children,
+    #[prop_or_default]
+    pub id: String,
     #[prop_or_default]
     pub classes: Option<String>,
     /// The HTML tag to use for this component.
@@ -263,11 +268,12 @@ impl Component for NavbarItem {
         if self.props.active {
             classes.push("is-active");
         }
+        let id = &self.props.id;
         match self.props.tag {
             NavbarItemTag::A => {
                 html! {
                     <a
-                        class=classes
+                        class=classes id=id
                         href=self.props.href.clone().unwrap_or_default()
                         rel=self.props.rel.clone().unwrap_or_default()
                         target=self.props.target.clone().unwrap_or_default()
@@ -278,7 +284,7 @@ impl Component for NavbarItem {
             }
             NavbarItemTag::Div => {
                 html! {
-                    <div class=classes>
+                    <div class=classes id=id>
                         {self.props.children.clone()}
                     </div>
                 }
@@ -288,12 +294,13 @@ impl Component for NavbarItem {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct NavbarDividerProps {
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
 }
 
 /// An element to display a horizontal rule in a navbar-dropdown.
@@ -324,13 +331,13 @@ impl Component for NavbarDivider {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <hr class=classes/>
+            <hr class=classes id=id/>
         }
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -340,6 +347,8 @@ pub struct NavbarDropdownProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The contents of the navbar-link used for triggering the dropdown menu.
     pub navlink: Html,
     /// Make this dropdown triggerable based on hover.
@@ -435,8 +444,9 @@ impl Component for NavbarDropdown {
         } else {
             html! {}
         };
+        let id = &self.props.id;
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 {overlay}
                 <a class=linkclasses onclick=opencb>{self.props.navlink.clone()}</a>
                 <div class=dropclasses>

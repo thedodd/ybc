@@ -21,6 +21,8 @@ pub struct RadioProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// Disable this component.
     #[prop_or_default]
     pub disabled: bool,
@@ -60,8 +62,9 @@ impl Component for Radio {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <label class=classes disabled=self.props.disabled>
+            <label class=classes id=id disabled=self.props.disabled>
                 <input
                     type="radio"
                     name=self.props.name.clone()

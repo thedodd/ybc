@@ -10,7 +10,10 @@ pub struct PanelProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
-    /// The HTML content of this panel's heading; it is automatically wrapped in a `p.panel-heading`.
+    #[prop_or_default]
+    pub id: String,
+    /// The HTML content of this panel's heading; it is automatically wrapped in a
+    /// `p.panel-heading`.
     #[prop_or_default]
     pub heading: Html,
 }
@@ -43,8 +46,9 @@ impl Component for Panel {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <nav class=classes>
+            <nav class=classes id=id>
                 <p class="panel-heading">{self.props.heading.clone()}</p>
                 {self.props.children.clone()}
             </nav>
@@ -52,7 +56,6 @@ impl Component for Panel {
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -93,7 +96,6 @@ impl Component for PanelTabs {
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]

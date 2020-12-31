@@ -25,6 +25,8 @@ pub struct FileProps {
 
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// An option to control if file names will be displayed; if a value is provided, then the
     /// `has-name` class will be added to this form element and the given value will be used as a
     /// placeholder until files are selected.
@@ -108,8 +110,9 @@ impl Component for File {
             .iter()
             .map(|file| html! {<span class="file-name">{file.name()}</span>})
             .collect::<Vec<_>>();
+        let id = &self.props.id;
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 <label class="file-label">
                     <input
                         type="file"

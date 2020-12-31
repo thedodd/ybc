@@ -7,6 +7,8 @@ use yewtil::NeqAssign;
 pub struct ProgressProps {
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The maximum amount of progress; the 100% value.
     #[prop_or_else(|| 1.0)]
     pub max: f32,
@@ -46,8 +48,9 @@ impl Component for Progress {
         let max = self.props.max.to_string();
         let value = self.props.value.to_string();
         let value_txt = html! {{format!("{}%", value)}};
+        let id = &self.props.id;
         html! {
-            <progress class=classes max=max value=value>
+            <progress class=classes id=id max=max value=value>
                 {value_txt}
             </progress>
         }

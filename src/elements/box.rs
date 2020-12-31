@@ -7,6 +7,8 @@ pub struct BoxProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
 }
 
 /// A white box to contain other elements.
@@ -37,8 +39,9 @@ impl Component for Box {
         if let Some(extra) = &self.props.classes {
             classes = classes.extend(extra);
         }
+        let id = &self.props.id;
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 {self.props.children.clone()}
             </div>
         }

@@ -11,6 +11,8 @@ pub struct BreadcrumbProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The size of this component.
     #[prop_or_default]
     pub size: Option<BreadcrumbSize>,
@@ -59,8 +61,9 @@ impl Component for Breadcrumb {
         if let Some(separator) = &self.props.separator {
             classes.push(&separator.to_string());
         }
+        let id = &self.props.id;
         html! {
-            <nav class=classes aria-label="breadcrumbs">
+            <nav class=classes aria-label="breadcrumbs" id=id>
                 <ul>
                     {self.props.children.clone()}
                 </ul>

@@ -9,6 +9,8 @@ pub struct ControlProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -49,8 +51,9 @@ impl Component for Control {
             classes.push("is-expanded");
         }
         let tag = self.props.tag.clone();
+        let id = &self.props.id;
         html! {
-            <@{tag} class=classes>
+            <@{tag} class=classes id=id>
                 {self.props.children.clone()}
             </@>
         }

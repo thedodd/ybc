@@ -8,6 +8,8 @@ pub struct FieldProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// A text label for the field.
     #[prop_or_default]
     pub label: Option<String>,
@@ -90,6 +92,7 @@ impl Component for Field {
         if self.props.multiline {
             classes.push("is-grouped-multiline");
         }
+        let id = &self.props.id;
 
         // Build the label if label content is provided.
         let label = match &self.props.label {
@@ -118,7 +121,7 @@ impl Component for Field {
         };
 
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 {label}
                 {self.props.children.clone()}
                 {help}
@@ -128,7 +131,6 @@ impl Component for Field {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct FieldHorizontalProps {
@@ -136,6 +138,8 @@ pub struct FieldHorizontalProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The text label for the field.
     #[prop_or_default]
     pub label: String,
@@ -179,9 +183,10 @@ impl Component for FieldHorizontal {
         if let Some(size) = &self.props.label_size {
             labelclasses.push(&size.to_string());
         }
+        let id = &self.props.id;
 
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 <div class=labelclasses>
                     <label class="label">{self.props.label.clone()}</label>
                 </div>

@@ -4,6 +4,10 @@ This changelog follows the patterns described here: https://keepachangelog.com/e
 
 ## Unreleased
 
+## 0.1.7
+### added
+- Added field `id` to compenents missing the field.
+
 ## 0.1.6
 ### changed
 - Updates to the `Navbar` component:

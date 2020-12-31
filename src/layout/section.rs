@@ -8,6 +8,8 @@ pub struct SectionProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// A size modifier to control spacing.
     #[prop_or_default]
     pub size: Option<SectionSize>,
@@ -44,8 +46,9 @@ impl Component for Section {
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
         }
+        let id = &self.props.id;
         html! {
-            <section class=classes>
+            <section class=classes id=id>
                 {self.props.children.clone()}
             </section>
         }

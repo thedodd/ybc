@@ -9,6 +9,8 @@ pub struct ButtonsProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The size for all buttons within this group.
     #[prop_or_default]
     pub size: Option<ButtonGroupSize>,
@@ -45,8 +47,9 @@ impl Component for Buttons {
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
         }
+        let id = &self.props.id;
         html! {
-            <div class=classes>
+            <div class=classes id=id>
                 {self.props.children.clone()}
             </div>
         }
@@ -68,7 +71,6 @@ pub enum ButtonGroupSize {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct ButtonProps {
@@ -76,6 +78,8 @@ pub struct ButtonProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The click handler to use for this component.
     #[prop_or_else(Callback::noop)]
     pub onclick: Callback<MouseEvent>,
@@ -124,15 +128,15 @@ impl Component for Button {
         if self.props.r#static {
             classes.push("is-static")
         }
+        let id = &self.props.id;
         html! {
-            <button class=classes onclick=self.props.onclick.clone() disabled=self.props.disabled>
+            <button class=classes id=id onclick=self.props.onclick.clone() disabled=self.props.disabled>
                 {self.props.children.clone()}
             </button>
         }
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[cfg(feature = "router")]
@@ -148,6 +152,8 @@ mod router {
         /// Html inside the component.
         #[prop_or_default]
         pub children: Children,
+        #[prop_or_default]
+        pub id: String,
         /// Classes to be added to component.
         #[prop_or_default]
         pub classes: Option<String>,
@@ -257,7 +263,6 @@ mod router {
 pub use router::{ButtonAnchorRouter, ButtonRouter, ButtonRouterProps};
 
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct ButtonAnchorProps {
@@ -265,6 +270,8 @@ pub struct ButtonAnchorProps {
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The `href` attribute value to use for this component.
     #[prop_or_default]
     pub href: String,
@@ -322,9 +329,11 @@ impl Component for ButtonAnchor {
         if self.props.r#static {
             classes.push("is-static")
         }
+        let id = &self.props.id;
         html! {
             <a
                 class=classes
+                id=id
                 onclick=self.props.onclick.clone()
                 href=self.props.href.clone()
                 rel=self.props.rel.clone().unwrap_or_default()
@@ -338,12 +347,13 @@ impl Component for ButtonAnchor {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct ButtonInputSubmitProps {
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The submit handler to use for this component.
     #[prop_or_else(Callback::noop)]
     pub onsubmit: Callback<FocusEvent>,
@@ -392,19 +402,21 @@ impl Component for ButtonInputSubmit {
         if self.props.r#static {
             classes.push("is-static")
         }
+        let id = &self.props.id;
         html! {
-            <input type="submit" class=classes onsubmit=self.props.onsubmit.clone() disabled=self.props.disabled/>
+            <input type="submit" class=classes id=id onsubmit=self.props.onsubmit.clone() disabled=self.props.disabled/>
         }
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct ButtonInputResetProps {
     #[prop_or_default]
     pub classes: Option<String>,
+    #[prop_or_default]
+    pub id: String,
     /// The reset handler to use for this component.
     #[prop_or_else(Callback::noop)]
     pub onreset: Callback<Event>,
@@ -453,8 +465,9 @@ impl Component for ButtonInputReset {
         if self.props.r#static {
             classes.push("is-static")
         }
+        let id = &self.props.id;
         html! {
-            <input type="reset" class=classes onreset=self.props.onreset.clone() disabled=self.props.disabled/>
+            <input type="reset" class=classes id=id onreset=self.props.onreset.clone() disabled=self.props.disabled/>
         }
     }
 }
