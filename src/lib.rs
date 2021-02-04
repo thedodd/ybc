@@ -35,6 +35,7 @@ pub use components::panel::{Panel, PanelBlock, PanelBlockProps, PanelProps, Pane
 pub use components::tabs::{Tabs, TabsProps};
 
 // elements
+pub use elements::block::{Block, BlockProps};
 pub use elements::button::{
     Button, ButtonAnchor, ButtonAnchorProps, ButtonAnchorRouter, ButtonGroupSize, ButtonInputReset, ButtonInputResetProps, ButtonInputSubmit,
     ButtonInputSubmitProps, ButtonProps, ButtonRouter, ButtonRouterProps, Buttons, ButtonsProps,
