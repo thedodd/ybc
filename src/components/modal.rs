@@ -79,7 +79,7 @@ impl Component for Modal {
     fn view(&self) -> Html {
         let mut classes = Classes::from("modal");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         let (opencb, closecb) = if self.is_active {
             classes.push("is-active");
@@ -181,7 +181,7 @@ impl Component for ModalCard {
     fn view(&self) -> Html {
         let mut classes = Classes::from("modal");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         let (opencb, closecb) = if self.is_active {
             classes.push("is-active");

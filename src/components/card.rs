@@ -35,7 +35,7 @@ impl Component for Card {
     fn view(&self) -> Html {
         let mut classes = Classes::from("card");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <div class=classes>
@@ -82,7 +82,7 @@ impl Component for CardHeader {
     fn view(&self) -> Html {
         let mut classes = Classes::from("card-header");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <header class=classes>
@@ -129,7 +129,7 @@ impl Component for CardImage {
     fn view(&self) -> Html {
         let mut classes = Classes::from("card-image");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <div class=classes>
@@ -176,7 +176,7 @@ impl Component for CardContent {
     fn view(&self) -> Html {
         let mut classes = Classes::from("card-content");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <div class=classes>
@@ -223,7 +223,7 @@ impl Component for CardFooter {
     fn view(&self) -> Html {
         let mut classes = Classes::from("card-footer");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <footer class=classes>

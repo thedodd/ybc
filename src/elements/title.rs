@@ -47,7 +47,7 @@ impl Component for Title {
     fn view(&self) -> Html {
         let mut classes = Classes::from("title");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
@@ -107,7 +107,7 @@ impl Component for Subtitle {
     fn view(&self) -> Html {
         let mut classes = Classes::from("subtitle");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra)
         }
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());

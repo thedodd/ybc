@@ -76,7 +76,7 @@ impl Component for Input {
     fn view(&self) -> Html {
         let mut classes = Classes::from("input");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());

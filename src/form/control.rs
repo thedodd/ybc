@@ -43,7 +43,7 @@ impl Component for Control {
     fn view(&self) -> Html {
         let mut classes = Classes::from("control");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if self.props.expanded {
             classes.push("is-expanded");

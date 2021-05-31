@@ -41,7 +41,7 @@ impl Component for Progress {
     fn view(&self) -> Html {
         let mut classes = Classes::from("progress");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         let max = self.props.max.to_string();
         let value = self.props.value.to_string();

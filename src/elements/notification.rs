@@ -35,7 +35,7 @@ impl Component for Notification {
     fn view(&self) -> Html {
         let mut classes = Classes::from("notification");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <div class=classes>

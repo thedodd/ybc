@@ -41,7 +41,7 @@ impl Component for Panel {
     fn view(&self) -> Html {
         let mut classes = Classes::from("panel");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <nav class=classes>

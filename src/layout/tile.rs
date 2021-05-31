@@ -56,7 +56,7 @@ impl Component for Tile {
     fn view(&self) -> Html {
         let mut classes = Classes::from("tile");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if let Some(ctx) = &self.props.ctx {
             classes.push(&ctx.to_string());

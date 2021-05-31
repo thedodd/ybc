@@ -54,7 +54,7 @@ impl Component for Tag {
     fn view(&self) -> Html {
         let mut classes = Classes::from("tag");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if self.props.rounded {
             classes.push("is-rounded");
@@ -114,7 +114,7 @@ impl Component for Tags {
     fn view(&self) -> Html {
         let mut classes = Classes::from("tags");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if self.props.has_addons {
             classes.push("has-addons");

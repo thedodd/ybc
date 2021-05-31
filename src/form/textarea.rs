@@ -3,6 +3,7 @@ use yew::prelude::*;
 use yewtil::NeqAssign;
 
 use crate::Size;
+use std::borrow::Cow;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct TextAreaProps {
@@ -50,8 +51,8 @@ pub struct TextAreaProps {
 /// be provided from a parent component, and changes to this component are propagated to the parent
 /// component via callback.
 pub struct TextArea {
-    props: TextAreaProps,
     link: ComponentLink<Self>,
+    props: TextAreaProps,
 }
 
 impl Component for TextArea {
@@ -74,7 +75,7 @@ impl Component for TextArea {
     fn view(&self) -> Html {
         let mut classes = Classes::from("textarea");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
@@ -88,13 +89,15 @@ impl Component for TextArea {
         if self.props.fixed_size {
             classes.push("has-fixed-size");
         }
+
+        let rows = Cow::from(self.props.rows.to_string());
         html! {
             <textarea
                 name=self.props.name.clone()
                 value=self.props.value.clone()
                 oninput=self.link.callback(|input: InputData| input.value)
                 class=classes
-                rows=self.props.rows
+                rows=rows
                 placeholder=self.props.placeholder.clone()
                 disabled=self.props.disabled
                 readonly=self.props.readonly
