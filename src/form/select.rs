@@ -164,10 +164,7 @@ impl Component for MultiSelect {
             classes.push("is-loading");
         }
 
-        let size: Option<String> = match &self.props.size {
-            None => None,
-            Some(size) => Some(size.clone().to_string()),
-        };
+        let size: Option<String> = self.props.size.as_ref().map(|size| size.to_string());
         html! {
             <div class=classes>
                 <select

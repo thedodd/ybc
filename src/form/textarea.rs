@@ -60,7 +60,7 @@ impl Component for TextArea {
     type Properties = TextAreaProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self { props, link }
+        Self { link, props }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
