@@ -6,7 +6,7 @@ pub struct CardProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// An all-around flexible and composable component; this is the card container.
@@ -34,9 +34,7 @@ impl Component for Card {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("card");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <div class=classes>
                 {self.props.children.clone()}
@@ -53,7 +51,7 @@ pub struct CardHeaderProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// A container for card header content; rendered as a horizontal bar with a shadow.
@@ -81,9 +79,7 @@ impl Component for CardHeader {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("card-header");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <header class=classes>
                 {self.props.children.clone()}
@@ -100,7 +96,7 @@ pub struct CardImageProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// A fullwidth container for a responsive image.
@@ -128,9 +124,7 @@ impl Component for CardImage {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("card-image");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <div class=classes>
                 {self.props.children.clone()}
@@ -147,7 +141,7 @@ pub struct CardContentProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// A container for any other content as the body of the card.
@@ -175,9 +169,7 @@ impl Component for CardContent {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("card-content");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <div class=classes>
                 {self.props.children.clone()}
@@ -194,7 +186,7 @@ pub struct CardFooterProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// A container for card footer content; rendered as a horizontal list of controls.
@@ -222,9 +214,7 @@ impl Component for CardFooter {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("card-footer");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <footer class=classes>
                 {self.props.children.clone()}

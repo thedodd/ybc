@@ -6,7 +6,7 @@ pub struct TableProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// Add borders to all the cells.
     #[prop_or_default]
     pub bordered: bool,
@@ -52,9 +52,7 @@ impl Component for Table {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("table");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if self.props.bordered {
             classes.push("is-bordered");
         }

@@ -7,19 +7,19 @@ pub struct FieldProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// A text label for the field.
     #[prop_or_default]
     pub label: Option<String>,
     /// Extra classes for the label container.
     #[prop_or_default]
-    pub label_classes: Option<String>,
+    pub label_classes: Option<Classes>,
     /// A help message for the field.
     #[prop_or_default]
     pub help: Option<String>,
     /// Extra classes for the help message container.
     #[prop_or_default]
-    pub help_classes: Option<String>,
+    pub help_classes: Option<Classes>,
     /// A convenience bool to add the `is-danger` class to the help classes when `true`.
     #[prop_or_default]
     pub help_has_error: bool,
@@ -72,9 +72,7 @@ impl Component for Field {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("field");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if self.props.icons_left {
             classes.push("has-icons-left");
         }
@@ -101,7 +99,7 @@ impl Component for Field {
         let label = match &self.props.label {
             Some(label_content) => match &self.props.label_classes {
                 Some(label_classes_str) => {
-                    let mut label_classes = Classes::from(label_classes_str);
+                    let mut label_classes = label_classes_str.clone();
                     if self.props.horizontal {
                         label_classes.push("field-label");
                         html! {
@@ -129,7 +127,7 @@ impl Component for Field {
         let help = match &self.props.help {
             Some(help_content) => match &self.props.help_classes {
                 Some(help_classes_str) => {
-                    let mut help_classes = Classes::from(help_classes_str);
+                    let mut help_classes = help_classes_str.clone();
                     help_classes.push("help");
                     if self.props.help_has_error {
                         help_classes.push("is-danger");

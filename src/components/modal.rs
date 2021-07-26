@@ -22,7 +22,7 @@ pub struct ModalProps {
     #[prop_or_default]
     pub trigger: Html,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// A classic modal overlay, in which you can include any content you want.
@@ -73,9 +73,7 @@ impl Component for Modal {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("modal");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         let (opencb, closecb) = if self.is_active {
             classes.push("is-active");
             (Callback::noop(), self.link.callback(|_| ModalMsg::Close))
@@ -119,7 +117,7 @@ pub struct ModalCardProps {
     #[prop_or_default]
     pub trigger: Html,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// A classic modal with a header, body, and footer section.
@@ -170,9 +168,7 @@ impl Component for ModalCard {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("modal");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         let (opencb, closecb) = if self.is_active {
             classes.push("is-active");
             (Callback::noop(), self.link.callback(|_| ModalMsg::Close))

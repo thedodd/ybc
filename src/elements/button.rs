@@ -8,7 +8,7 @@ pub struct ButtonsProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The size for all buttons within this group.
     #[prop_or_default]
     pub size: Option<ButtonGroupSize>,
@@ -39,9 +39,7 @@ impl Component for Buttons {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("buttons");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
         }
@@ -75,7 +73,7 @@ pub struct ButtonProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The click handler to use for this component.
     #[prop_or_else(Callback::noop)]
     pub onclick: Callback<MouseEvent>,
@@ -115,9 +113,7 @@ impl Component for Button {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("button");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if self.props.loading {
             classes.push("is-loading")
         }
@@ -150,7 +146,7 @@ mod router {
         pub children: Children,
         /// Classes to be added to component.
         #[prop_or_default]
-        pub classes: Option<String>,
+        pub classes: Option<Classes>,
         /// Render a loading spinner within this component.
         #[prop_or_default]
         pub loading: bool,
@@ -258,7 +254,7 @@ pub struct ButtonAnchorProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The `href` attribute value to use for this component.
     #[prop_or_default]
     pub href: String,
@@ -307,9 +303,7 @@ impl Component for ButtonAnchor {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("button");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if self.props.loading {
             classes.push("is-loading")
         }
@@ -337,7 +331,7 @@ impl Component for ButtonAnchor {
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct ButtonInputSubmitProps {
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The submit handler to use for this component.
     #[prop_or_else(Callback::noop)]
     pub onsubmit: Callback<FocusEvent>,
@@ -377,9 +371,7 @@ impl Component for ButtonInputSubmit {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("button");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if self.props.loading {
             classes.push("is-loading")
         }
@@ -398,7 +390,7 @@ impl Component for ButtonInputSubmit {
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct ButtonInputResetProps {
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The reset handler to use for this component.
     #[prop_or_else(Callback::noop)]
     pub onreset: Callback<Event>,
@@ -438,9 +430,7 @@ impl Component for ButtonInputReset {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("button");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if self.props.loading {
             classes.push("is-loading")
         }

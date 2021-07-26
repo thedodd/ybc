@@ -19,7 +19,7 @@ pub struct SelectProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 
     /// The size of this component.
     #[prop_or_default]
@@ -67,9 +67,7 @@ impl Component for Select {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("select");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
         }
@@ -110,7 +108,7 @@ pub struct MultiSelectProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 
     /// The size of this component.
     #[prop_or_default]
@@ -161,9 +159,7 @@ impl Component for MultiSelect {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("select is-multiple");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
         }

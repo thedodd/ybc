@@ -6,7 +6,7 @@ pub struct BlockProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// Bulma’s most basic spacer block
@@ -34,9 +34,7 @@ impl Component for Block {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("block");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <div class=classes>
                 {self.props.children.clone()}

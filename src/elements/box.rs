@@ -6,7 +6,7 @@ pub struct BoxProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// A white box to contain other elements.
@@ -34,9 +34,7 @@ impl Component for Box {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("box");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <div class=classes>
                 {self.props.children.clone()}

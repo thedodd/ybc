@@ -8,7 +8,7 @@ pub struct ContentProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -39,9 +39,7 @@ impl Component for Content {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("content");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         let tag = self.props.tag.clone();
         html! {
             <@{tag} class=classes>

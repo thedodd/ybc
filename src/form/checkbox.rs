@@ -12,7 +12,7 @@ pub struct CheckboxProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// Disable this component.
     #[prop_or_default]
     pub disabled: bool,
@@ -49,9 +49,7 @@ impl Component for Checkbox {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("checkbox");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         let checked = self.props.checked;
         html! {
             <label class=classes disabled=self.props.disabled>

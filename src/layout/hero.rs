@@ -6,24 +6,24 @@ use yewtil::NeqAssign;
 pub struct HeroProps {
     /// Extra classes for the hero container.
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The contents of the hero-head section.
     #[prop_or_default]
     pub head: Option<Html>,
     /// Optional classes to add to the hero-head container.
     #[prop_or_default]
-    pub head_classes: Option<String>,
+    pub head_classes: Option<Classes>,
     /// The contents of the hero-body section.
     pub body: Html,
     /// Optional classes to add to the hero-body container.
     #[prop_or_default]
-    pub body_classes: Option<String>,
+    pub body_classes: Option<Classes>,
     /// The contents of the hero-foot section.
     #[prop_or_default]
     pub foot: Option<Html>,
     /// Optional classes to add to the hero-foot container.
     #[prop_or_default]
-    pub foot_classes: Option<String>,
+    pub foot_classes: Option<Classes>,
     /// If you are using a [fixed navbar](https://bulma.io/documentation/components/navbar/#fixed-navbar),
     /// you can use the `fixed_nav=true` modifier on the hero for it to occupy the viewport height minus
     /// the navbar height.
@@ -64,9 +64,7 @@ impl Component for Hero {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("hero");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if self.props.fixed_nav {
             classes.push("is-fullheight-with-navbar");
         }
@@ -80,9 +78,7 @@ impl Component for Hero {
         // Build the header section.
         let head = if let Some(head) = &self.props.head {
             let mut classes = Classes::from("hero-head");
-            if let Some(extra) = self.props.head_classes.as_ref() {
-                classes.push(extra);
-            }
+            classes.push(&self.props.head_classes);
             html! {<div class=classes>{head.clone()}</div>}
         } else {
             html! {}
@@ -90,18 +86,14 @@ impl Component for Hero {
         // Build the footer section.
         let foot = if let Some(foot) = &self.props.foot {
             let mut classes = Classes::from("hero-foot");
-            if let Some(extra) = self.props.foot_classes.as_ref() {
-                classes.push(extra);
-            }
+            classes.push(&self.props.foot_classes);
             html! {<div class=classes>{foot.clone()}</div>}
         } else {
             html! {}
         };
 
         let mut body_classes = Classes::from("hero-body");
-        if let Some(extra) = self.props.body_classes.as_ref() {
-            body_classes.push(extra);
-        }
+        body_classes.push(&self.props.body_classes);
         html! {
             <section class=classes>
                 {head}

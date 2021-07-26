@@ -10,7 +10,7 @@ pub struct TagProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "span".into())]
     pub tag: String,
@@ -53,9 +53,7 @@ impl Component for Tag {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("tag");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if self.props.rounded {
             classes.push("is-rounded");
         }
@@ -82,7 +80,7 @@ pub struct TagsProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// Attach two tags together; this requires that this component wraps two `Tag` components.
     #[prop_or_default]
     pub has_addons: bool,
@@ -113,9 +111,7 @@ impl Component for Tags {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("tags");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if self.props.has_addons {
             classes.push("has-addons");
         }

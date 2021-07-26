@@ -24,7 +24,7 @@ pub struct FileProps {
     pub selector_icon: Html,
 
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// An option to control if file names will be displayed; if a value is provided, then the
     /// `has-name` class will be added to this form element and the given value will be used as a
     /// placeholder until files are selected.
@@ -81,9 +81,7 @@ impl Component for File {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("file");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if self.props.has_name.is_some() {
             classes.push("has-name");
         }

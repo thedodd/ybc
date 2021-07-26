@@ -17,7 +17,7 @@ pub struct InputProps {
     pub update: Callback<String>,
 
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The input type of this component.
     #[prop_or_else(|| InputType::Text)]
     pub r#type: InputType,
@@ -75,9 +75,7 @@ impl Component for Input {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("input");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
         }
