@@ -164,7 +164,7 @@ impl Component for MultiSelect {
             classes.push("is-loading");
         }
 
-        let size: Option<String> = self.props.size.as_ref().map(|size| size.to_string());
+        let size: String = self.props.list_size.to_string();
         html! {
             <div class=classes>
                 <select
