@@ -12,6 +12,7 @@ This changelog follows the patterns described here: https://keepachangelog.com/e
 - Added `help_has_error` prop to the `Field` component. This `bool` prop will add the `is-danger` class to the field's help text when `true`.
 - Added `horizontal` prop to the `Field` component. This replaces the `FieldHorizontal` component.
 - Added `disabled` prop to the `Select` & `MultiSelect` components.
+- All components have been updated to accept `yew::Classes` instead of `String` for their `classes` props.
 
 ### removed
 - The `FieldHorizontal` component has been removed in favor of the `horizontal` prop of the `Field` component.
