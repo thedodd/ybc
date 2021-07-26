@@ -54,7 +54,7 @@ impl Component for Pagination {
     fn view(&self) -> Html {
         let mut classes = Classes::from("pagination");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
@@ -200,10 +200,7 @@ mod router {
         type Properties = RouterProps<SW>;
 
         fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-            Self {
-                props,
-                marker: std::marker::PhantomData,
-            }
+            Self { props, marker: std::marker::PhantomData }
         }
 
         fn update(&mut self, _: Self::Message) -> ShouldRender {

@@ -40,7 +40,7 @@ impl Component for Level {
     fn view(&self) -> Html {
         let mut classes = Classes::from("level");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <@{self.props.tag.clone()} class=classes>
@@ -90,7 +90,7 @@ impl Component for LevelLeft {
     fn view(&self) -> Html {
         let mut classes = Classes::from("level-left");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <@{self.props.tag.clone()} class=classes>
@@ -140,7 +140,7 @@ impl Component for LevelRight {
     fn view(&self) -> Html {
         let mut classes = Classes::from("level-right");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <@{self.props.tag.clone()} class=classes>
@@ -190,7 +190,7 @@ impl Component for LevelItem {
     fn view(&self) -> Html {
         let mut classes = Classes::from("level-item");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <@{self.props.tag.clone()} class=classes>

@@ -35,7 +35,7 @@ impl Component for Menu {
     fn view(&self) -> Html {
         let mut classes = Classes::from("menu");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <aside class=classes>
@@ -83,7 +83,7 @@ impl Component for MenuList {
     fn view(&self) -> Html {
         let mut classes = Classes::from("menu-list");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <ul class=classes>
@@ -131,7 +131,7 @@ impl Component for MenuLabel {
     fn view(&self) -> Html {
         let mut classes = Classes::from("menu-label");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <p class=classes>

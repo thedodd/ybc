@@ -50,7 +50,7 @@ impl Component for Checkbox {
     fn view(&self) -> Html {
         let mut classes = Classes::from("checkbox");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         let checked = self.props.checked;
         html! {

@@ -43,11 +43,7 @@ impl Component for Dropdown {
     type Properties = DropdownProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self {
-            link,
-            props,
-            is_menu_active: false,
-        }
+        Self { link, props, is_menu_active: false }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -68,7 +64,7 @@ impl Component for Dropdown {
     fn view(&self) -> Html {
         let mut classes = Classes::from("dropdown");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         let opencb = if self.props.hoverable {
             classes.push("is-hoverable");

@@ -68,7 +68,7 @@ impl Component for Select {
     fn view(&self) -> Html {
         let mut classes = Classes::from("select");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
@@ -97,7 +97,7 @@ impl Component for Select {
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-#[derive(Clone, Debug, Properties, PartialEq)]
+#[derive(Properties, Clone, PartialEq)]
 pub struct MultiSelectProps {
     /// The `name` attribute for this form element.
     pub name: String,
@@ -162,7 +162,7 @@ impl Component for MultiSelect {
     fn view(&self) -> Html {
         let mut classes = Classes::from("select is-multiple");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
@@ -170,11 +170,13 @@ impl Component for MultiSelect {
         if self.props.loading {
             classes.push("is-loading");
         }
+
+        let size: String = self.props.list_size.to_string();
         html! {
             <div class=classes>
                 <select
                     multiple=true
-                    size=self.props.list_size
+                    size=size
                     name=self.props.name.clone()
                     value=self.props.value.join(",")
                     disabled=self.props.disabled

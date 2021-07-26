@@ -40,7 +40,7 @@ impl Component for Buttons {
     fn view(&self) -> Html {
         let mut classes = Classes::from("buttons");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
@@ -116,7 +116,7 @@ impl Component for Button {
     fn view(&self) -> Html {
         let mut classes = Classes::from("button");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if self.props.loading {
             classes.push("is-loading")
@@ -173,10 +173,7 @@ mod router {
         type Properties = ButtonRouterProps<SW>;
 
         fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-            Self {
-                props,
-                marker: std::marker::PhantomData,
-            }
+            Self { props, marker: std::marker::PhantomData }
         }
 
         fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -218,10 +215,7 @@ mod router {
         type Properties = ButtonRouterProps<SW>;
 
         fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-            Self {
-                props,
-                marker: std::marker::PhantomData,
-            }
+            Self { props, marker: std::marker::PhantomData }
         }
 
         fn update(&mut self, _: Self::Message) -> ShouldRender {
@@ -314,7 +308,7 @@ impl Component for ButtonAnchor {
     fn view(&self) -> Html {
         let mut classes = Classes::from("button");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if self.props.loading {
             classes.push("is-loading")
@@ -384,7 +378,7 @@ impl Component for ButtonInputSubmit {
     fn view(&self) -> Html {
         let mut classes = Classes::from("button");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if self.props.loading {
             classes.push("is-loading")
@@ -445,7 +439,7 @@ impl Component for ButtonInputReset {
     fn view(&self) -> Html {
         let mut classes = Classes::from("button");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if self.props.loading {
             classes.push("is-loading")

@@ -38,7 +38,7 @@ impl Component for Container {
     fn view(&self) -> Html {
         let mut classes = Classes::from("container");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if self.props.fluid {
             classes.push("is-fluid");

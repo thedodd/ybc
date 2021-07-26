@@ -35,7 +35,7 @@ impl Component for Box {
     fn view(&self) -> Html {
         let mut classes = Classes::from("box");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <div class=classes>

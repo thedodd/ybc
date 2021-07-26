@@ -43,7 +43,7 @@ impl Component for Delete {
     fn view(&self) -> Html {
         let mut classes = Classes::from("delete");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         let tag = self.props.tag.clone();
         html! {

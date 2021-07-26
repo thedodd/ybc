@@ -40,7 +40,7 @@ impl Component for Media {
     fn view(&self) -> Html {
         let mut classes = Classes::from("media");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <@{self.props.tag.clone()} class=classes>
@@ -90,7 +90,7 @@ impl Component for MediaLeft {
     fn view(&self) -> Html {
         let mut classes = Classes::from("media-left");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <@{self.props.tag.clone()} class=classes>
@@ -140,7 +140,7 @@ impl Component for MediaRight {
     fn view(&self) -> Html {
         let mut classes = Classes::from("media-right");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <@{self.props.tag.clone()} class=classes>
@@ -190,7 +190,7 @@ impl Component for MediaContent {
     fn view(&self) -> Html {
         let mut classes = Classes::from("media-content");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <@{self.props.tag.clone()} class=classes>

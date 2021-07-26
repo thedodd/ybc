@@ -53,7 +53,7 @@ impl Component for Table {
     fn view(&self) -> Html {
         let mut classes = Classes::from("table");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if self.props.bordered {
             classes.push("is-bordered");

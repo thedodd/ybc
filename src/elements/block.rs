@@ -35,7 +35,7 @@ impl Component for Block {
     fn view(&self) -> Html {
         let mut classes = Classes::from("block");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <div class=classes>
