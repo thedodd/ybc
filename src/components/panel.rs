@@ -9,7 +9,7 @@ pub struct PanelProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The HTML content of this panel's heading; it is automatically wrapped in a `p.panel-heading`.
     #[prop_or_default]
     pub heading: Html,
@@ -40,9 +40,7 @@ impl Component for Panel {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("panel");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <nav class=classes>
                 <p class="panel-heading">{self.props.heading.clone()}</p>

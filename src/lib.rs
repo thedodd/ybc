@@ -35,6 +35,7 @@ pub use components::panel::{Panel, PanelBlock, PanelBlockProps, PanelProps, Pane
 pub use components::tabs::{Tabs, TabsProps};
 
 // elements
+pub use elements::block::{Block, BlockProps};
 pub use elements::button::{
     Button, ButtonAnchor, ButtonAnchorProps, ButtonAnchorRouter, ButtonGroupSize, ButtonInputReset, ButtonInputResetProps, ButtonInputSubmit,
     ButtonInputSubmitProps, ButtonProps, ButtonRouter, ButtonRouterProps, Buttons, ButtonsProps,
@@ -53,7 +54,7 @@ pub use elements::title::{HeaderSize, Subtitle, SubtitleProps, Title, TitleProps
 // form
 pub use form::checkbox::{Checkbox, CheckboxProps};
 pub use form::control::{Control, ControlProps};
-pub use form::field::{AddonsAlign, Field, FieldHorizontal, FieldHorizontalProps, FieldProps, GroupedAlign, LabelSize};
+pub use form::field::{AddonsAlign, Field, FieldProps, GroupedAlign, LabelSize};
 pub use form::file::{File, FileProps};
 pub use form::input::{Input, InputProps, InputType};
 pub use form::radio::{Radio, RadioProps};

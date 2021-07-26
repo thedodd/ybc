@@ -6,7 +6,7 @@ pub struct NotificationProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// Bold notification blocks, to alert your users of something.
@@ -34,9 +34,7 @@ impl Component for Notification {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("notification");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <div class=classes>
                 {self.props.children.clone()}

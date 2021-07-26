@@ -1,29 +1,24 @@
-#![allow(clippy::redundant_closure_call)]
-
 use yew::prelude::*;
 use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
-pub struct ContentProps {
+pub struct BlockProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
     pub classes: Option<Classes>,
-    /// The HTML tag to use for this component.
-    #[prop_or_else(|| "div".into())]
-    pub tag: String,
 }
 
-/// A single component to wrap WYSIWYG generated content, where only HTML tags are available.
+/// Bulma’s most basic spacer block
 ///
-/// [https://bulma.io/documentation/elements/content/](https://bulma.io/documentation/elements/content/)
-pub struct Content {
-    props: ContentProps,
+/// [https://bulma.io/documentation/elements/block/](https://bulma.io/documentation/elements/block/)
+pub struct Block {
+    props: BlockProps,
 }
 
-impl Component for Content {
+impl Component for Block {
     type Message = ();
-    type Properties = ContentProps;
+    type Properties = BlockProps;
 
     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
         Self { props }
@@ -38,13 +33,12 @@ impl Component for Content {
     }
 
     fn view(&self) -> Html {
-        let mut classes = Classes::from("content");
+        let mut classes = Classes::from("block");
         classes.push(&self.props.classes);
-        let tag = self.props.tag.clone();
         html! {
-            <@{tag} class=classes>
+            <div class=classes>
                 {self.props.children.clone()}
-            </@>
+            </div>
         }
     }
 }

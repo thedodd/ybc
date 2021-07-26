@@ -8,7 +8,7 @@ pub struct MediaProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -39,9 +39,7 @@ impl Component for Media {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("media");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}
@@ -58,7 +56,7 @@ pub struct MediaLeftProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -89,9 +87,7 @@ impl Component for MediaLeft {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("media-left");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}
@@ -108,7 +104,7 @@ pub struct MediaRightProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -139,9 +135,7 @@ impl Component for MediaRight {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("media-right");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}
@@ -158,7 +152,7 @@ pub struct MediaContentProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -189,9 +183,7 @@ impl Component for MediaContent {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("media-content");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}

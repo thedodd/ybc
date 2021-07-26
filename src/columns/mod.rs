@@ -6,7 +6,7 @@ pub struct ColumnsProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// Align child columns vertically.
     #[prop_or_default]
     pub vcentered: bool,
@@ -43,9 +43,7 @@ impl Component for Columns {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("columns");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if self.props.vcentered {
             classes.push("is-vcentered");
         }
@@ -71,7 +69,7 @@ pub struct ColumnProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// A flexbox-based responsive column.
@@ -103,9 +101,7 @@ impl Component for Column {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("column");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <div class=classes>
                 {self.props.children.clone()}

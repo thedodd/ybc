@@ -6,7 +6,7 @@ pub struct ContainerProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// Add a `32px` margin to the left and right sides of the container.
     #[prop_or_default]
     pub fluid: bool,
@@ -37,9 +37,7 @@ impl Component for Container {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("container");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if self.props.fluid {
             classes.push("is-fluid");
         }

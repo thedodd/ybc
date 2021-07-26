@@ -6,7 +6,7 @@ use yewtil::NeqAssign;
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct ProgressProps {
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The maximum amount of progress; the 100% value.
     #[prop_or_else(|| 1.0)]
     pub max: f32,
@@ -40,9 +40,7 @@ impl Component for Progress {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("progress");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         let max = self.props.max.to_string();
         let value = self.props.value.to_string();
         let value_txt = html! {{format!("{}%", value)}};

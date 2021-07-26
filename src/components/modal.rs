@@ -22,7 +22,7 @@ pub struct ModalProps {
     #[prop_or_default]
     pub trigger: Html,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// A classic modal overlay, in which you can include any content you want.
@@ -46,12 +46,7 @@ impl Component for Modal {
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
         let callback = link.callback(ModalMsg::CloseFromAgent);
         let subscription = ModalCloser::bridge(callback);
-        Self {
-            props,
-            link,
-            subscription,
-            is_active: false,
-        }
+        Self { props, link, subscription, is_active: false }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -78,9 +73,7 @@ impl Component for Modal {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("modal");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         let (opencb, closecb) = if self.is_active {
             classes.push("is-active");
             (Callback::noop(), self.link.callback(|_| ModalMsg::Close))
@@ -124,7 +117,7 @@ pub struct ModalCardProps {
     #[prop_or_default]
     pub trigger: Html,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// A classic modal with a header, body, and footer section.
@@ -148,12 +141,7 @@ impl Component for ModalCard {
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
         let callback = link.callback(ModalMsg::CloseFromAgent);
         let subscription = ModalCloser::bridge(callback);
-        Self {
-            props,
-            link,
-            subscription,
-            is_active: false,
-        }
+        Self { props, link, subscription, is_active: false }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -180,9 +168,7 @@ impl Component for ModalCard {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("modal");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         let (opencb, closecb) = if self.is_active {
             classes.push("is-active");
             (Callback::noop(), self.link.callback(|_| ModalMsg::Close))
@@ -277,10 +263,7 @@ impl Agent for ModalCloser {
     type Output = ModalCloseMsg; // The agent forwards the input to all registered modals.
 
     fn create(link: AgentLink<Self>) -> Self {
-        Self {
-            link,
-            subscribers: HashSet::new(),
-        }
+        Self { link, subscribers: HashSet::new() }
     }
 
     fn update(&mut self, _: Self::Message) {}

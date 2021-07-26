@@ -6,7 +6,7 @@ pub struct MenuProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// A simple menu, for any type of vertical navigation.
@@ -34,9 +34,7 @@ impl Component for Menu {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("menu");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <aside class=classes>
                 {self.props.children.clone()}
@@ -54,7 +52,7 @@ pub struct MenuListProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// A container for menu list `li` elements.
@@ -82,9 +80,7 @@ impl Component for MenuList {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("menu-list");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <ul class=classes>
                 {self.props.children.clone()}
@@ -99,7 +95,7 @@ impl Component for MenuList {
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct MenuLabelProps {
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The text of the label.
     #[prop_or_default]
     pub text: String,
@@ -130,9 +126,7 @@ impl Component for MenuLabel {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("menu-label");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <p class=classes>
                 {self.props.text.clone()}

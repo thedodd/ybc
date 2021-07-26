@@ -7,19 +7,22 @@ pub struct FieldProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// A text label for the field.
     #[prop_or_default]
     pub label: Option<String>,
     /// Extra classes for the label container.
     #[prop_or_default]
-    pub label_classes: Option<String>,
+    pub label_classes: Option<Classes>,
     /// A help message for the field.
     #[prop_or_default]
     pub help: Option<String>,
     /// Extra classes for the help message container.
     #[prop_or_default]
-    pub help_classes: Option<String>,
+    pub help_classes: Option<Classes>,
+    /// A convenience bool to add the `is-danger` class to the help classes when `true`.
+    #[prop_or_default]
+    pub help_has_error: bool,
     /// Has icons on the left of the field's controls.
     #[prop_or_default]
     pub icons_left: bool,
@@ -41,6 +44,9 @@ pub struct FieldProps {
     /// Allow the grouped controls to span multiple lines.
     #[prop_or_default]
     pub multiline: bool,
+    /// Make this a horizontal field.
+    #[prop_or_default]
+    pub horizontal: bool,
 }
 
 /// A container for form controls
@@ -66,9 +72,7 @@ impl Component for Field {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("field");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if self.props.icons_left {
             classes.push("has-icons-left");
         }
@@ -95,11 +99,26 @@ impl Component for Field {
         let label = match &self.props.label {
             Some(label_content) => match &self.props.label_classes {
                 Some(label_classes_str) => {
-                    let mut label_classes = Classes::from(label_classes_str);
-                    label_classes.push("label");
-                    html! {<label class=label_classes>{label_content.clone()}</label>}
+                    let mut label_classes = label_classes_str.clone();
+                    if self.props.horizontal {
+                        label_classes.push("field-label");
+                        html! {
+                            <div class=label_classes>
+                                <label class="label">{label_content.clone()}</label>
+                            </div>
+                        }
+                    } else {
+                        label_classes.push("label");
+                        html! {<label class=label_classes>{label_content.clone()}</label>}
+                    }
                 }
-                None => html! {<label class="label">{label_content.clone()}</label>},
+                None => {
+                    if self.props.horizontal {
+                        html! {<div class="field-label"><label class="label">{label_content.clone()}</label></div>}
+                    } else {
+                        html! {<label class="label">{label_content.clone()}</label>}
+                    }
+                }
             },
             None => html! {},
         };
@@ -108,86 +127,35 @@ impl Component for Field {
         let help = match &self.props.help {
             Some(help_content) => match &self.props.help_classes {
                 Some(help_classes_str) => {
-                    let mut help_classes = Classes::from(help_classes_str);
+                    let mut help_classes = help_classes_str.clone();
                     help_classes.push("help");
+                    if self.props.help_has_error {
+                        help_classes.push("is-danger");
+                    }
                     html! {<label class=help_classes>{help_content.clone()}</label>}
                 }
-                None => html! {<label class="help">{help_content.clone()}</label>},
+                None => {
+                    let mut help_classes = Classes::from("help");
+                    if self.props.help_has_error {
+                        help_classes.push("is-danger");
+                    }
+                    html! {<label class=help_classes>{help_content.clone()}</label>}
+                }
             },
             None => html! {},
         };
 
+        // Build the body section.
+        let mut body = html! {<>{self.props.children.clone()}</>};
+        if self.props.horizontal {
+            body = html! {<div class="field-body">{body}</div>}
+        }
+
         html! {
             <div class=classes>
                 {label}
-                {self.props.children.clone()}
+                {body}
                 {help}
-            </div>
-        }
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-
-#[derive(Clone, Debug, Properties, PartialEq)]
-pub struct FieldHorizontalProps {
-    #[prop_or_default]
-    pub children: Children,
-    #[prop_or_default]
-    pub classes: Option<String>,
-    /// The text label for the field.
-    #[prop_or_default]
-    pub label: String,
-    /// The size of the contents for the field.
-    #[prop_or_default]
-    pub label_size: Option<LabelSize>,
-}
-
-/// A field wrapper to create horizontal fields.
-///
-/// https://bulma.io/documentation/form/general/#horizontal-form
-pub struct FieldHorizontal {
-    props: FieldHorizontalProps,
-}
-
-impl Component for FieldHorizontal {
-    type Message = ();
-    type Properties = FieldHorizontalProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        // field classes
-        let mut classes = Classes::from("field is-horizontal");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
-
-        // label classes
-        let mut labelclasses = Classes::from("field-label");
-        if let Some(size) = &self.props.label_size {
-            labelclasses.push(&size.to_string());
-        }
-
-        html! {
-            <div class=classes>
-                <div class=labelclasses>
-                    <label class="label">{self.props.label.clone()}</label>
-                </div>
-                <div class="field-body">
-                    {self.props.children.clone()}
-                </div>
             </div>
         }
     }

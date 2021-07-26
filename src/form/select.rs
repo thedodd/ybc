@@ -19,7 +19,7 @@ pub struct SelectProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 
     /// The size of this component.
     #[prop_or_default]
@@ -27,6 +27,9 @@ pub struct SelectProps {
     /// Display a loading spinner within this component.
     #[prop_or_default]
     pub loading: bool,
+    /// Disable this component.
+    #[prop_or_default]
+    pub disabled: bool,
 }
 
 /// A wrapper around an HTML `select` tag.
@@ -64,9 +67,7 @@ impl Component for Select {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("select");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
         }
@@ -78,6 +79,7 @@ impl Component for Select {
                 <select
                     name=self.props.name.clone()
                     value=self.props.value.clone()
+                    disabled=self.props.disabled
                     onchange=self.link.callback(|change: ChangeData| match change {
                         ChangeData::Select(data) => data.value(),
                         _ => unreachable!("invariant violation: received non-select change event from a select element"),
@@ -106,7 +108,7 @@ pub struct MultiSelectProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 
     /// The size of this component.
     #[prop_or_default]
@@ -117,6 +119,9 @@ pub struct MultiSelectProps {
     /// Display a loading spinner within this component.
     #[prop_or_default]
     pub loading: bool,
+    /// Disable this component.
+    #[prop_or_default]
+    pub disabled: bool,
 }
 
 /// A wrapper around an HTML `select` tag with the `multiple=true` attribute.
@@ -154,9 +159,7 @@ impl Component for MultiSelect {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("select is-multiple");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
         }
@@ -172,6 +175,7 @@ impl Component for MultiSelect {
                     size=size
                     name=self.props.name.clone()
                     value=self.props.value.join(",")
+                    disabled=self.props.disabled
                     onchange=self.link.callback(|change: ChangeData| match change {
                         ChangeData::Select(data) => {
                             let opts = data.selected_options();

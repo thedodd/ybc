@@ -6,7 +6,7 @@ pub struct MessageProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// Colored message blocks, to emphasize part of your page.
@@ -34,9 +34,7 @@ impl Component for Message {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("message");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <article class=classes>
                 {self.props.children.clone()}
@@ -53,7 +51,7 @@ pub struct MessageHeaderProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// An optional message header that can hold a title and a delete element.
@@ -81,9 +79,7 @@ impl Component for MessageHeader {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("message-header");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <div class=classes>
                 {self.props.children.clone()}
@@ -100,7 +96,7 @@ pub struct MessageBodyProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// A container for the body of a message.
@@ -128,9 +124,7 @@ impl Component for MessageBody {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("message-body");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <div class=classes>
                 {self.props.children.clone()}

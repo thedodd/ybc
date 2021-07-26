@@ -8,7 +8,7 @@ pub struct LevelProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "nav".into())]
     pub tag: String,
@@ -39,9 +39,7 @@ impl Component for Level {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("level");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}
@@ -58,7 +56,7 @@ pub struct LevelLeftProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -89,9 +87,7 @@ impl Component for LevelLeft {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("level-left");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}
@@ -108,7 +104,7 @@ pub struct LevelRightProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -139,9 +135,7 @@ impl Component for LevelRight {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("level-right");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}
@@ -158,7 +152,7 @@ pub struct LevelItemProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -189,9 +183,7 @@ impl Component for LevelItem {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("level-item");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <@{self.props.tag.clone()} class=classes>
                 {self.props.children.clone()}

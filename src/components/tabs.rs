@@ -8,7 +8,7 @@ pub struct TabsProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The alignment of this component.
     #[prop_or_default]
     pub alignment: Option<Alignment>,
@@ -57,9 +57,7 @@ impl Component for Tabs {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("tabs");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if let Some(alignment) = &self.props.alignment {
             classes.push(&alignment.to_string());
         }

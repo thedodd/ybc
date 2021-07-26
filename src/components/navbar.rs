@@ -16,7 +16,7 @@ pub struct NavbarProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// Make the navbar fixed to the top or bottom of the UI.
     #[prop_or_default]
     pub fixed: Option<NavbarFixed>,
@@ -49,6 +49,9 @@ pub struct NavbarProps {
     /// A bool controlling if the navbar should have a navbar burger for smaller viewports.
     #[prop_or_else(|| true)]
     pub navburger: bool,
+    /// Extra classes for the navbar burger.
+    #[prop_or_default]
+    pub navburger_classes: Option<Classes>,
 }
 
 /// A responsive horizontal navbar that can support images, links, buttons, and dropdowns.
@@ -65,11 +68,7 @@ impl Component for Navbar {
     type Properties = NavbarProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self {
-            props,
-            link,
-            is_menu_open: false,
-        }
+        Self { props, link, is_menu_open: false }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -88,9 +87,7 @@ impl Component for Navbar {
     fn view(&self) -> Html {
         // navbar classes
         let mut classes = Classes::from("navbar");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if let Some(fixed) = &self.props.fixed {
             classes.push(&fixed.to_string());
         }
@@ -98,6 +95,7 @@ impl Component for Navbar {
         // navbar-menu classes
         let mut navclasses = Classes::from("navbar-menu");
         let mut burgerclasses = Classes::from("navbar-burger");
+        burgerclasses.push(&self.props.navburger_classes);
         if self.is_menu_open {
             navclasses.push("is-active");
             burgerclasses.push("is-active");
@@ -194,7 +192,7 @@ pub struct NavbarItemProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| NavbarItemTag::Div)]
     pub tag: NavbarItemTag,
@@ -248,9 +246,7 @@ impl Component for NavbarItem {
     fn view(&self) -> Html {
         // navbar classes
         let mut classes = Classes::from("navbar-item");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if self.props.has_dropdown {
             classes.push("has-dropdown");
         }
@@ -293,7 +289,7 @@ impl Component for NavbarItem {
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct NavbarDividerProps {
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
 }
 
 /// An element to display a horizontal rule in a navbar-dropdown.
@@ -321,9 +317,7 @@ impl Component for NavbarDivider {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("navbar-divider");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         html! {
             <hr class=classes/>
         }
@@ -339,7 +333,7 @@ pub struct NavbarDropdownProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The contents of the navbar-link used for triggering the dropdown menu.
     pub navlink: Html,
     /// Make this dropdown triggerable based on hover.
@@ -376,11 +370,7 @@ impl Component for NavbarDropdown {
     type Properties = NavbarDropdownProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self {
-            props,
-            link,
-            is_menu_active: false,
-        }
+        Self { props, link, is_menu_active: false }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -401,9 +391,7 @@ impl Component for NavbarDropdown {
     fn view(&self) -> Html {
         // navbar-item classes
         let mut classes = Classes::from("navbar-item has-dropdown");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if self.props.dropup {
             classes.push("has-dropdown-up");
         }

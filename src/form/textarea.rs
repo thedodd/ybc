@@ -15,7 +15,7 @@ pub struct TextAreaProps {
     pub update: Callback<String>,
 
     #[prop_or_default]
-    pub classes: Option<String>,
+    pub classes: Option<Classes>,
     /// The placeholder value for this component.
     #[prop_or_default]
     pub placeholder: String,
@@ -74,9 +74,7 @@ impl Component for TextArea {
 
     fn view(&self) -> Html {
         let mut classes = Classes::from("textarea");
-        if let Some(extra) = &self.props.classes {
-            classes.push(extra);
-        }
+        classes.push(&self.props.classes);
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());
         }
