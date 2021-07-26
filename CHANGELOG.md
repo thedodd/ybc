@@ -4,6 +4,9 @@ This changelog follows the patterns described here: https://keepachangelog.com/e
 
 ## Unreleased
 
+## 0.2.0 
+- Added support for yew `0.18.x`
+
 ## 0.1.6
 ### changed
 - Updates to the `Navbar` component:

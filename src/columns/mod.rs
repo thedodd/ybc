@@ -44,7 +44,7 @@ impl Component for Columns {
     fn view(&self) -> Html {
         let mut classes = Classes::from("columns");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if self.props.vcentered {
             classes.push("is-vcentered");
@@ -104,7 +104,7 @@ impl Component for Column {
     fn view(&self) -> Html {
         let mut classes = Classes::from("column");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <div class=classes>

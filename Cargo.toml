@@ -1,6 +1,6 @@
 [package]
 name = "ybc"
-version = "0.1.6"
+version = "0.2.0"
 description = "A Yew component library based on the Bulma CSS framework."
 authors = ["Anthony Dodd <dodd.anthonyjosiah@gmail.com>"]
 edition = "2018"
@@ -13,9 +13,9 @@ keywords = ["wasm", "web", "bulma", "sass", "yew"]
 [dependencies]
 derive_more = "0.99.9"
 web-sys = { version="0.3", features=["Element", "File", "HtmlCollection", "HtmlSelectElement"] }
-yew = { version="0.17.3", features=["web_sys"] }
-yewtil = { version="0.3.2", features=["neq"] }
-yew-router = { version="0.14.0", features=["web_sys"], optional=true }
+yew = { version="0.18.0", features=["web_sys"] }
+yewtil = { version="0.4.0", features=["neq"] }
+yew-router = { version="0.15.0", features=["web_sys"], optional=true }
 
 [features]
 default = ["router"]

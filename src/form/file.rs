@@ -82,7 +82,7 @@ impl Component for File {
     fn view(&self) -> Html {
         let mut classes = Classes::from("file");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if self.props.has_name.is_some() {
             classes.push("has-name");

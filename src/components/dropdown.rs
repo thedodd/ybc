@@ -68,7 +68,7 @@ impl Component for Dropdown {
     fn view(&self) -> Html {
         let mut classes = Classes::from("dropdown");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         let opencb = if self.props.hoverable {
             classes.push("is-hoverable");

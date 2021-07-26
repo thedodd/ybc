@@ -35,7 +35,7 @@ impl Component for Message {
     fn view(&self) -> Html {
         let mut classes = Classes::from("message");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <article class=classes>
@@ -82,7 +82,7 @@ impl Component for MessageHeader {
     fn view(&self) -> Html {
         let mut classes = Classes::from("message-header");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <div class=classes>
@@ -129,7 +129,7 @@ impl Component for MessageBody {
     fn view(&self) -> Html {
         let mut classes = Classes::from("message-body");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         html! {
             <div class=classes>

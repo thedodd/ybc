@@ -56,7 +56,7 @@ impl Component for Hero {
     fn view(&self) -> Html {
         let mut classes = Classes::from("hero");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if self.props.fixed_nav {
             classes.push("is-fullheight-with-navbar");

@@ -67,7 +67,7 @@ impl Component for Field {
     fn view(&self) -> Html {
         let mut classes = Classes::from("field");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if self.props.icons_left {
             classes.push("has-icons-left");
@@ -171,7 +171,7 @@ impl Component for FieldHorizontal {
         // field classes
         let mut classes = Classes::from("field is-horizontal");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
 
         // label classes

@@ -39,7 +39,7 @@ impl Component for Section {
     fn view(&self) -> Html {
         let mut classes = Classes::from("section");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if let Some(size) = &self.props.size {
             classes.push(&size.to_string());

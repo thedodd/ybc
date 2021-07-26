@@ -58,7 +58,7 @@ impl Component for Tabs {
     fn view(&self) -> Html {
         let mut classes = Classes::from("tabs");
         if let Some(extra) = &self.props.classes {
-            classes = classes.extend(extra);
+            classes.push(extra);
         }
         if let Some(alignment) = &self.props.alignment {
             classes.push(&alignment.to_string());

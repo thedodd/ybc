@@ -1,6 +1,7 @@
 # directory ignores
 dist
 target
+.idea
 
 # file ignores
 Cargo.lock
