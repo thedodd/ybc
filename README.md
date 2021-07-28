@@ -37,7 +37,7 @@ impl Component for App {
       <ybc::Container fluid=true>
         <ybc::Tile ctx=Ancestor>
           <ybc::Tile ctx=Parent vertical=true size=Four>
-            <ybc::Tile ctx=Child classes="box">
+            <ybc::Tile ctx=Child classes=classes!("box")>
               <p>{"Lorem ipsum dolor sit amet ..."}</p>
             </ybc::Tile>
             /* .. snip .. more tiles here .. */
@@ -56,12 +56,12 @@ First, add this library to your `Cargo.toml` dependencies.
 
 ```toml
 [dependencies]
-ybc = "*"
+ybc = "0.2"
 ```
 
 ### add bulma
 #### add bulma css (no customizations)
-This project works perfectly well if you just include the Bulma CSS in your HTML, [as described here](https://bulma.io/documentation/overview/start/). The following link in your HTML head should do the trick: `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"/>`.
+This project works perfectly well if you just include the Bulma CSS in your HTML, [as described here](https://bulma.io/documentation/overview/start/). The following link in your HTML head should do the trick: `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"/>`.
 
 #### add bulma sass (allows customization & themes)
 However, if you want to customize Bulma to match your style guidelines, then you will need to have a copy of the Bulma SASS locally, and then import Bulma after you've defined your customizations, [as described here](https://bulma.io/documentation/customize/).
