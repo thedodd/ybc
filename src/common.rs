@@ -1,6 +1,6 @@
 use derive_more::Display;
 use std::borrow::Cow;
-use yew::html::IntoOptPropValue;
+use yew::html::IntoPropValue;
 
 /// Common alignment classes.
 #[derive(Clone, Debug, Display, PartialEq)]
@@ -28,8 +28,8 @@ pub enum Size {
     Large,
 }
 
-impl IntoOptPropValue<Cow<'static, str>> for Size {
-    fn into_opt_prop_value(self) -> Option<Cow<'static, str>> {
-        Some(Cow::from(self.to_string()))
+impl IntoPropValue<Cow<'static, str>> for Size {
+    fn into_prop_value(self) -> Cow<'static, str> {
+        Cow::from(self.to_string())
     }
 }

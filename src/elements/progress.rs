@@ -1,7 +1,6 @@
 #![allow(clippy::redundant_closure_call)]
 
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct ProgressProps {
@@ -18,36 +17,15 @@ pub struct ProgressProps {
 /// A native HTML progress bar.
 ///
 /// [https://bulma.io/documentation/elements/progress/](https://bulma.io/documentation/elements/progress/)
-pub struct Progress {
-    props: ProgressProps,
-}
-
-impl Component for Progress {
-    type Message = ();
-    type Properties = ProgressProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("progress");
-        classes.push(&self.props.classes);
-        let max = self.props.max.to_string();
-        let value = self.props.value.to_string();
-        let value_txt = html! {{format!("{}%", value)}};
-        html! {
-            <progress class=classes max=max value=value>
-                {value_txt}
-            </progress>
-        }
+#[function_component(Progress)]
+pub fn progress(props: &ProgressProps) -> Html {
+    let class = classes!("progress", props.classes.clone());
+    let max = props.max.to_string();
+    let value = props.value.to_string();
+    let value_txt = format!("{}%", value);
+    html! {
+        <progress {class} {max} {value}>
+            {value_txt}
+        </progress>
     }
 }

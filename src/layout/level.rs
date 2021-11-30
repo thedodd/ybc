@@ -1,7 +1,6 @@
 #![allow(clippy::redundant_closure_call)]
 
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct LevelProps {
@@ -17,34 +16,13 @@ pub struct LevelProps {
 /// A multi-purpose horizontal level, which can contain almost any other element.
 ///
 /// [https://bulma.io/documentation/layout/level/](https://bulma.io/documentation/layout/level/)
-pub struct Level {
-    props: LevelProps,
-}
-
-impl Component for Level {
-    type Message = ();
-    type Properties = LevelProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("level");
-        classes.push(&self.props.classes);
-        html! {
-            <@{self.props.tag.clone()} class=classes>
-                {self.props.children.clone()}
-            </@>
-        }
+#[function_component(Level)]
+pub fn level(props: &LevelProps) -> Html {
+    let class = classes!("level", props.classes.clone());
+    html! {
+        <@{props.tag.clone()} {class}>
+            {props.children.clone()}
+        </@>
     }
 }
 
@@ -65,34 +43,13 @@ pub struct LevelLeftProps {
 /// A container for level elements to be grouped to the left of the container.
 ///
 /// [https://bulma.io/documentation/layout/level/](https://bulma.io/documentation/layout/level/)
-pub struct LevelLeft {
-    props: LevelLeftProps,
-}
-
-impl Component for LevelLeft {
-    type Message = ();
-    type Properties = LevelLeftProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("level-left");
-        classes.push(&self.props.classes);
-        html! {
-            <@{self.props.tag.clone()} class=classes>
-                {self.props.children.clone()}
-            </@>
-        }
+#[function_component(LevelLeft)]
+pub fn level_left(props: &LevelLeftProps) -> Html {
+    let class = classes!("level-left", props.classes.clone());
+    html! {
+        <@{props.tag.clone()} {class}>
+            {props.children.clone()}
+        </@>
     }
 }
 
@@ -113,34 +70,13 @@ pub struct LevelRightProps {
 /// A container for level elements to be grouped to the right of the container.
 ///
 /// [https://bulma.io/documentation/layout/level/](https://bulma.io/documentation/layout/level/)
-pub struct LevelRight {
-    props: LevelRightProps,
-}
-
-impl Component for LevelRight {
-    type Message = ();
-    type Properties = LevelRightProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("level-right");
-        classes.push(&self.props.classes);
-        html! {
-            <@{self.props.tag.clone()} class=classes>
-                {self.props.children.clone()}
-            </@>
-        }
+#[function_component(LevelRight)]
+pub fn level_right(props: &LevelRightProps) -> Html {
+    let class = classes!("level-right", props.classes.clone());
+    html! {
+        <@{props.tag.clone()} {class}>
+            {props.children.clone()}
+        </@>
     }
 }
 
@@ -161,33 +97,12 @@ pub struct LevelItemProps {
 /// An individual element of a level container.
 ///
 /// [https://bulma.io/documentation/layout/level/](https://bulma.io/documentation/layout/level/)
-pub struct LevelItem {
-    props: LevelItemProps,
-}
-
-impl Component for LevelItem {
-    type Message = ();
-    type Properties = LevelItemProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("level-item");
-        classes.push(&self.props.classes);
-        html! {
-            <@{self.props.tag.clone()} class=classes>
-                {self.props.children.clone()}
-            </@>
-        }
+#[function_component(LevelItem)]
+pub fn level_item(props: &LevelItemProps) -> Html {
+    let class = classes!("level-item", props.classes.clone());
+    html! {
+        <@{props.tag.clone()} {class}>
+            {props.children.clone()}
+        </@>
     }
 }

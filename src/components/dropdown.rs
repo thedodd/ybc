@@ -1,5 +1,4 @@
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 use crate::elements::button::Button;
 
@@ -33,8 +32,6 @@ pub enum DropdownMsg {
 ///
 /// [https://bulma.io/documentation/components/dropdown/](https://bulma.io/documentation/components/dropdown/)
 pub struct Dropdown {
-    link: ComponentLink<Self>,
-    props: DropdownProps,
     is_menu_active: bool,
 }
 
@@ -42,12 +39,12 @@ impl Component for Dropdown {
     type Message = DropdownMsg;
     type Properties = DropdownProps;
 
-    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self { link, props, is_menu_active: false }
+    fn create(_ctx: &Context<Self>) -> Self {
+        Self { is_menu_active: false }
     }
 
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
-        if self.props.hoverable {
+    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
+        if ctx.props().hoverable {
             return false;
         }
         match msg {
@@ -57,36 +54,32 @@ impl Component for Dropdown {
         true
     }
 
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("dropdown");
-        classes.push(&self.props.classes);
-        let opencb = if self.props.hoverable {
-            classes.push("is-hoverable");
+    fn view(&self, ctx: &Context<Self>) -> Html {
+        let mut class = Classes::from("dropdown");
+        class.push(&ctx.props().classes);
+        let opencb = if ctx.props().hoverable {
+            class.push("is-hoverable");
             Callback::noop()
         } else {
-            self.link.callback(|_| DropdownMsg::Open)
+            ctx.link().callback(|_| DropdownMsg::Open)
         };
         let overlay = if self.is_menu_active {
-            classes.push("is-active");
-            html! {<div onclick=self.link.callback(|_| DropdownMsg::Close) style="z-index:10;background-color:rgba(0,0,0,0);position:fixed;top:0;bottom:0;left:0;right:0;"></div>}
+            class.push("is-active");
+            html! {<div onclick={ctx.link().callback(|_| DropdownMsg::Close)} style="z-index:10;background-color:rgba(0,0,0,0);position:fixed;top:0;bottom:0;left:0;right:0;"></div>}
         } else {
             html! {}
         };
         html! {
-            <div class=classes>
+            <div {class}>
                 {overlay}
                 <div class="dropdown-trigger">
-                    <Button classes=self.props.button_classes.clone() onclick=opencb>
-                        {self.props.button_html.clone()}
+                    <Button classes={ctx.props().button_classes.clone()} onclick={opencb}>
+                        {ctx.props().button_html.clone()}
                     </Button>
                 </div>
                 <div class="dropdown-menu" role="menu">
                     <div class="dropdown-content">
-                        {self.props.children.clone()}
+                        {ctx.props().children.clone()}
                     </div>
                 </div>
             </div>

@@ -1,5 +1,4 @@
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 use crate::{Alignment, Size};
 
@@ -35,53 +34,23 @@ pub struct TabsProps {
 ///
 /// For integration with Yew Router, it is recommended that the `RouterButton` or `RouterAnchor`
 /// components be used as the individual tab elements for this component.
-pub struct Tabs {
-    props: TabsProps,
-}
-
-impl Component for Tabs {
-    type Message = ();
-    type Properties = TabsProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("tabs");
-        classes.push(&self.props.classes);
-        if let Some(alignment) = &self.props.alignment {
-            classes.push(&alignment.to_string());
-        }
-        if let Some(size) = &self.props.size {
-            classes.push(&size.to_string());
-        }
-        if self.props.boxed {
-            classes.push("is-boxed");
-        }
-        if self.props.toggle {
-            classes.push("is-toggle");
-        }
-        if self.props.rounded {
-            classes.push("is-rounded");
-        }
-        if self.props.fullwidth {
-            classes.push("is-fullwidth");
-        }
-        html! {
-            <div class=classes>
-                <ul>
-                    {self.props.children.clone()}
-                </ul>
-            </div>
-        }
+#[function_component(Tabs)]
+pub fn tabs(props: &TabsProps) -> Html {
+    let class = classes!(
+        "tabs",
+        props.classes.clone(),
+        props.alignment.as_ref().map(ToString::to_string),
+        props.size.as_ref().map(ToString::to_string),
+        props.boxed.then(|| "is-boxed"),
+        props.toggle.then(|| "is-toggle"),
+        props.rounded.then(|| "is-rounded"),
+        props.fullwidth.then(|| "is-fullwidth"),
+    );
+    html! {
+        <div {class}>
+            <ul>
+                {props.children.clone()}
+            </ul>
+        </div>
     }
 }

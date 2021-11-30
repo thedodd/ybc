@@ -1,5 +1,4 @@
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct MenuProps {
@@ -12,34 +11,12 @@ pub struct MenuProps {
 /// A simple menu, for any type of vertical navigation.
 ///
 /// [https://bulma.io/documentation/components/menu/](https://bulma.io/documentation/components/menu/)
-pub struct Menu {
-    props: MenuProps,
-}
-
-impl Component for Menu {
-    type Message = ();
-    type Properties = MenuProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("menu");
-        classes.push(&self.props.classes);
-        html! {
-            <aside class=classes>
-                {self.props.children.clone()}
-            </aside>
-        }
+#[function_component(Menu)]
+pub fn menu(props: &MenuProps) -> Html {
+    html! {
+        <aside class={classes!("menu", props.classes.clone())}>
+            {props.children.clone()}
+        </aside>
     }
 }
 
@@ -58,34 +35,12 @@ pub struct MenuListProps {
 /// A container for menu list `li` elements.
 ///
 /// [https://bulma.io/documentation/components/menu/](https://bulma.io/documentation/components/menu/)
-pub struct MenuList {
-    props: MenuListProps,
-}
-
-impl Component for MenuList {
-    type Message = ();
-    type Properties = MenuListProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("menu-list");
-        classes.push(&self.props.classes);
-        html! {
-            <ul class=classes>
-                {self.props.children.clone()}
-            </ul>
-        }
+#[function_component(MenuList)]
+pub fn menu_list(props: &MenuListProps) -> Html {
+    html! {
+        <ul class={classes!("menu-list", props.classes.clone())}>
+            {props.children.clone()}
+        </ul>
     }
 }
 
@@ -104,33 +59,11 @@ pub struct MenuLabelProps {
 /// A label for a section of the menu.
 ///
 /// [https://bulma.io/documentation/components/menu/](https://bulma.io/documentation/components/menu/)
-pub struct MenuLabel {
-    props: MenuLabelProps,
-}
-
-impl Component for MenuLabel {
-    type Message = ();
-    type Properties = MenuLabelProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("menu-label");
-        classes.push(&self.props.classes);
-        html! {
-            <p class=classes>
-                {self.props.text.clone()}
-            </p>
-        }
+#[function_component(MenuLabel)]
+pub fn menu_label(props: &MenuLabelProps) -> Html {
+    html! {
+        <p class={classes!("menu-label", props.classes.clone())}>
+            {props.text.clone()}
+        </p>
     }
 }

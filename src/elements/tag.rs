@@ -1,7 +1,6 @@
 #![allow(clippy::redundant_closure_call)]
 
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 use crate::Size;
 
@@ -31,44 +30,19 @@ pub struct TagProps {
 /// A small tag label to insert anywhere.
 ///
 /// [https://bulma.io/documentation/elements/tag/](https://bulma.io/documentation/elements/tag/)
-pub struct Tag {
-    props: TagProps,
-}
-
-impl Component for Tag {
-    type Message = ();
-    type Properties = TagProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("tag");
-        classes.push(&self.props.classes);
-        if self.props.rounded {
-            classes.push("is-rounded");
-        }
-        if self.props.delete {
-            classes.push("is-delete");
-        }
-        if let Some(size) = &self.props.size {
-            classes.push(&size.to_string());
-        }
-        let tag = self.props.tag.clone();
-        html! {
-            <@{tag} class=classes onclick=self.props.onclick.clone()>
-                {self.props.children.clone()}
-            </@>
-        }
+#[function_component(Tag)]
+pub fn tag(props: &TagProps) -> Html {
+    let class = classes!(
+        "tag",
+        props.classes.clone(),
+        props.rounded.then(|| "is-rounded"),
+        props.delete.then(|| "is-delete"),
+        props.size.as_ref().map(|size| size.to_string()),
+    );
+    html! {
+        <@{props.tag.clone()} {class} onclick={props.onclick.clone()}>
+            {props.children.clone()}
+        </@>
     }
 }
 
@@ -89,36 +63,12 @@ pub struct TagsProps {
 /// A container for a list of tags.
 ///
 /// [https://bulma.io/documentation/elements/tag/](https://bulma.io/documentation/elements/tag/)
-pub struct Tags {
-    props: TagsProps,
-}
-
-impl Component for Tags {
-    type Message = ();
-    type Properties = TagsProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("tags");
-        classes.push(&self.props.classes);
-        if self.props.has_addons {
-            classes.push("has-addons");
-        }
-        html! {
-            <div class=classes>
-                {self.props.children.clone()}
-            </div>
-        }
+#[function_component(Tags)]
+pub fn tags(props: &TagsProps) -> Html {
+    let class = classes!("tags", props.classes.clone(), props.has_addons.then(|| "has-addons"));
+    html! {
+        <div {class}>
+            {props.children.clone()}
+        </div>
     }
 }

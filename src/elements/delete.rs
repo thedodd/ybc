@@ -1,7 +1,6 @@
 #![allow(clippy::redundant_closure_call)]
 use yew::events::MouseEvent;
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct DeleteProps {
@@ -20,34 +19,12 @@ pub struct DeleteProps {
 /// A versatile delete cross.
 ///
 /// [https://bulma.io/documentation/elements/delete/](https://bulma.io/documentation/elements/delete/)
-pub struct Delete {
-    props: DeleteProps,
-}
-
-impl Component for Delete {
-    type Message = ();
-    type Properties = DeleteProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("delete");
-        classes.push(&self.props.classes);
-        let tag = self.props.tag.clone();
-        html! {
-            <@{tag} class=classes onclick=self.props.onclick.clone()>
-                {self.props.children.clone()}
-            </@>
-        }
+#[function_component(Delete)]
+pub fn delete(props: &DeleteProps) -> Html {
+    let class = classes!("delete", props.classes.clone());
+    html! {
+        <@{props.tag.clone()} {class} onclick={props.onclick.clone()}>
+            {props.children.clone()}
+        </@>
     }
 }

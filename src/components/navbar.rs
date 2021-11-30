@@ -2,7 +2,6 @@
 
 use derive_more::Display;
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 use crate::components::dropdown::DropdownMsg;
 
@@ -58,8 +57,6 @@ pub struct NavbarProps {
 ///
 /// [https://bulma.io/documentation/components/navbar/](https://bulma.io/documentation/components/navbar/)
 pub struct Navbar {
-    props: NavbarProps,
-    link: ComponentLink<Self>,
     is_menu_open: bool,
 }
 
@@ -67,11 +64,11 @@ impl Component for Navbar {
     type Message = NavbarMsg;
     type Properties = NavbarProps;
 
-    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self { props, link, is_menu_open: false }
+    fn create(_ctx: &Context<Self>) -> Self {
+        Self { is_menu_open: false }
     }
 
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             NavbarMsg::ToggleMenu => {
                 self.is_menu_open = !self.is_menu_open;
@@ -80,34 +77,30 @@ impl Component for Navbar {
         true
     }
 
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
+    fn view(&self, ctx: &Context<Self>) -> Html {
         // navbar classes
-        let mut classes = Classes::from("navbar");
-        classes.push(&self.props.classes);
-        if let Some(fixed) = &self.props.fixed {
-            classes.push(&fixed.to_string());
+        let mut class = Classes::from("navbar");
+        class.push(&ctx.props().classes);
+        if let Some(fixed) = &ctx.props().fixed {
+            class.push(&fixed.to_string());
         }
 
         // navbar-menu classes
         let mut navclasses = Classes::from("navbar-menu");
         let mut burgerclasses = Classes::from("navbar-burger");
-        burgerclasses.push(&self.props.navburger_classes);
+        burgerclasses.push(&ctx.props().navburger_classes);
         if self.is_menu_open {
             navclasses.push("is-active");
             burgerclasses.push("is-active");
         }
-        let togglecb = self.link.callback(|_| NavbarMsg::ToggleMenu);
-        let navbrand = if let Some(navbrand) = &self.props.navbrand {
+        let togglecb = ctx.link().callback(|_| NavbarMsg::ToggleMenu);
+        let navbrand = if let Some(navbrand) = &ctx.props().navbrand {
             html! {
                 <div class="navbar-brand">
                     {navbrand.clone()}
-                    {if self.props.navburger {
+                    {if ctx.props().navburger {
                         html! {
-                            <a class=burgerclasses onclick=togglecb
+                            <a class={burgerclasses} onclick={togglecb}
                                 role="button" aria-label="menu"
                                 aria-expanded={if self.is_menu_open { "true" } else { "false" }}
                             >
@@ -124,12 +117,12 @@ impl Component for Navbar {
         } else {
             html! {}
         };
-        let navstart = if let Some(navstart) = &self.props.navstart {
+        let navstart = if let Some(navstart) = &ctx.props().navstart {
             html! {<div class="navbar-start">{navstart.clone()}</div>}
         } else {
             html! {}
         };
-        let navend = if let Some(navend) = &self.props.navend {
+        let navend = if let Some(navend) = &ctx.props().navend {
             html! {<div class="navbar-end">{navend.clone()}</div>}
         } else {
             html! {}
@@ -137,22 +130,22 @@ impl Component for Navbar {
         let contents = html! {
             <>
             {navbrand}
-            <div class=navclasses>
+            <div class={navclasses}>
                 {navstart}
                 {navend}
             </div>
             </>
         };
 
-        if self.props.padded {
+        if ctx.props().padded {
             html! {
-                <nav class=classes role="navigation" aria-label="main navigation">
+                <nav {class} role="navigation" aria-label="main navigation">
                     <div class="container">{contents}</div>
                 </nav>
             }
         } else {
             html! {
-                <nav class=classes role="navigation" aria-label="main navigation">{contents}</nav>
+                <nav {class} role="navigation" aria-label="main navigation">{contents}</nav>
             }
         }
     }
@@ -223,61 +216,34 @@ pub struct NavbarItemProps {
 /// A single element of the navbar.
 ///
 /// [https://bulma.io/documentation/components/navbar/](https://bulma.io/documentation/components/navbar/)
-pub struct NavbarItem {
-    props: NavbarItemProps,
-}
-
-impl Component for NavbarItem {
-    type Message = ();
-    type Properties = NavbarItemProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        // navbar classes
-        let mut classes = Classes::from("navbar-item");
-        classes.push(&self.props.classes);
-        if self.props.has_dropdown {
-            classes.push("has-dropdown");
-        }
-        if self.props.expanded {
-            classes.push("is-expanded");
-        }
-        if self.props.tab {
-            classes.push("is-tab");
-        }
-        if self.props.active {
-            classes.push("is-active");
-        }
-        match self.props.tag {
-            NavbarItemTag::A => {
-                html! {
-                    <a
-                        class=classes
-                        href=self.props.href.clone().unwrap_or_default()
-                        rel=self.props.rel.clone().unwrap_or_default()
-                        target=self.props.target.clone().unwrap_or_default()
-                    >
-                        {self.props.children.clone()}
-                    </a>
-                }
+#[function_component(NavbarItem)]
+pub fn navbar_item(props: &NavbarItemProps) -> Html {
+    let class = classes!(
+        "navbar-item",
+        props.classes.clone(),
+        props.has_dropdown.then(|| "has-dropdown"),
+        props.expanded.then(|| "is-expanded"),
+        props.tab.then(|| "is-tab"),
+        props.active.then(|| "is-active"),
+    );
+    match props.tag {
+        NavbarItemTag::A => {
+            html! {
+                <a
+                    {class}
+                    href={props.href.clone().unwrap_or_default()}
+                    rel={props.rel.clone().unwrap_or_default()}
+                    target={props.target.clone().unwrap_or_default()}
+                >
+                    {props.children.clone()}
+                </a>
             }
-            NavbarItemTag::Div => {
-                html! {
-                    <div class=classes>
-                        {self.props.children.clone()}
-                    </div>
-                }
+        }
+        NavbarItemTag::Div => {
+            html! {
+                <div {class}>
+                    {props.children.clone()}
+                </div>
             }
         }
     }
@@ -295,33 +261,9 @@ pub struct NavbarDividerProps {
 /// An element to display a horizontal rule in a navbar-dropdown.
 ///
 /// [https://bulma.io/documentation/components/navbar/#dropdown-menu](https://bulma.io/documentation/components/navbar/#dropdown-menu)
-pub struct NavbarDivider {
-    props: NavbarDividerProps,
-}
-
-impl Component for NavbarDivider {
-    type Message = ();
-    type Properties = NavbarDividerProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("navbar-divider");
-        classes.push(&self.props.classes);
-        html! {
-            <hr class=classes/>
-        }
-    }
+#[function_component(NavbarDivider)]
+pub fn navbar_divider(props: &NavbarDividerProps) -> Html {
+    html! { <hr class={classes!("navbar-divider", props.classes.clone())} /> }
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -360,8 +302,6 @@ pub struct NavbarDropdownProps {
 ///
 /// [https://bulma.io/documentation/components/navbar/#dropdown-menu](https://bulma.io/documentation/components/navbar/#dropdown-menu)
 pub struct NavbarDropdown {
-    props: NavbarDropdownProps,
-    link: ComponentLink<Self>,
     is_menu_active: bool,
 }
 
@@ -369,12 +309,12 @@ impl Component for NavbarDropdown {
     type Message = DropdownMsg;
     type Properties = NavbarDropdownProps;
 
-    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self { props, link, is_menu_active: false }
+    fn create(_ctx: &Context<Self>) -> Self {
+        Self { is_menu_active: false }
     }
 
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
-        if self.props.hoverable {
+    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
+        if ctx.props().hoverable {
             return false;
         }
         match msg {
@@ -384,51 +324,47 @@ impl Component for NavbarDropdown {
         true
     }
 
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
+    fn view(&self, ctx: &Context<Self>) -> Html {
         // navbar-item classes
-        let mut classes = Classes::from("navbar-item has-dropdown");
-        classes.push(&self.props.classes);
-        if self.props.dropup {
-            classes.push("has-dropdown-up");
+        let mut class = Classes::from("navbar-item has-dropdown");
+        class.push(&ctx.props().classes);
+        if ctx.props().dropup {
+            class.push("has-dropdown-up");
         }
 
         // navbar-dropdown classes
         let mut dropclasses = Classes::from("navbar-dropdown");
-        if self.props.right {
+        if ctx.props().right {
             dropclasses.push("is-right");
         }
-        if self.props.boxed {
+        if ctx.props().boxed {
             dropclasses.push("is-boxed");
         }
 
         // navbar-link classes
         let mut linkclasses = Classes::from("navbar-link");
-        if self.props.arrowless {
+        if ctx.props().arrowless {
             linkclasses.push("is-arrowless");
         }
 
-        let opencb = if self.props.hoverable {
-            classes.push("is-hoverable");
+        let opencb = if ctx.props().hoverable {
+            class.push("is-hoverable");
             Callback::noop()
         } else {
-            self.link.callback(|_| DropdownMsg::Open)
+            ctx.link().callback(|_| DropdownMsg::Open)
         };
         let overlay = if self.is_menu_active {
-            classes.push("is-active");
-            html! {<div onclick=self.link.callback(|_| DropdownMsg::Close) style="z-index:10;background-color:rgba(0,0,0,0);position:fixed;top:0;bottom:0;left:0;right:0;"></div>}
+            class.push("is-active");
+            html! {<div onclick={ctx.link().callback(|_| DropdownMsg::Close)} style="z-index:10;background-color:rgba(0,0,0,0);position:fixed;top:0;bottom:0;left:0;right:0;"></div>}
         } else {
             html! {}
         };
         html! {
-            <div class=classes>
+            <div {class}>
                 {overlay}
-                <a class=linkclasses onclick=opencb>{self.props.navlink.clone()}</a>
-                <div class=dropclasses>
-                    {self.props.children.clone()}
+                <a class={linkclasses} onclick={opencb}>{ctx.props().navlink.clone()}</a>
+                <div class={dropclasses}>
+                    {ctx.props().children.clone()}
                 </div>
             </div>
         }

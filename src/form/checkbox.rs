@@ -1,5 +1,4 @@
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct CheckboxProps {
@@ -25,43 +24,20 @@ pub struct CheckboxProps {
 /// All YBC form components are controlled components. This means that the value of the field must
 /// be provided from a parent component, and changes to this component are propagated to the parent
 /// component via callback.
-pub struct Checkbox {
-    props: CheckboxProps,
-    link: ComponentLink<Self>,
-}
-
-impl Component for Checkbox {
-    type Message = bool;
-    type Properties = CheckboxProps;
-
-    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self { props, link }
-    }
-
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
-        self.props.update.emit(msg);
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("checkbox");
-        classes.push(&self.props.classes);
-        let checked = self.props.checked;
-        html! {
-            <label class=classes disabled=self.props.disabled>
-                <input
-                    type="checkbox"
-                    checked=self.props.checked
-                    name=self.props.name.clone()
-                    onclick=self.link.callback(move |_| !checked)
-                    disabled=self.props.disabled
-                    />
-                {self.props.children.clone()}
-            </label>
-        }
+#[function_component(Checkbox)]
+pub fn checkbox(props: &CheckboxProps) -> Html {
+    let class = classes!("checkbox", props.classes.clone());
+    let checked = props.checked;
+    html! {
+        <label {class} disabled={props.disabled}>
+            <input
+                type="checkbox"
+                checked={props.checked}
+                name={props.name.clone()}
+                onclick={props.update.reform(move |_| !checked)}
+                disabled={props.disabled}
+                />
+            {props.children.clone()}
+        </label>
     }
 }

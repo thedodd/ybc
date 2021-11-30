@@ -1,6 +1,6 @@
-use yew::events::InputData;
+use wasm_bindgen::{JsCast, UnwrapThrowExt};
+use web_sys::HtmlInputElement;
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct RadioProps {
@@ -33,43 +33,25 @@ pub struct RadioProps {
 /// All YBC form components are controlled components. This means that the value of the field must
 /// be provided from a parent component, and changes to this component are propagated to the parent
 /// component via callback.
-pub struct Radio {
-    props: RadioProps,
-    link: ComponentLink<Self>,
-}
-
-impl Component for Radio {
-    type Message = String;
-    type Properties = RadioProps;
-
-    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self { props, link }
-    }
-
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
-        self.props.update.emit(msg);
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("radio");
-        classes.push(&self.props.classes);
-        html! {
-            <label class=classes disabled=self.props.disabled>
-                <input
-                    type="radio"
-                    name=self.props.name.clone()
-                    value=self.props.value.clone()
-                    checked=self.props.checked_value.as_ref().map(|val| val == &self.props.value).unwrap_or(false)
-                    oninput=self.link.callback(|data: InputData| data.value)
-                    disabled=self.props.disabled
-                    />
-                {self.props.children.clone()}
-            </label>
-        }
+#[function_component(Radio)]
+pub fn radio(props: &RadioProps) -> Html {
+    let class = classes!("radio", props.classes.clone());
+    let oninput = props.update.reform(|ev: web_sys::InputEvent| {
+        let target = ev.target().expect_throw("event should have a target");
+        let input: HtmlInputElement = target.dyn_into().expect_throw("event target should be an input");
+        input.value()
+    });
+    html! {
+        <label {class} disabled={props.disabled}>
+            <input
+                type="radio"
+                name={props.name.clone()}
+                value={props.value.clone()}
+                checked={props.checked_value.as_ref().map(|val| val == &props.value).unwrap_or(false)}
+                {oninput}
+                disabled={props.disabled}
+                />
+            {props.children.clone()}
+        </label>
     }
 }

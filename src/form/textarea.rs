@@ -1,9 +1,8 @@
-use yew::events::InputData;
+use wasm_bindgen::{JsCast, UnwrapThrowExt};
+use web_sys::HtmlTextAreaElement;
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 use crate::Size;
-use std::borrow::Cow;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct TextAreaProps {
@@ -50,56 +49,31 @@ pub struct TextAreaProps {
 /// All YBC form components are controlled components. This means that the value of the field must
 /// be provided from a parent component, and changes to this component are propagated to the parent
 /// component via callback.
-pub struct TextArea {
-    link: ComponentLink<Self>,
-    props: TextAreaProps,
-}
-
-impl Component for TextArea {
-    type Message = String;
-    type Properties = TextAreaProps;
-
-    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self { link, props }
-    }
-
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
-        self.props.update.emit(msg);
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("textarea");
-        classes.push(&self.props.classes);
-        if let Some(size) = &self.props.size {
-            classes.push(&size.to_string());
-        }
-        if self.props.loading {
-            classes.push("is-loading");
-        }
-        if self.props.r#static {
-            classes.push("is-static");
-        }
-        if self.props.fixed_size {
-            classes.push("has-fixed-size");
-        }
-
-        let rows = Cow::from(self.props.rows.to_string());
-        html! {
-            <textarea
-                name=self.props.name.clone()
-                value=self.props.value.clone()
-                oninput=self.link.callback(|input: InputData| input.value)
-                class=classes
-                rows=rows
-                placeholder=self.props.placeholder.clone()
-                disabled=self.props.disabled
-                readonly=self.props.readonly
-                />
-        }
+#[function_component(TextArea)]
+pub fn text_area(props: &TextAreaProps) -> Html {
+    let class = classes!(
+        "textarea",
+        props.classes.clone(),
+        props.size.as_ref().map(|size| size.to_string()),
+        props.loading.then(|| "is-loading"),
+        props.r#static.then(|| "is-static"),
+        props.fixed_size.then(|| "has-fixed-size"),
+    );
+    let oninput = props.update.reform(|ev: web_sys::InputEvent| {
+        let target = ev.target().expect_throw("event should have a target");
+        let input: HtmlTextAreaElement = target.dyn_into().expect_throw("event target should be a text area");
+        input.value()
+    });
+    html! {
+        <textarea
+            name={props.name.clone()}
+            value={props.value.clone()}
+            {oninput}
+            {class}
+            rows={props.rows.to_string()}
+            placeholder={props.placeholder.clone()}
+            disabled={props.disabled}
+            readonly={props.readonly}
+            />
     }
 }

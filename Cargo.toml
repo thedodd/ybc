@@ -13,9 +13,11 @@ keywords = ["wasm", "web", "bulma", "sass", "yew"]
 [dependencies]
 derive_more = "0.99.9"
 web-sys = { version="0.3", features=["Element", "File", "HtmlCollection", "HtmlSelectElement"] }
-yew = { version="0.18.0", features=["web_sys"] }
-yewtil = { version="0.4.0", features=["neq"] }
-yew-router = { version="0.15.0", features=["web_sys"], optional=true }
+yew = { git="https://github.com/yewstack/yew.git" }
+yew-agent = { git="https://github.com/yewstack/yew.git" }
+yew-router = { git="https://github.com/yewstack/yew.git", optional=true }
+wasm-bindgen = "0.2"
+serde = "1"
 
 [features]
 default = ["router"]

@@ -1,7 +1,6 @@
 use derive_more::Display;
 use yew::events::MouseEvent;
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 use crate::{Alignment, Size};
 
@@ -31,47 +30,23 @@ pub struct PaginationProps {
 /// A responsive, usable, and flexible pagination component.
 ///
 /// [https://bulma.io/documentation/components/pagination/](https://bulma.io/documentation/components/pagination/)
-pub struct Pagination {
-    props: PaginationProps,
-}
-
-impl Component for Pagination {
-    type Message = ();
-    type Properties = PaginationProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("pagination");
-        classes.push(&self.props.classes);
-        if let Some(size) = &self.props.size {
-            classes.push(&size.to_string());
-        }
-        if let Some(alignment) = &self.props.alignment {
-            classes.push(&alignment.to_string());
-        }
-        if self.props.rounded {
-            classes.push("is-rounded");
-        }
-        html! {
-            <nav class=classes role="navigation" aria-label="pagination">
-                {self.props.previous.clone()}
-                {self.props.next.clone()}
-                <ul class="pagination-list">
-                    {self.props.children.clone()}
-                </ul>
-            </nav>
-        }
+#[function_component(Pagination)]
+pub fn pagination(props: &PaginationProps) -> Html {
+    let class = classes!(
+        "pagination",
+        props.classes.clone(),
+        props.size.as_ref().map(|size| size.to_string()),
+        props.alignment.as_ref().map(|alignment| alignment.to_string()),
+        props.rounded.then(|| "is-rounded"),
+    );
+    html! {
+        <nav {class} role="navigation" aria-label="pagination">
+            {props.previous.clone()}
+            {props.next.clone()}
+            <ul class="pagination-list">
+                {props.children.clone()}
+            </ul>
+        </nav>
     }
 }
 
@@ -94,32 +69,12 @@ pub struct PaginationItemProps {
 /// A pagination element representing a link to a page number, the previous page or the next page.
 ///
 /// [https://bulma.io/documentation/components/pagination/](https://bulma.io/documentation/components/pagination/)
-pub struct PaginationItem {
-    props: PaginationItemProps,
-}
-
-impl Component for PaginationItem {
-    type Message = ();
-    type Properties = PaginationItemProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        html! {
-            <a class=self.props.item_type.to_string() aria-label=self.props.label.clone() onclick=self.props.onclick.clone()>
-                {self.props.children.clone()}
-            </a>
-        }
+#[function_component(PaginationItem)]
+pub fn pagination_item(props: &PaginationItemProps) -> Html {
+    html! {
+        <a class={props.item_type.to_string()} aria-label={props.label.clone()} onclick={props.onclick.clone()}>
+            {props.children.clone()}
+        </a>
     }
 }
 
@@ -144,27 +99,9 @@ pub enum PaginationItemType {
 /// A horizontal ellipsis for pagination range separators.
 ///
 /// [https://bulma.io/documentation/components/pagination/](https://bulma.io/documentation/components/pagination/)
-pub struct PaginationEllipsis;
-
-impl Component for PaginationEllipsis {
-    type Message = ();
-    type Properties = ();
-
-    fn create(_: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, _: Self::Properties) -> ShouldRender {
-        false
-    }
-
-    fn view(&self) -> Html {
-        html! {<span class="pagination-ellipsis">{"&hellip;"}</span>}
-    }
+#[function_component(PaginationEllipsis)]
+pub fn pagination_ellipsis() -> Html {
+    html! {<span class="pagination-ellipsis">{"&hellip;"}</span>}
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -173,13 +110,14 @@ impl Component for PaginationEllipsis {
 #[cfg(feature = "router")]
 mod router {
     use super::*;
-    use yew_router::components::RouterAnchor;
-    use yew_router::{RouterState, Switch};
+    use serde::Serialize;
+    use yew_router::components::Link;
+    use yew_router::Routable;
 
     #[derive(Clone, Properties, PartialEq)]
-    pub struct RouterProps<SW: Switch + Clone + PartialEq + 'static> {
+    pub struct RouterProps<R: Routable + Clone + PartialEq + 'static> {
         /// The Switched item representing the route.
-        pub route: SW,
+        pub route: R,
         /// Html inside the component.
         #[prop_or_default]
         pub children: Children,
@@ -188,34 +126,29 @@ mod router {
     }
 
     /// A Yew Router anchor button for use in a `Pagination` component.
-    pub struct PaginationItemRouter<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState = ()> {
-        props: RouterProps<SW>,
-        marker: std::marker::PhantomData<STATE>,
+    pub struct PaginationItemRouter<R: Routable + Clone + PartialEq + 'static, Q: Clone + PartialEq + Serialize + 'static = ()> {
+        _route: std::marker::PhantomData<R>,
+        _query: std::marker::PhantomData<Q>,
     }
 
-    impl<SW: Switch + Clone + PartialEq + 'static, STATE: RouterState> Component for PaginationItemRouter<SW, STATE> {
+    impl<R: Routable + Clone + PartialEq + 'static, Q: Clone + PartialEq + Serialize + 'static> Component for PaginationItemRouter<R, Q> {
         type Message = ();
-        type Properties = RouterProps<SW>;
+        type Properties = RouterProps<R>;
 
-        fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-            Self { props, marker: std::marker::PhantomData }
-        }
-
-        fn update(&mut self, _: Self::Message) -> ShouldRender {
-            false
-        }
-
-        fn change(&mut self, props: Self::Properties) -> ShouldRender {
-            self.props.neq_assign(props)
+        fn create(_ctx: &Context<Self>) -> Self {
+            Self {
+                _route: std::marker::PhantomData,
+                _query: std::marker::PhantomData,
+            }
         }
 
         #[allow(deprecated)]
-        fn view(&self) -> Html {
+        fn view(&self, ctx: &Context<Self>) -> Html {
             html! {
-                <RouterAnchor<SW, STATE>
-                    route=self.props.route.clone()
-                    children=self.props.children.clone()
-                    classes=self.props.item_type.to_string()
+                <Link<R, Q>
+                    to={ctx.props().route.clone()}
+                    children={ctx.props().children.clone()}
+                    classes={classes!(ctx.props().item_type.to_string())}
                 />
             }
         }
