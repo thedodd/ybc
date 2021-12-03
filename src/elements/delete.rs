@@ -1,5 +1,3 @@
-#![allow(clippy::redundant_closure_call)]
-use yew::events::MouseEvent;
 use yew::prelude::*;
 
 #[derive(Clone, Debug, Properties, PartialEq)]

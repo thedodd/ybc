@@ -25,39 +25,6 @@ pub fn buttons(props: &ButtonsProps) -> Html {
         </div>
     }
 }
-// pub struct Buttons {
-//     props: ButtonsProps,
-// }
-
-// impl Component for Buttons {
-//     type Message = ();
-//     type Properties = ButtonsProps;
-
-//     fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-//         Self { props }
-//     }
-
-//     fn update(&mut self, _: Self::Message) -> ShouldRender {
-//         false
-//     }
-
-//     fn change(&mut self, props: Self::Properties) -> ShouldRender {
-//         self.props.neq_assign(props)
-//     }
-
-//     fn view(&self) -> Html {
-//         let mut classes = Classes::from("buttons");
-//         classes.push(&self.props.classes);
-//         if let Some(size) = &self.props.size {
-//             classes.push(&size.to_string());
-//         }
-//         html! {
-//             <div class=classes>
-//                 {self.props.children.clone()}
-//             </div>
-//         }
-//     }
-// }
 
 /// The 3 sizes available for a button group.
 ///
@@ -162,7 +129,6 @@ mod router {
             }
         }
 
-        #[allow(deprecated)]
         fn view(&self, ctx: &Context<Self>) -> Html {
             let mut classes = Classes::from(&ctx.props().classes);
             if !classes.contains("button") {
@@ -199,7 +165,6 @@ mod router {
             }
         }
 
-        #[allow(deprecated)]
         fn view(&self, ctx: &Context<Self>) -> Html {
             let mut classes = Classes::from(&ctx.props().classes);
             if !classes.contains("button") {

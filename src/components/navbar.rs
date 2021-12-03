@@ -1,5 +1,3 @@
-#![allow(clippy::redundant_closure_call)]
-
 use derive_more::Display;
 use yew::prelude::*;
 

@@ -1,5 +1,3 @@
-#![allow(clippy::redundant_closure_call)]
-
 use wasm_bindgen::UnwrapThrowExt;
 use web_sys::HtmlSelectElement;
 use yew::prelude::*;

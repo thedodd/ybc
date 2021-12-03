@@ -1,5 +1,3 @@
-#![allow(clippy::redundant_closure_call)]
-
 use yew::prelude::*;
 
 use crate::Size;

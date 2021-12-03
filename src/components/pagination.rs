@@ -142,7 +142,6 @@ mod router {
             }
         }
 
-        #[allow(deprecated)]
         fn view(&self, ctx: &Context<Self>) -> Html {
             html! {
                 <Link<R, Q>
