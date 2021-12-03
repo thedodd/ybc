@@ -1,6 +1,6 @@
 #![allow(clippy::redundant_closure_call)]
 
-use wasm_bindgen::{JsCast, UnwrapThrowExt};
+use wasm_bindgen::UnwrapThrowExt;
 use web_sys::HtmlSelectElement;
 use yew::prelude::*;
 
@@ -52,8 +52,7 @@ pub fn select(props: &SelectProps) -> Html {
         props.loading.then(|| "is-loading"),
     );
     let onchange = props.update.reform(|ev: web_sys::Event| {
-        let target = ev.target().expect_throw("event should have a target");
-        let select: HtmlSelectElement = target.dyn_into().expect_throw("event target should be a select");
+        let select: HtmlSelectElement = ev.target_dyn_into().expect_throw("event target should be a select");
         select.value()
     });
     html! {
@@ -124,8 +123,7 @@ pub fn multi_select(props: &MultiSelectProps) -> Html {
     );
     let size = props.list_size.to_string();
     let onchange = props.update.reform(|ev: web_sys::Event| {
-        let target: web_sys::EventTarget = ev.target().expect_throw("event should have a target");
-        let select: HtmlSelectElement = target.dyn_into().expect_throw("event target should be a select");
+        let select: HtmlSelectElement = ev.target_dyn_into().expect_throw("event target should be a select");
         let opts = select.selected_options();
         (0..opts.length())
             .into_iter()

@@ -1,4 +1,4 @@
-use wasm_bindgen::{JsCast, UnwrapThrowExt};
+use wasm_bindgen::UnwrapThrowExt;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
@@ -37,8 +37,7 @@ pub struct RadioProps {
 pub fn radio(props: &RadioProps) -> Html {
     let class = classes!("radio", props.classes.clone());
     let oninput = props.update.reform(|ev: web_sys::InputEvent| {
-        let target = ev.target().expect_throw("event should have a target");
-        let input: HtmlInputElement = target.dyn_into().expect_throw("event target should be an input");
+        let input: HtmlInputElement = ev.target_dyn_into().expect_throw("event target should be an input");
         input.value()
     });
     html! {

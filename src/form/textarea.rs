@@ -1,4 +1,4 @@
-use wasm_bindgen::{JsCast, UnwrapThrowExt};
+use wasm_bindgen::UnwrapThrowExt;
 use web_sys::HtmlTextAreaElement;
 use yew::prelude::*;
 
@@ -60,8 +60,7 @@ pub fn text_area(props: &TextAreaProps) -> Html {
         props.fixed_size.then(|| "has-fixed-size"),
     );
     let oninput = props.update.reform(|ev: web_sys::InputEvent| {
-        let target = ev.target().expect_throw("event should have a target");
-        let input: HtmlTextAreaElement = target.dyn_into().expect_throw("event target should be a text area");
+        let input: HtmlTextAreaElement = ev.target_dyn_into().expect_throw("event target should be a text area");
         input.value()
     });
     html! {
