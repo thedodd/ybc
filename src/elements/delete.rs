@@ -10,7 +10,7 @@ pub struct DeleteProps {
     #[prop_or_else(|| "button".into())]
     pub tag: String,
     /// The click handler to use for this component.
-    #[prop_or_else(Callback::noop)]
+    #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
 }
 

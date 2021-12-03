@@ -12,7 +12,7 @@ pub struct TagProps {
     #[prop_or_else(|| "span".into())]
     pub tag: String,
     /// The click handler for this component.
-    #[prop_or_else(Callback::noop)]
+    #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
     /// Make this tag rounded.
     #[prop_or_default]

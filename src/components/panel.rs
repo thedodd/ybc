@@ -57,7 +57,7 @@ pub struct PanelBlockProps {
     #[prop_or_default]
     pub active: bool,
     /// The click handler for this element.
-    #[prop_or_else(Callback::noop)]
+    #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
 }
 

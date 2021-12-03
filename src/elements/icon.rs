@@ -10,7 +10,7 @@ pub struct IconProps {
     #[prop_or_default]
     pub classes: Option<Classes>,
     /// The click handler to use for this component.
-    #[prop_or_else(Callback::noop)]
+    #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
     /// The size of this component; to help prevent page "jumps" during load.
     #[prop_or_default]

@@ -62,7 +62,7 @@ pub struct PaginationItemProps {
     #[prop_or_default]
     pub label: String,
     /// The click handler for this component.
-    #[prop_or_else(Callback::noop)]
+    #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
 }
 

@@ -50,7 +50,7 @@ pub struct ButtonProps {
     #[prop_or_default]
     pub classes: Option<Classes>,
     /// The click handler to use for this component.
-    #[prop_or_else(Callback::noop)]
+    #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
     /// Render a loading spinner within this component.
     #[prop_or_default]
@@ -201,7 +201,7 @@ pub struct ButtonAnchorProps {
     #[prop_or_default]
     pub href: String,
     /// The click handler to use for this component.
-    #[prop_or_else(Callback::noop)]
+    #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
     /// Render a loading spinner within this component.
     #[prop_or_default]
@@ -253,7 +253,7 @@ pub struct ButtonInputSubmitProps {
     #[prop_or_default]
     pub classes: Option<Classes>,
     /// The submit handler to use for this component.
-    #[prop_or_else(Callback::noop)]
+    #[prop_or_default]
     pub onsubmit: Callback<FocusEvent>,
     /// Render a loading spinner within this component.
     #[prop_or_default]
@@ -290,7 +290,7 @@ pub struct ButtonInputResetProps {
     #[prop_or_default]
     pub classes: Option<Classes>,
     /// The reset handler to use for this component.
-    #[prop_or_else(Callback::noop)]
+    #[prop_or_default]
     pub onreset: Callback<Event>,
     /// Render a loading spinner within this component.
     #[prop_or_default]
