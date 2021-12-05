@@ -13,9 +13,8 @@ pub struct BoxProps {
 /// [https://bulma.io/documentation/elements/box/](https://bulma.io/documentation/elements/box/)
 #[function_component(Box)]
 pub fn r#box(props: &BoxProps) -> Html {
-    let class = classes!("box", props.classes.clone());
     html! {
-        <div {class}>
+        <div class={classes!("box", &props.classes)}>
             {props.children.clone()}
         </div>
     }

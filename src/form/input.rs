@@ -53,7 +53,7 @@ pub struct InputProps {
 pub fn input(props: &InputProps) -> Html {
     let class = classes!(
         "input",
-        props.classes.clone(),
+        &props.classes,
         props.size.as_ref().map(|size| size.to_string()),
         props.rounded.then(|| "is-rounded"),
         props.loading.then(|| "is-loading"),

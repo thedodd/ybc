@@ -16,9 +16,8 @@ pub struct ContentProps {
 /// [https://bulma.io/documentation/elements/content/](https://bulma.io/documentation/elements/content/)
 #[function_component(Content)]
 pub fn content(props: &ContentProps) -> Html {
-    let class = classes!("content", props.classes.clone());
     html! {
-        <@{props.tag.clone()} {class}>
+        <@{props.tag.clone()} class={classes!("content", &props.classes)}>
             {props.children.clone()}
         </@>
     }

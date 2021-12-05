@@ -18,9 +18,8 @@ pub struct SectionProps {
 #[function_component(Section)]
 pub fn section(props: &SectionProps) -> Html {
     let size = props.size.as_ref().map(|size| size.to_string());
-    let class = classes!("section", props.classes.clone(), size);
     html! {
-        <section {class}>
+        <section class={classes!("section", &props.classes, size)}>
             {props.children.clone()}
         </section>
     }

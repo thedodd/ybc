@@ -17,7 +17,7 @@ pub struct PanelProps {
 /// [https://bulma.io/documentation/components/panel/](https://bulma.io/documentation/components/panel/)
 #[function_component(Panel)]
 pub fn panel(props: &PanelProps) -> Html {
-    let class = classes!("panel", props.classes.clone());
+    let class = classes!("panel", &props.classes);
     html! {
         <nav {class}>
             <p class="panel-heading">{props.heading.clone()}</p>

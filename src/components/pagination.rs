@@ -34,7 +34,7 @@ pub struct PaginationProps {
 pub fn pagination(props: &PaginationProps) -> Html {
     let class = classes!(
         "pagination",
-        props.classes.clone(),
+        &props.classes,
         props.size.as_ref().map(|size| size.to_string()),
         props.alignment.as_ref().map(|alignment| alignment.to_string()),
         props.rounded.then(|| "is-rounded"),

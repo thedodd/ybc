@@ -32,7 +32,7 @@ pub struct TagProps {
 pub fn tag(props: &TagProps) -> Html {
     let class = classes!(
         "tag",
-        props.classes.clone(),
+        &props.classes,
         props.rounded.then(|| "is-rounded"),
         props.delete.then(|| "is-delete"),
         props.size.as_ref().map(|size| size.to_string()),
@@ -63,7 +63,7 @@ pub struct TagsProps {
 /// [https://bulma.io/documentation/elements/tag/](https://bulma.io/documentation/elements/tag/)
 #[function_component(Tags)]
 pub fn tags(props: &TagsProps) -> Html {
-    let class = classes!("tags", props.classes.clone(), props.has_addons.then(|| "has-addons"));
+    let class = classes!("tags", &props.classes, props.has_addons.then(|| "has-addons"));
     html! {
         <div {class}>
             {props.children.clone()}

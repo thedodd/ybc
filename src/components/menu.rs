@@ -14,7 +14,7 @@ pub struct MenuProps {
 #[function_component(Menu)]
 pub fn menu(props: &MenuProps) -> Html {
     html! {
-        <aside class={classes!("menu", props.classes.clone())}>
+        <aside class={classes!("menu", &props.classes)}>
             {props.children.clone()}
         </aside>
     }
@@ -38,7 +38,7 @@ pub struct MenuListProps {
 #[function_component(MenuList)]
 pub fn menu_list(props: &MenuListProps) -> Html {
     html! {
-        <ul class={classes!("menu-list", props.classes.clone())}>
+        <ul class={classes!("menu-list", &props.classes)}>
             {props.children.clone()}
         </ul>
     }
@@ -62,7 +62,7 @@ pub struct MenuLabelProps {
 #[function_component(MenuLabel)]
 pub fn menu_label(props: &MenuLabelProps) -> Html {
     html! {
-        <p class={classes!("menu-label", props.classes.clone())}>
+        <p class={classes!("menu-label", &props.classes)}>
             {props.text.clone()}
         </p>
     }

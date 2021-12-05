@@ -18,7 +18,7 @@ pub struct ButtonsProps {
 /// [https://bulma.io/documentation/elements/button/](https://bulma.io/documentation/elements/button/)
 #[function_component(Buttons)]
 pub fn buttons(props: &ButtonsProps) -> Html {
-    let class = classes!("buttons", props.classes.clone(), props.size.as_ref().map(ToString::to_string));
+    let class = classes!("buttons", &props.classes, props.size.as_ref().map(ToString::to_string));
     html! {
         <div {class}>
             {props.children.clone()}
@@ -70,7 +70,7 @@ pub struct ButtonProps {
 pub fn button(props: &ButtonProps) -> Html {
     let class = classes!(
         "button",
-        props.classes.clone(),
+        &props.classes,
         props.loading.then(|| "is-loading"),
         props.r#static.then(|| "is-static")
     );
@@ -227,7 +227,7 @@ pub struct ButtonAnchorProps {
 pub fn button_anchor(props: &ButtonAnchorProps) -> Html {
     let class = classes!(
         "button",
-        props.classes.clone(),
+        &props.classes,
         props.loading.then(|| "is-loading"),
         props.r#static.then(|| "is-static")
     );
@@ -273,7 +273,7 @@ pub struct ButtonInputSubmitProps {
 pub fn button_input_submit(props: &ButtonInputSubmitProps) -> Html {
     let class = classes!(
         "button",
-        props.classes.clone(),
+        &props.classes,
         props.loading.then(|| "is-loading"),
         props.r#static.then(|| "is-static"),
     );
@@ -310,7 +310,7 @@ pub struct ButtonInputResetProps {
 pub fn button_input_reset(props: &ButtonInputResetProps) -> Html {
     let class = classes!(
         "button",
-        props.classes.clone(),
+        &props.classes,
         props.loading.then(|| "is-loading"),
         props.r#static.then(|| "is-static"),
     );

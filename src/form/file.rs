@@ -58,7 +58,7 @@ pub struct FileProps {
 pub fn file(props: &FileProps) -> Html {
     let class = classes!(
         "file",
-        props.classes.clone(),
+        &props.classes,
         props.has_name.is_some().then(|| "has-name"),
         props.right.then(|| "is-right"),
         props.fullwidth.then(|| "is-fullwidth"),

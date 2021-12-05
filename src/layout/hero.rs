@@ -45,7 +45,7 @@ pub struct HeroProps {
 pub fn hero(props: &HeroProps) -> Html {
     let class = classes!(
         "hero",
-        props.classes.clone(),
+        &props.classes,
         props.fixed_nav.then(|| "is-fullheight-with-navbar"),
         props.bold.then(|| "is-bold"),
         props.size.as_ref().map(|size| size.to_string()),

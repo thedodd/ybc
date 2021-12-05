@@ -38,7 +38,7 @@ pub struct TabsProps {
 pub fn tabs(props: &TabsProps) -> Html {
     let class = classes!(
         "tabs",
-        props.classes.clone(),
+        &props.classes,
         props.alignment.as_ref().map(ToString::to_string),
         props.size.as_ref().map(ToString::to_string),
         props.boxed.then(|| "is-boxed"),

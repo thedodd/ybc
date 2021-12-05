@@ -53,7 +53,7 @@ pub struct FieldProps {
 pub fn field(props: &FieldProps) -> Html {
     let class = classes!(
         "field",
-        props.classes.clone(),
+        &props.classes,
         props.icons_left.then(|| "has-icons-left"),
         props.icons_right.then(|| "has-icons-right"),
         props.addons.then(|| "has-addons"),

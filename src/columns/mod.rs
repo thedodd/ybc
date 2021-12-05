@@ -24,7 +24,7 @@ pub struct ColumnsProps {
 pub fn columns(props: &ColumnsProps) -> Html {
     let class = classes!(
         "columns",
-        props.classes.clone(),
+        &props.classes,
         props.vcentered.then(|| "is-vcentered"),
         props.multiline.then(|| "is-multiline"),
         props.centered.then(|| "is-centered"),
@@ -57,7 +57,7 @@ pub struct ColumnProps {
 #[function_component(Column)]
 pub fn column(props: &ColumnProps) -> Html {
     html! {
-        <div class={classes!("column", props.classes.clone())}>
+        <div class={classes!("column", &props.classes)}>
             {props.children.clone()}
         </div>
     }

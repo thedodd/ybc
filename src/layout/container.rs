@@ -16,7 +16,7 @@ pub struct ContainerProps {
 /// [https://bulma.io/documentation/layout/container/](https://bulma.io/documentation/layout/container/)
 #[function_component(Container)]
 pub fn container(props: &ContainerProps) -> Html {
-    let class = classes!("container", props.classes.clone(), props.fluid.then(|| "is-fluid"));
+    let class = classes!("container", &props.classes, props.fluid.then(|| "is-fluid"));
     html! {
         <div {class}>{props.children.clone()}</div>
     }

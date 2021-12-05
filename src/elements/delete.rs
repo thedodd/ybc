@@ -19,7 +19,7 @@ pub struct DeleteProps {
 /// [https://bulma.io/documentation/elements/delete/](https://bulma.io/documentation/elements/delete/)
 #[function_component(Delete)]
 pub fn delete(props: &DeleteProps) -> Html {
-    let class = classes!("delete", props.classes.clone());
+    let class = classes!("delete", &props.classes);
     html! {
         <@{props.tag.clone()} {class} onclick={props.onclick.clone()}>
             {props.children.clone()}

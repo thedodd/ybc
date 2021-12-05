@@ -33,7 +33,7 @@ pub struct TableProps {
 pub fn table(props: &TableProps) -> Html {
     let class = classes!(
         "table",
-        props.classes.clone(),
+        &props.classes,
         props.bordered.then(|| "is-bordered"),
         props.striped.then(|| "is-striped"),
         props.narrow.then(|| "is-narrow"),

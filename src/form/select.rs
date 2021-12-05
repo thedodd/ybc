@@ -45,7 +45,7 @@ pub struct SelectProps {
 pub fn select(props: &SelectProps) -> Html {
     let class = classes!(
         "select",
-        props.classes.clone(),
+        &props.classes,
         props.size.as_ref().map(|size| size.to_string()),
         props.loading.then(|| "is-loading"),
     );
@@ -115,7 +115,7 @@ pub fn multi_select(props: &MultiSelectProps) -> Html {
     let class = classes!(
         "select",
         "is-multiple",
-        props.classes.clone(),
+        &props.classes,
         props.size.as_ref().map(|size| size.to_string()),
         props.loading.then(|| "is-loading"),
     );

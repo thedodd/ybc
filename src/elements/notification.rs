@@ -13,7 +13,7 @@ pub struct NotificationProps {
 /// [https://bulma.io/documentation/elements/notification/](https://bulma.io/documentation/elements/notification/)
 #[function_component(Notification)]
 pub fn notification(props: &NotificationProps) -> Html {
-    let class = classes!("notification", props.classes.clone());
+    let class = classes!("notification", &props.classes);
     html! {
         <div {class}>
             {props.children.clone()}

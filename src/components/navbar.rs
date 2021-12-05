@@ -218,7 +218,7 @@ pub struct NavbarItemProps {
 pub fn navbar_item(props: &NavbarItemProps) -> Html {
     let class = classes!(
         "navbar-item",
-        props.classes.clone(),
+        &props.classes,
         props.has_dropdown.then(|| "has-dropdown"),
         props.expanded.then(|| "is-expanded"),
         props.tab.then(|| "is-tab"),
@@ -261,7 +261,7 @@ pub struct NavbarDividerProps {
 /// [https://bulma.io/documentation/components/navbar/#dropdown-menu](https://bulma.io/documentation/components/navbar/#dropdown-menu)
 #[function_component(NavbarDivider)]
 pub fn navbar_divider(props: &NavbarDividerProps) -> Html {
-    html! { <hr class={classes!("navbar-divider", props.classes.clone())} /> }
+    html! { <hr class={classes!("navbar-divider", &props.classes)} /> }
 }
 
 //////////////////////////////////////////////////////////////////////////////

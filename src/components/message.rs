@@ -14,7 +14,7 @@ pub struct MessageProps {
 #[function_component(Message)]
 pub fn message(props: &MessageProps) -> Html {
     html! {
-        <article class={classes!("message", props.classes.clone())}>
+        <article class={classes!("message", &props.classes)}>
             {props.children.clone()}
         </article>
     }
@@ -37,7 +37,7 @@ pub struct MessageHeaderProps {
 #[function_component(MessageHeader)]
 pub fn message_header(props: &MessageHeaderProps) -> Html {
     html! {
-        <div class={classes!("message-header", props.classes.clone())}>
+        <div class={classes!("message-header", &props.classes)}>
             {props.children.clone()}
         </div>
     }
@@ -60,7 +60,7 @@ pub struct MessageBodyProps {
 #[function_component(MessageBody)]
 pub fn message_body(props: &MessageBodyProps) -> Html {
     html! {
-        <div class={classes!("message-body", props.classes.clone())}>
+        <div class={classes!("message-body", &props.classes)}>
             {props.children.clone()}
         </div>
     }

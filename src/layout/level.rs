@@ -16,7 +16,7 @@ pub struct LevelProps {
 /// [https://bulma.io/documentation/layout/level/](https://bulma.io/documentation/layout/level/)
 #[function_component(Level)]
 pub fn level(props: &LevelProps) -> Html {
-    let class = classes!("level", props.classes.clone());
+    let class = classes!("level", &props.classes);
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}
@@ -43,7 +43,7 @@ pub struct LevelLeftProps {
 /// [https://bulma.io/documentation/layout/level/](https://bulma.io/documentation/layout/level/)
 #[function_component(LevelLeft)]
 pub fn level_left(props: &LevelLeftProps) -> Html {
-    let class = classes!("level-left", props.classes.clone());
+    let class = classes!("level-left", &props.classes);
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}
@@ -70,7 +70,7 @@ pub struct LevelRightProps {
 /// [https://bulma.io/documentation/layout/level/](https://bulma.io/documentation/layout/level/)
 #[function_component(LevelRight)]
 pub fn level_right(props: &LevelRightProps) -> Html {
-    let class = classes!("level-right", props.classes.clone());
+    let class = classes!("level-right", &props.classes);
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}
@@ -97,7 +97,7 @@ pub struct LevelItemProps {
 /// [https://bulma.io/documentation/layout/level/](https://bulma.io/documentation/layout/level/)
 #[function_component(LevelItem)]
 pub fn level_item(props: &LevelItemProps) -> Html {
-    let class = classes!("level-item", props.classes.clone());
+    let class = classes!("level-item", &props.classes);
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}

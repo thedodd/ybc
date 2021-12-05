@@ -34,7 +34,7 @@ pub struct TileProps {
 pub fn tile(props: &TileProps) -> Html {
     let ctx = props.ctx.as_ref().map(|ctx| ctx.to_string());
     let size = props.size.as_ref().map(|size| size.to_string());
-    let class = classes!("tile", props.classes.clone(), ctx, props.vertical.then(|| "is-vertical"), size);
+    let class = classes!("tile", &props.classes, ctx, props.vertical.then(|| "is-vertical"), size);
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}

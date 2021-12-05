@@ -19,7 +19,7 @@ pub struct ControlProps {
 /// [https://bulma.io/documentation/form/general/](https://bulma.io/documentation/form/general/)
 #[function_component(Control)]
 pub fn control(props: &ControlProps) -> Html {
-    let class = classes!("control", props.classes.clone(), props.expanded.then(|| "is-expanded"));
+    let class = classes!("control", &props.classes, props.expanded.then(|| "is-expanded"));
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}

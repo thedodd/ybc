@@ -14,7 +14,7 @@ pub struct FooterProps {
 #[function_component(Footer)]
 pub fn footer(props: &FooterProps) -> Html {
     html! {
-        <footer class={classes!("footer", props.classes.clone())}>
+        <footer class={classes!("footer", &props.classes)}>
             {props.children.clone()}
         </footer>
     }

@@ -53,7 +53,7 @@ pub struct TextAreaProps {
 pub fn text_area(props: &TextAreaProps) -> Html {
     let class = classes!(
         "textarea",
-        props.classes.clone(),
+        &props.classes,
         props.size.as_ref().map(|size| size.to_string()),
         props.loading.then(|| "is-loading"),
         props.r#static.then(|| "is-static"),

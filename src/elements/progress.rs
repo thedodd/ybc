@@ -17,7 +17,7 @@ pub struct ProgressProps {
 /// [https://bulma.io/documentation/elements/progress/](https://bulma.io/documentation/elements/progress/)
 #[function_component(Progress)]
 pub fn progress(props: &ProgressProps) -> Html {
-    let class = classes!("progress", props.classes.clone());
+    let class = classes!("progress", &props.classes);
     let max = props.max.to_string();
     let value = props.value.to_string();
     let value_txt = format!("{}%", value);

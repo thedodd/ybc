@@ -28,7 +28,7 @@ pub struct BreadcrumbProps {
 pub fn breadcrumb(props: &BreadcrumbProps) -> Html {
     let class = classes!(
         "breadcrumb",
-        props.classes.clone(),
+        &props.classes,
         props.size.as_ref().map(|size| size.to_string()),
         props.alignment.as_ref().map(|alignment| alignment.to_string()),
         props.separator.as_ref().map(|separator| separator.to_string()),

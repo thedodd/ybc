@@ -16,7 +16,7 @@ pub struct MediaProps {
 /// [https://bulma.io/documentation/layout/media-object/](https://bulma.io/documentation/layout/media-object/)
 #[function_component(Media)]
 pub fn media(props: &MediaProps) -> Html {
-    let class = classes!("media", props.classes.clone());
+    let class = classes!("media", &props.classes);
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}
@@ -43,7 +43,7 @@ pub struct MediaLeftProps {
 /// [https://bulma.io/documentation/layout/media-object/](https://bulma.io/documentation/layout/media-object/)
 #[function_component(MediaLeft)]
 pub fn media_left(props: &MediaLeftProps) -> Html {
-    let class = classes!("media-left", props.classes.clone());
+    let class = classes!("media-left", &props.classes);
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}
@@ -70,7 +70,7 @@ pub struct MediaRightProps {
 /// [https://bulma.io/documentation/layout/media-object/](https://bulma.io/documentation/layout/media-object/)
 #[function_component(MediaRight)]
 pub fn media_right(props: &MediaRightProps) -> Html {
-    let class = classes!("media-right", props.classes.clone());
+    let class = classes!("media-right", &props.classes);
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}
@@ -97,7 +97,7 @@ pub struct MediaContentProps {
 /// [https://bulma.io/documentation/layout/media-object/](https://bulma.io/documentation/layout/media-object/)
 #[function_component(MediaContent)]
 pub fn media_content(props: &MediaContentProps) -> Html {
-    let class = classes!("media-content", props.classes.clone());
+    let class = classes!("media-content", &props.classes);
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}

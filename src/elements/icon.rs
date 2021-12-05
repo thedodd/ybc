@@ -27,7 +27,7 @@ pub struct IconProps {
 pub fn icon(props: &IconProps) -> Html {
     let class = classes!(
         "icon",
-        props.classes.clone(),
+        &props.classes,
         props.size.as_ref().map(|size| size.to_string()),
         props.alignment.as_ref().map(|alignment| alignment.to_string()),
     );

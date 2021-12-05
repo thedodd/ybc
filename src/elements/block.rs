@@ -13,7 +13,7 @@ pub struct BlockProps {
 /// [https://bulma.io/documentation/elements/block/](https://bulma.io/documentation/elements/block/)
 #[function_component(Block)]
 pub fn block(props: &BlockProps) -> Html {
-    let class = classes!("block", props.classes.clone());
+    let class = classes!("block", &props.classes);
     html! {
         <div {class}>
             {props.children.clone()}

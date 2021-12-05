@@ -25,7 +25,7 @@ pub struct TitleProps {
 pub fn title(props: &TitleProps) -> Html {
     let class = classes!(
         "title",
-        props.classes.clone(),
+        &props.classes,
         props.size.as_ref().map(|size| size.to_string()),
         props.is_spaced.then(|| "is-spaced"),
     );
@@ -58,7 +58,7 @@ pub struct SubtitleProps {
 /// [https://bulma.io/documentation/elements/title/](https://bulma.io/documentation/elements/title/)
 #[function_component(Subtitle)]
 pub fn subtitle(props: &SubtitleProps) -> Html {
-    let class = classes!("subtitle", props.classes.clone(), props.size.as_ref().map(|size| size.to_string()));
+    let class = classes!("subtitle", &props.classes, props.size.as_ref().map(|size| size.to_string()));
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}
