@@ -11,7 +11,7 @@ categories = ["wasm", "web-programming"]
 keywords = ["wasm", "web", "bulma", "sass", "yew"]
 
 [dependencies]
-derive_more = "0.99.9"
+derive_more = { version="0.99.9", default-features=false, features=["display"] }
 web-sys = { version="0.3", features=["Element", "File", "HtmlCollection", "HtmlSelectElement"] }
 yew = { git="https://github.com/yewstack/yew.git" }
 yew-agent = { git="https://github.com/yewstack/yew.git" }
