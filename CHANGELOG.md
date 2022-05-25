@@ -34,7 +34,7 @@ This changelog follows the patterns described here: https://keepachangelog.com/e
 - The default tag type for NavbarItems is now `div`.
 - Added the `href`, `rel` & `target` props to the `NavbarItem` component. They will only be used when the `NavbarItemTag::A` is being used for the component.
 - Added the `rel` & `target` props to the `ButtonAnchor` component.
-- Adds an additional size for heros: `is-fullheight-with-navbar`. This one is present in the Bulma docs, but is slightly hidden.
+- Adds an additional size for heroes: `is-fullheight-with-navbar`. This one is present in the Bulma docs, but is slightly hidden.
 
 ## 0.1.3
 ### fixed

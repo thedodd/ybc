@@ -104,7 +104,7 @@ impl Component for Hero {
     }
 }
 
-/// The 4 sizes available for heros.
+/// The 4 sizes available for heroes.
 ///
 /// [https://bulma.io/documentation/layout/hero/#sizes](https://bulma.io/documentation/layout/hero/#sizes)
 #[derive(Clone, Debug, Display, PartialEq)]
