@@ -6,7 +6,7 @@
 //!
 //! As a guiding principal, YBC does not attempt to encapsulate every single Bulma style as a Rust
 //! type, let alone the many valid style combinations. That would be far too complex, and probably
-//! limiting to the user in many ways. Instead, YBC handles strucutre, required classes, functionality,
+//! limiting to the user in many ways. Instead, YBC handles structure, required classes, functionality,
 //! sane defaults and every component can be customized with any additional classes for an exact look and feel.
 //!
 //! What does it look like to use YBC? The following is a snippet of a component's `view` method
