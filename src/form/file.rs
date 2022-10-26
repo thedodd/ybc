@@ -59,10 +59,10 @@ pub fn file(props: &FileProps) -> Html {
     let class = classes!(
         "file",
         &props.classes,
-        props.has_name.is_some().then(|| "has-name"),
-        props.right.then(|| "is-right"),
-        props.fullwidth.then(|| "is-fullwidth"),
-        props.boxed.then(|| "is-boxed"),
+        props.has_name.is_some().then_some("has-name"),
+        props.right.then_some("is-right"),
+        props.fullwidth.then_some("is-fullwidth"),
+        props.boxed.then_some("is-boxed"),
         props.size.as_ref().map(|size| size.to_string()),
         props.alignment.as_ref().map(|alignment| alignment.to_string()),
     );

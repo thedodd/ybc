@@ -28,7 +28,7 @@ pub fn section(props: &SectionProps) -> Html {
 /// The 2 sizes available for sections, which controls spacing.
 ///
 /// [https://bulma.io/documentation/layout/section/](https://bulma.io/documentation/layout/section/)
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 #[display(fmt = "is-{}")]
 pub enum SectionSize {
     #[display(fmt = "medium")]

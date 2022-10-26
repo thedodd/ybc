@@ -3,7 +3,7 @@ use std::borrow::Cow;
 use yew::html::IntoPropValue;
 
 /// Common alignment classes.
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 #[display(fmt = "is-{}")]
 pub enum Alignment {
     #[display(fmt = "left")]
@@ -15,7 +15,7 @@ pub enum Alignment {
 }
 
 /// Common size classes.
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 #[display(fmt = "is-{}")]
 pub enum Size {
     #[display(fmt = "small")]

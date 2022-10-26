@@ -41,10 +41,10 @@ pub fn tabs(props: &TabsProps) -> Html {
         &props.classes,
         props.alignment.as_ref().map(ToString::to_string),
         props.size.as_ref().map(ToString::to_string),
-        props.boxed.then(|| "is-boxed"),
-        props.toggle.then(|| "is-toggle"),
-        props.rounded.then(|| "is-rounded"),
-        props.fullwidth.then(|| "is-fullwidth"),
+        props.boxed.then_some("is-boxed"),
+        props.toggle.then_some("is-toggle"),
+        props.rounded.then_some("is-rounded"),
+        props.fullwidth.then_some("is-fullwidth"),
     );
     html! {
         <div {class}>

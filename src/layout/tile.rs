@@ -34,7 +34,7 @@ pub struct TileProps {
 pub fn tile(props: &TileProps) -> Html {
     let ctx = props.ctx.as_ref().map(|ctx| ctx.to_string());
     let size = props.size.as_ref().map(|size| size.to_string());
-    let class = classes!("tile", &props.classes, ctx, props.vertical.then(|| "is-vertical"), size);
+    let class = classes!("tile", &props.classes, ctx, props.vertical.then_some("is-vertical"), size);
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}
@@ -45,7 +45,7 @@ pub fn tile(props: &TileProps) -> Html {
 /// Tile context modifiers.
 ///
 /// https://bulma.io/documentation/layout/tiles/#modifiers
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 #[display(fmt = "is-{}")]
 pub enum TileCtx {
     #[display(fmt = "ancestor")]
@@ -59,7 +59,7 @@ pub enum TileCtx {
 /// Tile size modifiers.
 ///
 /// https://bulma.io/documentation/layout/tiles/#modifiers
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 #[display(fmt = "is-{}")]
 pub enum TileSize {
     #[display(fmt = "1")]

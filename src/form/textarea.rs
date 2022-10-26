@@ -55,9 +55,9 @@ pub fn text_area(props: &TextAreaProps) -> Html {
         "textarea",
         &props.classes,
         props.size.as_ref().map(|size| size.to_string()),
-        props.loading.then(|| "is-loading"),
-        props.r#static.then(|| "is-static"),
-        props.fixed_size.then(|| "has-fixed-size"),
+        props.loading.then_some("is-loading"),
+        props.r#static.then_some("is-static"),
+        props.fixed_size.then_some("has-fixed-size"),
     );
     let oninput = props.update.reform(|ev: web_sys::InputEvent| {
         let input: HtmlTextAreaElement = ev.target_dyn_into().expect_throw("event target should be a text area");

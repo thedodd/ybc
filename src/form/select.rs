@@ -47,7 +47,7 @@ pub fn select(props: &SelectProps) -> Html {
         "select",
         &props.classes,
         props.size.as_ref().map(|size| size.to_string()),
-        props.loading.then(|| "is-loading"),
+        props.loading.then_some("is-loading"),
     );
     let onchange = props.update.reform(|ev: web_sys::Event| {
         let select: HtmlSelectElement = ev.target_dyn_into().expect_throw("event target should be a select");
@@ -117,7 +117,7 @@ pub fn multi_select(props: &MultiSelectProps) -> Html {
         "is-multiple",
         &props.classes,
         props.size.as_ref().map(|size| size.to_string()),
-        props.loading.then(|| "is-loading"),
+        props.loading.then_some("is-loading"),
     );
     let size = props.list_size.to_string();
     let onchange = props.update.reform(|ev: web_sys::Event| {

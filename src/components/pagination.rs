@@ -37,7 +37,7 @@ pub fn pagination(props: &PaginationProps) -> Html {
         &props.classes,
         props.size.as_ref().map(|size| size.to_string()),
         props.alignment.as_ref().map(|alignment| alignment.to_string()),
-        props.rounded.then(|| "is-rounded"),
+        props.rounded.then_some("is-rounded"),
     );
     html! {
         <nav {class} role="navigation" aria-label="pagination">
@@ -79,7 +79,7 @@ pub fn pagination_item(props: &PaginationItemProps) -> Html {
 }
 
 /// A pagination item type.
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 #[display(fmt = "pagination-{}")]
 pub enum PaginationItemType {
     /// A pagination link for a specific page number.

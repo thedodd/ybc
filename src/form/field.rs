@@ -54,11 +54,11 @@ pub fn field(props: &FieldProps) -> Html {
     let class = classes!(
         "field",
         &props.classes,
-        props.icons_left.then(|| "has-icons-left"),
-        props.icons_right.then(|| "has-icons-right"),
-        props.addons.then(|| "has-addons"),
-        props.grouped.then(|| "is-grouped"),
-        props.multiline.then(|| "is-multiline"),
+        props.icons_left.then_some("has-icons-left"),
+        props.icons_right.then_some("has-icons-right"),
+        props.addons.then_some("has-addons"),
+        props.grouped.then_some("is-grouped"),
+        props.multiline.then_some("is-multiline"),
         props.addons_align.as_ref().map(|align| align.to_string()),
         props.grouped_align.as_ref().map(|align| align.to_string()),
     );
@@ -95,11 +95,11 @@ pub fn field(props: &FieldProps) -> Html {
     let help = match &props.help {
         Some(help_content) => match &props.help_classes {
             Some(help_classes_str) => {
-                let class = classes!("help", help_classes_str.clone(), props.help_has_error.then(|| "is-danger"));
+                let class = classes!("help", help_classes_str.clone(), props.help_has_error.then_some("is-danger"));
                 html! {<label {class}>{help_content.clone()}</label>}
             }
             None => {
-                let class = classes!("help", props.help_has_error.then(|| "is-danger"));
+                let class = classes!("help", props.help_has_error.then_some("is-danger"));
                 html! {<label {class}>{help_content.clone()}</label>}
             }
         },
@@ -125,7 +125,7 @@ pub fn field(props: &FieldProps) -> Html {
 /// The two alignment options available for field addons.
 ///
 /// https://bulma.io/documentation/form/general/
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 #[display(fmt = "has-addons-{}")]
 pub enum AddonsAlign {
     #[display(fmt = "centered")]
@@ -137,7 +137,7 @@ pub enum AddonsAlign {
 /// The two alignment options available for grouped field controls.
 ///
 /// https://bulma.io/documentation/form/general/
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 #[display(fmt = "is-grouped-{}")]
 pub enum GroupedAlign {
     #[display(fmt = "centered")]
@@ -149,7 +149,7 @@ pub enum GroupedAlign {
 /// The three sizes available for horizontal field labels.
 ///
 /// https://bulma.io/documentation/form/general/#horizontal-form
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 #[display(fmt = "is-{}")]
 pub enum LabelSize {
     #[display(fmt = "small")]

@@ -46,8 +46,8 @@ pub fn hero(props: &HeroProps) -> Html {
     let class = classes!(
         "hero",
         &props.classes,
-        props.fixed_nav.then(|| "is-fullheight-with-navbar"),
-        props.bold.then(|| "is-bold"),
+        props.fixed_nav.then_some("is-fullheight-with-navbar"),
+        props.bold.then_some("is-bold"),
         props.size.as_ref().map(|size| size.to_string()),
     );
 
@@ -79,7 +79,7 @@ pub fn hero(props: &HeroProps) -> Html {
 /// The 4 sizes available for heroes.
 ///
 /// [https://bulma.io/documentation/layout/hero/#sizes](https://bulma.io/documentation/layout/hero/#sizes)
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 #[display(fmt = "is-{}")]
 pub enum HeroSize {
     #[display(fmt = "medium")]

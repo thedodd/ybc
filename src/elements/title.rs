@@ -27,7 +27,7 @@ pub fn title(props: &TitleProps) -> Html {
         "title",
         &props.classes,
         props.size.as_ref().map(|size| size.to_string()),
-        props.is_spaced.then(|| "is-spaced"),
+        props.is_spaced.then_some("is-spaced"),
     );
     html! {
         <@{props.tag.clone()} {class}>
@@ -69,7 +69,7 @@ pub fn subtitle(props: &SubtitleProps) -> Html {
 /// The six sizes available for titles & subtitles.
 ///
 /// https://bulma.io/documentation/elements/title/#sizes
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 #[display(fmt = "is-{}")]
 pub enum HeaderSize {
     #[display(fmt = "1")]

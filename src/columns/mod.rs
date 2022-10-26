@@ -25,9 +25,9 @@ pub fn columns(props: &ColumnsProps) -> Html {
     let class = classes!(
         "columns",
         &props.classes,
-        props.vcentered.then(|| "is-vcentered"),
-        props.multiline.then(|| "is-multiline"),
-        props.centered.then(|| "is-centered"),
+        props.vcentered.then_some("is-vcentered"),
+        props.multiline.then_some("is-multiline"),
+        props.centered.then_some("is-centered"),
     );
     html! {
         <div {class}>

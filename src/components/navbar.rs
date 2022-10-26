@@ -155,7 +155,7 @@ impl Component for Navbar {
 ///
 /// NOTE WELL: in order to work properly, the root `html` or `body` element must be configured with
 /// the corresponding `has-navbar-fixed-top` or `has-navbar-fixed-bottom` class.
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 #[display(fmt = "is-{}")]
 pub enum NavbarFixed {
     #[display(fmt = "fixed-top")]
@@ -170,7 +170,7 @@ pub enum NavbarFixed {
 /// The two HTML tags allowed for a navbar-item.
 ///
 /// [https://bulma.io/documentation/components/navbar/#navbar-item](https://bulma.io/documentation/components/navbar/#navbar-item)
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 pub enum NavbarItemTag {
     #[display(fmt = "a")]
     A,
@@ -219,10 +219,10 @@ pub fn navbar_item(props: &NavbarItemProps) -> Html {
     let class = classes!(
         "navbar-item",
         &props.classes,
-        props.has_dropdown.then(|| "has-dropdown"),
-        props.expanded.then(|| "is-expanded"),
-        props.tab.then(|| "is-tab"),
-        props.active.then(|| "is-active"),
+        props.has_dropdown.then_some("has-dropdown"),
+        props.expanded.then_some("is-expanded"),
+        props.tab.then_some("is-tab"),
+        props.active.then_some("is-active"),
     );
     match props.tag {
         NavbarItemTag::A => {

@@ -29,7 +29,7 @@ pub fn buttons(props: &ButtonsProps) -> Html {
 /// The 3 sizes available for a button group.
 ///
 /// https://bulma.io/documentation/elements/button/#sizes
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 #[display(fmt = "are-{}")]
 pub enum ButtonGroupSize {
     #[display(fmt = "small")]
@@ -71,8 +71,8 @@ pub fn button(props: &ButtonProps) -> Html {
     let class = classes!(
         "button",
         &props.classes,
-        props.loading.then(|| "is-loading"),
-        props.r#static.then(|| "is-static")
+        props.loading.then_some("is-loading"),
+        props.r#static.then_some("is-static")
     );
     html! {
         <button {class} onclick={props.onclick.clone()} disabled={props.disabled}>
@@ -228,8 +228,8 @@ pub fn button_anchor(props: &ButtonAnchorProps) -> Html {
     let class = classes!(
         "button",
         &props.classes,
-        props.loading.then(|| "is-loading"),
-        props.r#static.then(|| "is-static")
+        props.loading.then_some("is-loading"),
+        props.r#static.then_some("is-static")
     );
     html! {
         <a
@@ -274,8 +274,8 @@ pub fn button_input_submit(props: &ButtonInputSubmitProps) -> Html {
     let class = classes!(
         "button",
         &props.classes,
-        props.loading.then(|| "is-loading"),
-        props.r#static.then(|| "is-static"),
+        props.loading.then_some("is-loading"),
+        props.r#static.then_some("is-static"),
     );
     html! {
         <input type="submit" {class} onsubmit={props.onsubmit.clone()} disabled={props.disabled} />
@@ -311,8 +311,8 @@ pub fn button_input_reset(props: &ButtonInputResetProps) -> Html {
     let class = classes!(
         "button",
         &props.classes,
-        props.loading.then(|| "is-loading"),
-        props.r#static.then(|| "is-static"),
+        props.loading.then_some("is-loading"),
+        props.r#static.then_some("is-static"),
     );
     html! {
         <input type="reset" {class} onreset={props.onreset.clone()} disabled={props.disabled} />

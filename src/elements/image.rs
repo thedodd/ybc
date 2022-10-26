@@ -28,7 +28,7 @@ pub fn image(props: &ImageProps) -> Html {
 /// Available placeholder sizes for figures.
 ///
 /// https://bulma.io/documentation/elements/image/
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 #[display(fmt = "is-{}")]
 pub enum ImageSize {
     #[display(fmt = "16x16")]

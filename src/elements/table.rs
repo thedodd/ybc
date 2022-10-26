@@ -34,11 +34,11 @@ pub fn table(props: &TableProps) -> Html {
     let class = classes!(
         "table",
         &props.classes,
-        props.bordered.then(|| "is-bordered"),
-        props.striped.then(|| "is-striped"),
-        props.narrow.then(|| "is-narrow"),
-        props.hoverable.then(|| "is-hoverable"),
-        props.fullwidth.then(|| "is-fullwidth"),
+        props.bordered.then_some("is-bordered"),
+        props.striped.then_some("is-striped"),
+        props.narrow.then_some("is-narrow"),
+        props.hoverable.then_some("is-hoverable"),
+        props.fullwidth.then_some("is-fullwidth"),
     );
     if props.scrollable {
         html! {

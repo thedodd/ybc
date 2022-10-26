@@ -55,9 +55,9 @@ pub fn input(props: &InputProps) -> Html {
         "input",
         &props.classes,
         props.size.as_ref().map(|size| size.to_string()),
-        props.rounded.then(|| "is-rounded"),
-        props.loading.then(|| "is-loading"),
-        props.r#static.then(|| "is-static"),
+        props.rounded.then_some("is-rounded"),
+        props.loading.then_some("is-loading"),
+        props.r#static.then_some("is-static"),
     );
     let oninput = props.update.reform(|ev: web_sys::InputEvent| {
         let input: HtmlInputElement = ev.target_dyn_into().expect_throw("event target should be an input");
@@ -80,7 +80,7 @@ pub fn input(props: &InputProps) -> Html {
 /// The 4 allowed types for an input component.
 ///
 /// https://bulma.io/documentation/form/input/
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 pub enum InputType {
     #[display(fmt = "text")]
     Text,
