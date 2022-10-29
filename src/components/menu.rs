@@ -5,7 +5,7 @@ pub struct MenuProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
 }
 
 /// A simple menu, for any type of vertical navigation.
@@ -14,7 +14,7 @@ pub struct MenuProps {
 #[function_component(Menu)]
 pub fn menu(props: &MenuProps) -> Html {
     html! {
-        <aside class={classes!("menu", &props.classes)}>
+        <aside class={classes!("menu", props.classes.clone())}>
             {props.children.clone()}
         </aside>
     }
@@ -29,7 +29,7 @@ pub struct MenuListProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
 }
 
 /// A container for menu list `li` elements.
@@ -38,7 +38,7 @@ pub struct MenuListProps {
 #[function_component(MenuList)]
 pub fn menu_list(props: &MenuListProps) -> Html {
     html! {
-        <ul class={classes!("menu-list", &props.classes)}>
+        <ul class={classes!("menu-list", props.classes.clone())}>
             {props.children.clone()}
         </ul>
     }
@@ -50,7 +50,7 @@ pub fn menu_list(props: &MenuListProps) -> Html {
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct MenuLabelProps {
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The text of the label.
     #[prop_or_default]
     pub text: String,
@@ -62,7 +62,7 @@ pub struct MenuLabelProps {
 #[function_component(MenuLabel)]
 pub fn menu_label(props: &MenuLabelProps) -> Html {
     html! {
-        <p class={classes!("menu-label", &props.classes)}>
+        <p class={classes!("menu-label", props.classes.clone())}>
             {props.text.clone()}
         </p>
     }

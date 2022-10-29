@@ -5,7 +5,7 @@ pub struct ContainerProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// Add a `32px` margin to the left and right sides of the container.
     #[prop_or_default]
     pub fluid: bool,
@@ -16,7 +16,7 @@ pub struct ContainerProps {
 /// [https://bulma.io/documentation/layout/container/](https://bulma.io/documentation/layout/container/)
 #[function_component(Container)]
 pub fn container(props: &ContainerProps) -> Html {
-    let class = classes!("container", &props.classes, props.fluid.then_some("is-fluid"));
+    let class = classes!("container", props.classes.clone(), props.fluid.then_some("is-fluid"));
     html! {
         <div {class}>{props.children.clone()}</div>
     }

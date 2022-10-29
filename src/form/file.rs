@@ -21,7 +21,7 @@ pub struct FileProps {
     pub selector_icon: Html,
 
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// An option to control if file names will be displayed; if a value is provided, then the
     /// `has-name` class will be added to this form element and the given value will be used as a
     /// placeholder until files are selected.
@@ -58,7 +58,7 @@ pub struct FileProps {
 pub fn file(props: &FileProps) -> Html {
     let class = classes!(
         "file",
-        &props.classes,
+        props.classes.clone(),
         props.has_name.is_some().then_some("has-name"),
         props.right.then_some("is-right"),
         props.fullwidth.then_some("is-fullwidth"),

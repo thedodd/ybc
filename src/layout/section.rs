@@ -6,7 +6,7 @@ pub struct SectionProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// A size modifier to control spacing.
     #[prop_or_default]
     pub size: Option<SectionSize>,
@@ -19,7 +19,7 @@ pub struct SectionProps {
 pub fn section(props: &SectionProps) -> Html {
     let size = props.size.as_ref().map(|size| size.to_string());
     html! {
-        <section class={classes!("section", &props.classes, size)}>
+        <section class={classes!("section", props.classes.clone(), size)}>
             {props.children.clone()}
         </section>
     }

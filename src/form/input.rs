@@ -15,7 +15,7 @@ pub struct InputProps {
     pub update: Callback<String>,
 
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The input type of this component.
     #[prop_or_else(|| InputType::Text)]
     pub r#type: InputType,
@@ -53,7 +53,7 @@ pub struct InputProps {
 pub fn input(props: &InputProps) -> Html {
     let class = classes!(
         "input",
-        &props.classes,
+        props.classes.clone(),
         props.size.as_ref().map(|size| size.to_string()),
         props.rounded.then_some("is-rounded"),
         props.loading.then_some("is-loading"),

@@ -5,7 +5,7 @@ pub struct BoxProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
 }
 
 /// A white box to contain other elements.
@@ -14,7 +14,7 @@ pub struct BoxProps {
 #[function_component(Box)]
 pub fn r#box(props: &BoxProps) -> Html {
     html! {
-        <div class={classes!("box", &props.classes)}>
+        <div class={classes!("box", props.classes.clone())}>
             {props.children.clone()}
         </div>
     }

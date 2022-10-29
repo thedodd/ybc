@@ -5,7 +5,7 @@ pub struct MediaProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -16,7 +16,7 @@ pub struct MediaProps {
 /// [https://bulma.io/documentation/layout/media-object/](https://bulma.io/documentation/layout/media-object/)
 #[function_component(Media)]
 pub fn media(props: &MediaProps) -> Html {
-    let class = classes!("media", &props.classes);
+    let class = classes!("media", props.classes.clone());
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}
@@ -32,7 +32,7 @@ pub struct MediaLeftProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -43,7 +43,7 @@ pub struct MediaLeftProps {
 /// [https://bulma.io/documentation/layout/media-object/](https://bulma.io/documentation/layout/media-object/)
 #[function_component(MediaLeft)]
 pub fn media_left(props: &MediaLeftProps) -> Html {
-    let class = classes!("media-left", &props.classes);
+    let class = classes!("media-left", props.classes.clone());
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}
@@ -59,7 +59,7 @@ pub struct MediaRightProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -70,7 +70,7 @@ pub struct MediaRightProps {
 /// [https://bulma.io/documentation/layout/media-object/](https://bulma.io/documentation/layout/media-object/)
 #[function_component(MediaRight)]
 pub fn media_right(props: &MediaRightProps) -> Html {
-    let class = classes!("media-right", &props.classes);
+    let class = classes!("media-right", props.classes.clone());
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}
@@ -86,7 +86,7 @@ pub struct MediaContentProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -97,7 +97,7 @@ pub struct MediaContentProps {
 /// [https://bulma.io/documentation/layout/media-object/](https://bulma.io/documentation/layout/media-object/)
 #[function_component(MediaContent)]
 pub fn media_content(props: &MediaContentProps) -> Html {
-    let class = classes!("media-content", &props.classes);
+    let class = classes!("media-content", props.classes.clone());
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}

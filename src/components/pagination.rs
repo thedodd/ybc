@@ -10,7 +10,7 @@ pub struct PaginationProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The size of this component.
     #[prop_or_default]
     pub size: Option<Size>,
@@ -34,7 +34,7 @@ pub struct PaginationProps {
 pub fn pagination(props: &PaginationProps) -> Html {
     let class = classes!(
         "pagination",
-        &props.classes,
+        props.classes.clone(),
         props.size.as_ref().map(|size| size.to_string()),
         props.alignment.as_ref().map(|alignment| alignment.to_string()),
         props.rounded.then_some("is-rounded"),

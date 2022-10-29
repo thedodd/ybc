@@ -5,24 +5,24 @@ use yew::prelude::*;
 pub struct HeroProps {
     /// Extra classes for the hero container.
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The contents of the hero-head section.
     #[prop_or_default]
     pub head: Option<Html>,
     /// Optional classes to add to the hero-head container.
     #[prop_or_default]
-    pub head_classes: Option<Classes>,
+    pub head_classes: Classes,
     /// The contents of the hero-body section.
     pub body: Html,
     /// Optional classes to add to the hero-body container.
     #[prop_or_default]
-    pub body_classes: Option<Classes>,
+    pub body_classes: Classes,
     /// The contents of the hero-foot section.
     #[prop_or_default]
     pub foot: Option<Html>,
     /// Optional classes to add to the hero-foot container.
     #[prop_or_default]
-    pub foot_classes: Option<Classes>,
+    pub foot_classes: Classes,
     /// If you are using a [fixed navbar](https://bulma.io/documentation/components/navbar/#fixed-navbar),
     /// you can use the `fixed_nav=true` modifier on the hero for it to occupy the viewport height minus
     /// the navbar height.
@@ -45,7 +45,7 @@ pub struct HeroProps {
 pub fn hero(props: &HeroProps) -> Html {
     let class = classes!(
         "hero",
-        &props.classes,
+        props.classes.clone(),
         props.fixed_nav.then_some("is-fullheight-with-navbar"),
         props.bold.then_some("is-bold"),
         props.size.as_ref().map(|size| size.to_string()),

@@ -7,7 +7,7 @@ pub struct ButtonsProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The size for all buttons within this group.
     #[prop_or_default]
     pub size: Option<ButtonGroupSize>,
@@ -18,7 +18,7 @@ pub struct ButtonsProps {
 /// [https://bulma.io/documentation/elements/button/](https://bulma.io/documentation/elements/button/)
 #[function_component(Buttons)]
 pub fn buttons(props: &ButtonsProps) -> Html {
-    let class = classes!("buttons", &props.classes, props.size.as_ref().map(ToString::to_string));
+    let class = classes!("buttons", props.classes.clone(), props.size.as_ref().map(ToString::to_string));
     html! {
         <div {class}>
             {props.children.clone()}
@@ -48,7 +48,7 @@ pub struct ButtonProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The click handler to use for this component.
     #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
@@ -70,7 +70,7 @@ pub struct ButtonProps {
 pub fn button(props: &ButtonProps) -> Html {
     let class = classes!(
         "button",
-        &props.classes,
+        props.classes.clone(),
         props.loading.then_some("is-loading"),
         props.r#static.then_some("is-static")
     );
@@ -100,7 +100,7 @@ mod router {
         pub children: Children,
         /// Classes to be added to component.
         #[prop_or_default]
-        pub classes: Option<Classes>,
+        pub classes: Classes,
         /// Render a loading spinner within this component.
         #[prop_or_default]
         pub loading: bool,
@@ -130,13 +130,8 @@ mod router {
         }
 
         fn view(&self, ctx: &Context<Self>) -> Html {
-            let mut classes = Classes::from(&ctx.props().classes);
-            if !classes.contains("button") {
-                classes.push("button")
-            }
-            if ctx.props().loading {
-                classes.push("is-loading");
-            }
+            let loading = ctx.props().loading.then_some("is-loading");
+            let classes = classes!(ctx.props().classes.clone(), "button", loading);
             html! {
                 <Link<R, Q>
                     to={ctx.props().route.clone()}
@@ -166,13 +161,8 @@ mod router {
         }
 
         fn view(&self, ctx: &Context<Self>) -> Html {
-            let mut classes = Classes::from(&ctx.props().classes);
-            if !classes.contains("button") {
-                classes.push("button")
-            }
-            if ctx.props().loading {
-                classes.push("is-loading");
-            }
+            let loading = ctx.props().loading.then_some("is-loading");
+            let classes = classes!(ctx.props().classes.clone(), "button", loading);
             html! {
                 <Link<R, Q>
                     to={ctx.props().route.clone()}
@@ -196,7 +186,7 @@ pub struct ButtonAnchorProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The `href` attribute value to use for this component.
     #[prop_or_default]
     pub href: String,
@@ -227,7 +217,7 @@ pub struct ButtonAnchorProps {
 pub fn button_anchor(props: &ButtonAnchorProps) -> Html {
     let class = classes!(
         "button",
-        &props.classes,
+        props.classes.clone(),
         props.loading.then_some("is-loading"),
         props.r#static.then_some("is-static")
     );
@@ -251,7 +241,7 @@ pub fn button_anchor(props: &ButtonAnchorProps) -> Html {
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct ButtonInputSubmitProps {
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The submit handler to use for this component.
     #[prop_or_default]
     pub onsubmit: Callback<FocusEvent>,
@@ -273,7 +263,7 @@ pub struct ButtonInputSubmitProps {
 pub fn button_input_submit(props: &ButtonInputSubmitProps) -> Html {
     let class = classes!(
         "button",
-        &props.classes,
+        props.classes.clone(),
         props.loading.then_some("is-loading"),
         props.r#static.then_some("is-static"),
     );
@@ -288,7 +278,7 @@ pub fn button_input_submit(props: &ButtonInputSubmitProps) -> Html {
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct ButtonInputResetProps {
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The reset handler to use for this component.
     #[prop_or_default]
     pub onreset: Callback<Event>,
@@ -310,7 +300,7 @@ pub struct ButtonInputResetProps {
 pub fn button_input_reset(props: &ButtonInputResetProps) -> Html {
     let class = classes!(
         "button",
-        &props.classes,
+        props.classes.clone(),
         props.loading.then_some("is-loading"),
         props.r#static.then_some("is-static"),
     );

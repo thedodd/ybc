@@ -3,7 +3,7 @@ use yew::prelude::*;
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct ProgressProps {
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The maximum amount of progress; the 100% value.
     #[prop_or_else(|| 1.0)]
     pub max: f32,
@@ -17,7 +17,7 @@ pub struct ProgressProps {
 /// [https://bulma.io/documentation/elements/progress/](https://bulma.io/documentation/elements/progress/)
 #[function_component(Progress)]
 pub fn progress(props: &ProgressProps) -> Html {
-    let class = classes!("progress", &props.classes);
+    let class = classes!("progress", props.classes.clone());
     let max = props.max.to_string();
     let value = props.value.to_string();
     let value_txt = format!("{}%", value);

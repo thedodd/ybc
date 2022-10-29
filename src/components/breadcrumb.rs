@@ -9,7 +9,7 @@ pub struct BreadcrumbProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The size of this component.
     #[prop_or_default]
     pub size: Option<BreadcrumbSize>,
@@ -28,7 +28,7 @@ pub struct BreadcrumbProps {
 pub fn breadcrumb(props: &BreadcrumbProps) -> Html {
     let class = classes!(
         "breadcrumb",
-        &props.classes,
+        props.classes.clone(),
         props.size.as_ref().map(|size| size.to_string()),
         props.alignment.as_ref().map(|alignment| alignment.to_string()),
         props.separator.as_ref().map(|separator| separator.to_string()),

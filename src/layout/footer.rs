@@ -5,7 +5,7 @@ pub struct FooterProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
 }
 
 /// A simple responsive footer which can include anything.
@@ -14,7 +14,7 @@ pub struct FooterProps {
 #[function_component(Footer)]
 pub fn footer(props: &FooterProps) -> Html {
     html! {
-        <footer class={classes!("footer", &props.classes)}>
+        <footer class={classes!("footer", props.classes.clone())}>
             {props.children.clone()}
         </footer>
     }

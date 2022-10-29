@@ -8,7 +8,7 @@ pub struct IconProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The click handler to use for this component.
     #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
@@ -27,7 +27,7 @@ pub struct IconProps {
 pub fn icon(props: &IconProps) -> Html {
     let class = classes!(
         "icon",
-        &props.classes,
+        props.classes.clone(),
         props.size.as_ref().map(|size| size.to_string()),
         props.alignment.as_ref().map(|alignment| alignment.to_string()),
     );

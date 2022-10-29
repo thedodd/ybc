@@ -11,7 +11,7 @@ pub struct CheckboxProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// Disable this component.
     #[prop_or_default]
     pub disabled: bool,
@@ -26,7 +26,7 @@ pub struct CheckboxProps {
 /// component via callback.
 #[function_component(Checkbox)]
 pub fn checkbox(props: &CheckboxProps) -> Html {
-    let class = classes!("checkbox", &props.classes);
+    let class = classes!("checkbox", props.classes.clone());
     let checked = props.checked;
     html! {
         <label {class} disabled={props.disabled}>

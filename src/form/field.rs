@@ -6,19 +6,19 @@ pub struct FieldProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// A text label for the field.
     #[prop_or_default]
     pub label: Option<String>,
     /// Extra classes for the label container.
     #[prop_or_default]
-    pub label_classes: Option<Classes>,
+    pub label_classes: Classes,
     /// A help message for the field.
     #[prop_or_default]
     pub help: Option<String>,
     /// Extra classes for the help message container.
     #[prop_or_default]
-    pub help_classes: Option<Classes>,
+    pub help_classes: Classes,
     /// A convenience bool to add the `is-danger` class to the help classes when `true`.
     #[prop_or_default]
     pub help_has_error: bool,
@@ -53,7 +53,7 @@ pub struct FieldProps {
 pub fn field(props: &FieldProps) -> Html {
     let class = classes!(
         "field",
-        &props.classes,
+        props.classes.clone(),
         props.icons_left.then_some("has-icons-left"),
         props.icons_right.then_some("has-icons-right"),
         props.addons.then_some("has-addons"),
@@ -65,9 +65,15 @@ pub fn field(props: &FieldProps) -> Html {
 
     // Build the label if label content is provided.
     let label = match &props.label {
-        Some(label_content) => match &props.label_classes {
-            Some(label_classes_str) => {
-                let mut label_classes = label_classes_str.clone();
+        Some(label_content) => {
+            if props.label_classes.is_empty() {
+                if props.horizontal {
+                    html! {<div class="field-label"><label class="label">{label_content.clone()}</label></div>}
+                } else {
+                    html! {<label class="label">{label_content.clone()}</label>}
+                }
+            } else {
+                let mut label_classes = props.label_classes.clone();
                 if props.horizontal {
                     label_classes.push("field-label");
                     html! {
@@ -80,29 +86,21 @@ pub fn field(props: &FieldProps) -> Html {
                     html! {<label class={label_classes}>{label_content.clone()}</label>}
                 }
             }
-            None => {
-                if props.horizontal {
-                    html! {<div class="field-label"><label class="label">{label_content.clone()}</label></div>}
-                } else {
-                    html! {<label class="label">{label_content.clone()}</label>}
-                }
-            }
-        },
+        }
         None => html! {},
     };
 
     // Build the help label if present.
     let help = match &props.help {
-        Some(help_content) => match &props.help_classes {
-            Some(help_classes_str) => {
-                let class = classes!("help", help_classes_str.clone(), props.help_has_error.then_some("is-danger"));
-                html! {<label {class}>{help_content.clone()}</label>}
-            }
-            None => {
+        Some(help_content) => {
+            if props.help_classes.is_empty() {
                 let class = classes!("help", props.help_has_error.then_some("is-danger"));
                 html! {<label {class}>{help_content.clone()}</label>}
+            } else {
+                let class = classes!("help", props.help_classes.clone(), props.help_has_error.then_some("is-danger"));
+                html! {<label {class}>{help_content.clone()}</label>}
             }
-        },
+        }
         None => html! {},
     };
 

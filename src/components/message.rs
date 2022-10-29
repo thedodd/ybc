@@ -5,7 +5,7 @@ pub struct MessageProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
 }
 
 /// Colored message blocks, to emphasize part of your page.
@@ -14,7 +14,7 @@ pub struct MessageProps {
 #[function_component(Message)]
 pub fn message(props: &MessageProps) -> Html {
     html! {
-        <article class={classes!("message", &props.classes)}>
+        <article class={classes!("message", props.classes.clone())}>
             {props.children.clone()}
         </article>
     }
@@ -28,7 +28,7 @@ pub struct MessageHeaderProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
 }
 
 /// An optional message header that can hold a title and a delete element.
@@ -37,7 +37,7 @@ pub struct MessageHeaderProps {
 #[function_component(MessageHeader)]
 pub fn message_header(props: &MessageHeaderProps) -> Html {
     html! {
-        <div class={classes!("message-header", &props.classes)}>
+        <div class={classes!("message-header", props.classes.clone())}>
             {props.children.clone()}
         </div>
     }
@@ -51,7 +51,7 @@ pub struct MessageBodyProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
 }
 
 /// A container for the body of a message.
@@ -60,7 +60,7 @@ pub struct MessageBodyProps {
 #[function_component(MessageBody)]
 pub fn message_body(props: &MessageBodyProps) -> Html {
     html! {
-        <div class={classes!("message-body", &props.classes)}>
+        <div class={classes!("message-body", props.classes.clone())}>
             {props.children.clone()}
         </div>
     }

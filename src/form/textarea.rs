@@ -14,7 +14,7 @@ pub struct TextAreaProps {
     pub update: Callback<String>,
 
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The placeholder value for this component.
     #[prop_or_default]
     pub placeholder: String,
@@ -53,7 +53,7 @@ pub struct TextAreaProps {
 pub fn text_area(props: &TextAreaProps) -> Html {
     let class = classes!(
         "textarea",
-        &props.classes,
+        props.classes.clone(),
         props.size.as_ref().map(|size| size.to_string()),
         props.loading.then_some("is-loading"),
         props.r#static.then_some("is-static"),

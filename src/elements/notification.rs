@@ -5,7 +5,7 @@ pub struct NotificationProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
 }
 
 /// Bold notification blocks, to alert your users of something.
@@ -13,7 +13,7 @@ pub struct NotificationProps {
 /// [https://bulma.io/documentation/elements/notification/](https://bulma.io/documentation/elements/notification/)
 #[function_component(Notification)]
 pub fn notification(props: &NotificationProps) -> Html {
-    let class = classes!("notification", &props.classes);
+    let class = classes!("notification", props.classes.clone());
     html! {
         <div {class}>
             {props.children.clone()}

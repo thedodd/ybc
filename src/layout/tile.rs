@@ -6,7 +6,7 @@ pub struct TileProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -34,7 +34,7 @@ pub struct TileProps {
 pub fn tile(props: &TileProps) -> Html {
     let ctx = props.ctx.as_ref().map(|ctx| ctx.to_string());
     let size = props.size.as_ref().map(|size| size.to_string());
-    let class = classes!("tile", &props.classes, ctx, props.vertical.then_some("is-vertical"), size);
+    let class = classes!("tile", props.classes.clone(), ctx, props.vertical.then_some("is-vertical"), size);
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}

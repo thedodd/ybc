@@ -20,7 +20,7 @@ pub struct RadioProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// Disable this component.
     #[prop_or_default]
     pub disabled: bool,
@@ -35,7 +35,7 @@ pub struct RadioProps {
 /// component via callback.
 #[function_component(Radio)]
 pub fn radio(props: &RadioProps) -> Html {
-    let class = classes!("radio", &props.classes);
+    let class = classes!("radio", props.classes.clone());
     let oninput = props.update.reform(|ev: web_sys::InputEvent| {
         let input: HtmlInputElement = ev.target_dyn_into().expect_throw("event target should be an input");
         input.value()

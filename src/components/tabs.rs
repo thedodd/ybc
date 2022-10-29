@@ -7,7 +7,7 @@ pub struct TabsProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The alignment of this component.
     #[prop_or_default]
     pub alignment: Option<Alignment>,
@@ -38,7 +38,7 @@ pub struct TabsProps {
 pub fn tabs(props: &TabsProps) -> Html {
     let class = classes!(
         "tabs",
-        &props.classes,
+        props.classes.clone(),
         props.alignment.as_ref().map(ToString::to_string),
         props.size.as_ref().map(ToString::to_string),
         props.boxed.then_some("is-boxed"),

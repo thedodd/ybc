@@ -7,7 +7,7 @@ pub struct TagProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "span".into())]
     pub tag: String,
@@ -32,7 +32,7 @@ pub struct TagProps {
 pub fn tag(props: &TagProps) -> Html {
     let class = classes!(
         "tag",
-        &props.classes,
+        props.classes.clone(),
         props.rounded.then_some("is-rounded"),
         props.delete.then_some("is-delete"),
         props.size.as_ref().map(|size| size.to_string()),
@@ -52,7 +52,7 @@ pub struct TagsProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// Attach two tags together; this requires that this component wraps two `Tag` components.
     #[prop_or_default]
     pub has_addons: bool,
@@ -63,7 +63,7 @@ pub struct TagsProps {
 /// [https://bulma.io/documentation/elements/tag/](https://bulma.io/documentation/elements/tag/)
 #[function_component(Tags)]
 pub fn tags(props: &TagsProps) -> Html {
-    let class = classes!("tags", &props.classes, props.has_addons.then_some("has-addons"));
+    let class = classes!("tags", props.classes.clone(), props.has_addons.then_some("has-addons"));
     html! {
         <div {class}>
             {props.children.clone()}

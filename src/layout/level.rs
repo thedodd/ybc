@@ -5,7 +5,7 @@ pub struct LevelProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "nav".into())]
     pub tag: String,
@@ -16,7 +16,7 @@ pub struct LevelProps {
 /// [https://bulma.io/documentation/layout/level/](https://bulma.io/documentation/layout/level/)
 #[function_component(Level)]
 pub fn level(props: &LevelProps) -> Html {
-    let class = classes!("level", &props.classes);
+    let class = classes!("level", props.classes.clone());
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}
@@ -32,7 +32,7 @@ pub struct LevelLeftProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -43,7 +43,7 @@ pub struct LevelLeftProps {
 /// [https://bulma.io/documentation/layout/level/](https://bulma.io/documentation/layout/level/)
 #[function_component(LevelLeft)]
 pub fn level_left(props: &LevelLeftProps) -> Html {
-    let class = classes!("level-left", &props.classes);
+    let class = classes!("level-left", props.classes.clone());
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}
@@ -59,7 +59,7 @@ pub struct LevelRightProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -70,7 +70,7 @@ pub struct LevelRightProps {
 /// [https://bulma.io/documentation/layout/level/](https://bulma.io/documentation/layout/level/)
 #[function_component(LevelRight)]
 pub fn level_right(props: &LevelRightProps) -> Html {
-    let class = classes!("level-right", &props.classes);
+    let class = classes!("level-right", props.classes.clone());
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}
@@ -86,7 +86,7 @@ pub struct LevelItemProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -97,7 +97,7 @@ pub struct LevelItemProps {
 /// [https://bulma.io/documentation/layout/level/](https://bulma.io/documentation/layout/level/)
 #[function_component(LevelItem)]
 pub fn level_item(props: &LevelItemProps) -> Html {
-    let class = classes!("level-item", &props.classes);
+    let class = classes!("level-item", props.classes.clone());
     html! {
         <@{props.tag.clone()} {class}>
             {props.children.clone()}

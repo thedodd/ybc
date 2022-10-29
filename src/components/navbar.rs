@@ -13,7 +13,7 @@ pub struct NavbarProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// Make the navbar fixed to the top or bottom of the UI.
     #[prop_or_default]
     pub fixed: Option<NavbarFixed>,
@@ -48,7 +48,7 @@ pub struct NavbarProps {
     pub navburger: bool,
     /// Extra classes for the navbar burger.
     #[prop_or_default]
-    pub navburger_classes: Option<Classes>,
+    pub navburger_classes: Classes,
 }
 
 /// A responsive horizontal navbar that can support images, links, buttons, and dropdowns.
@@ -78,7 +78,7 @@ impl Component for Navbar {
     fn view(&self, ctx: &Context<Self>) -> Html {
         // navbar classes
         let mut class = Classes::from("navbar");
-        class.push(&ctx.props().classes);
+        class.push(ctx.props().classes.clone());
         if let Some(fixed) = &ctx.props().fixed {
             class.push(&fixed.to_string());
         }
@@ -86,7 +86,7 @@ impl Component for Navbar {
         // navbar-menu classes
         let mut navclasses = Classes::from("navbar-menu");
         let mut burgerclasses = Classes::from("navbar-burger");
-        burgerclasses.push(&ctx.props().navburger_classes);
+        burgerclasses.push(ctx.props().navburger_classes.clone());
         if self.is_menu_open {
             navclasses.push("is-active");
             burgerclasses.push("is-active");
@@ -183,7 +183,7 @@ pub struct NavbarItemProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| NavbarItemTag::Div)]
     pub tag: NavbarItemTag,
@@ -218,7 +218,7 @@ pub struct NavbarItemProps {
 pub fn navbar_item(props: &NavbarItemProps) -> Html {
     let class = classes!(
         "navbar-item",
-        &props.classes,
+        props.classes.clone(),
         props.has_dropdown.then_some("has-dropdown"),
         props.expanded.then_some("is-expanded"),
         props.tab.then_some("is-tab"),
@@ -253,7 +253,7 @@ pub fn navbar_item(props: &NavbarItemProps) -> Html {
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct NavbarDividerProps {
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
 }
 
 /// An element to display a horizontal rule in a navbar-dropdown.
@@ -261,7 +261,7 @@ pub struct NavbarDividerProps {
 /// [https://bulma.io/documentation/components/navbar/#dropdown-menu](https://bulma.io/documentation/components/navbar/#dropdown-menu)
 #[function_component(NavbarDivider)]
 pub fn navbar_divider(props: &NavbarDividerProps) -> Html {
-    html! { <hr class={classes!("navbar-divider", &props.classes)} /> }
+    html! { <hr class={classes!("navbar-divider", props.classes.clone())} /> }
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -273,7 +273,7 @@ pub struct NavbarDropdownProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The contents of the navbar-link used for triggering the dropdown menu.
     pub navlink: Html,
     /// Make this dropdown triggerable based on hover.
@@ -325,7 +325,7 @@ impl Component for NavbarDropdown {
     fn view(&self, ctx: &Context<Self>) -> Html {
         // navbar-item classes
         let mut class = Classes::from("navbar-item has-dropdown");
-        class.push(&ctx.props().classes);
+        class.push(ctx.props().classes.clone());
         if ctx.props().dropup {
             class.push("has-dropdown-up");
         }

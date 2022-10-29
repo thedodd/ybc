@@ -10,13 +10,13 @@ pub struct DropdownProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// Make this dropdown triggerable based on hover.
     #[prop_or_default]
     pub hoverable: bool,
     /// Any additional classes to use for the trigger button.
     #[prop_or_default]
-    pub button_classes: Option<Classes>,
+    pub button_classes: Classes,
     /// The content of the trigger button.
     #[prop_or_default]
     pub button_html: Html,
@@ -56,7 +56,7 @@ impl Component for Dropdown {
 
     fn view(&self, ctx: &Context<Self>) -> Html {
         let mut class = Classes::from("dropdown");
-        class.push(&ctx.props().classes);
+        class.push(ctx.props().classes.clone());
         let opencb = if ctx.props().hoverable {
             class.push("is-hoverable");
             Callback::noop()

@@ -5,7 +5,7 @@ pub struct TableProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// Add borders to all the cells.
     #[prop_or_default]
     pub bordered: bool,
@@ -33,7 +33,7 @@ pub struct TableProps {
 pub fn table(props: &TableProps) -> Html {
     let class = classes!(
         "table",
-        &props.classes,
+        props.classes.clone(),
         props.bordered.then_some("is-bordered"),
         props.striped.then_some("is-striped"),
         props.narrow.then_some("is-narrow"),

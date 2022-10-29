@@ -17,7 +17,7 @@ pub struct SelectProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
 
     /// The size of this component.
     #[prop_or_default]
@@ -45,7 +45,7 @@ pub struct SelectProps {
 pub fn select(props: &SelectProps) -> Html {
     let class = classes!(
         "select",
-        &props.classes,
+        props.classes.clone(),
         props.size.as_ref().map(|size| size.to_string()),
         props.loading.then_some("is-loading"),
     );
@@ -83,7 +83,7 @@ pub struct MultiSelectProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
 
     /// The size of this component.
     #[prop_or_default]
@@ -115,7 +115,7 @@ pub fn multi_select(props: &MultiSelectProps) -> Html {
     let class = classes!(
         "select",
         "is-multiple",
-        &props.classes,
+        props.classes.clone(),
         props.size.as_ref().map(|size| size.to_string()),
         props.loading.then_some("is-loading"),
     );

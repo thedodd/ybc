@@ -5,7 +5,7 @@ pub struct BlockProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
 }
 
 /// Bulma’s most basic spacer block
@@ -13,7 +13,7 @@ pub struct BlockProps {
 /// [https://bulma.io/documentation/elements/block/](https://bulma.io/documentation/elements/block/)
 #[function_component(Block)]
 pub fn block(props: &BlockProps) -> Html {
-    let class = classes!("block", &props.classes);
+    let class = classes!("block", props.classes.clone());
     html! {
         <div {class}>
             {props.children.clone()}

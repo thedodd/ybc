@@ -5,7 +5,7 @@ pub struct ContentProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -17,7 +17,7 @@ pub struct ContentProps {
 #[function_component(Content)]
 pub fn content(props: &ContentProps) -> Html {
     html! {
-        <@{props.tag.clone()} class={classes!("content", &props.classes)}>
+        <@{props.tag.clone()} class={classes!("content", props.classes.clone())}>
             {props.children.clone()}
         </@>
     }
