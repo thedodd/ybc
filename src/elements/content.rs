@@ -1,14 +1,11 @@
-#![allow(clippy::redundant_closure_call)]
-
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct ContentProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The HTML tag to use for this component.
     #[prop_or_else(|| "div".into())]
     pub tag: String,
@@ -17,34 +14,11 @@ pub struct ContentProps {
 /// A single component to wrap WYSIWYG generated content, where only HTML tags are available.
 ///
 /// [https://bulma.io/documentation/elements/content/](https://bulma.io/documentation/elements/content/)
-pub struct Content {
-    props: ContentProps,
-}
-
-impl Component for Content {
-    type Message = ();
-    type Properties = ContentProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("content");
-        classes.push(&self.props.classes);
-        let tag = self.props.tag.clone();
-        html! {
-            <@{tag} class=classes>
-                {self.props.children.clone()}
-            </@>
-        }
+#[function_component(Content)]
+pub fn content(props: &ContentProps) -> Html {
+    html! {
+        <@{props.tag.clone()} class={classes!("content", props.classes.clone())}>
+            {props.children.clone()}
+        </@>
     }
 }

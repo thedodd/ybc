@@ -1,9 +1,7 @@
-#![allow(clippy::redundant_closure_call)]
-
 use derive_more::Display;
-use yew::events::InputData;
+use wasm_bindgen::UnwrapThrowExt;
+use web_sys::HtmlInputElement;
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 use crate::Size;
 
@@ -17,7 +15,7 @@ pub struct InputProps {
     pub update: Callback<String>,
 
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The input type of this component.
     #[prop_or_else(|| InputType::Text)]
     pub r#type: InputType,
@@ -51,62 +49,38 @@ pub struct InputProps {
 /// All YBC form components are controlled components. This means that the value of the field must
 /// be provided from a parent component, and changes to this component are propagated to the parent
 /// component via callback.
-pub struct Input {
-    props: InputProps,
-    link: ComponentLink<Self>,
-}
-
-impl Component for Input {
-    type Message = String;
-    type Properties = InputProps;
-
-    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self { props, link }
-    }
-
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
-        self.props.update.emit(msg);
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("input");
-        classes.push(&self.props.classes);
-        if let Some(size) = &self.props.size {
-            classes.push(&size.to_string());
-        }
-        if self.props.rounded {
-            classes.push("is-rounded");
-        }
-        if self.props.loading {
-            classes.push("is-loading");
-        }
-        if self.props.r#static {
-            classes.push("is-static");
-        }
-        html! {
-            <input
-                name=self.props.name.clone()
-                value=self.props.value.clone()
-                oninput=self.link.callback(|input: InputData| input.value)
-                class=classes
-                type=self.props.r#type.to_string()
-                placeholder=self.props.placeholder.clone()
-                disabled=self.props.disabled
-                readonly=self.props.readonly
-                />
-        }
+#[function_component(Input)]
+pub fn input(props: &InputProps) -> Html {
+    let class = classes!(
+        "input",
+        props.classes.clone(),
+        props.size.as_ref().map(|size| size.to_string()),
+        props.rounded.then_some("is-rounded"),
+        props.loading.then_some("is-loading"),
+        props.r#static.then_some("is-static"),
+    );
+    let oninput = props.update.reform(|ev: web_sys::InputEvent| {
+        let input: HtmlInputElement = ev.target_dyn_into().expect_throw("event target should be an input");
+        input.value()
+    });
+    html! {
+        <input
+            name={props.name.clone()}
+            value={props.value.clone()}
+            {oninput}
+            {class}
+            type={props.r#type.to_string()}
+            placeholder={props.placeholder.clone()}
+            disabled={props.disabled}
+            readonly={props.readonly}
+            />
     }
 }
 
 /// The 4 allowed types for an input component.
 ///
 /// https://bulma.io/documentation/form/input/
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 pub enum InputType {
     #[display(fmt = "text")]
     Text,

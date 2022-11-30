@@ -1,15 +1,12 @@
-#![allow(clippy::redundant_closure_call)]
-
 use yew::events::MouseEvent;
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct PanelProps {
     #[prop_or_default]
     pub children: Children,
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The HTML content of this panel's heading; it is automatically wrapped in a `p.panel-heading`.
     #[prop_or_default]
     pub heading: Html,
@@ -18,35 +15,14 @@ pub struct PanelProps {
 /// A composable panel, for compact controls.
 ///
 /// [https://bulma.io/documentation/components/panel/](https://bulma.io/documentation/components/panel/)
-pub struct Panel {
-    props: PanelProps,
-}
-
-impl Component for Panel {
-    type Message = ();
-    type Properties = PanelProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("panel");
-        classes.push(&self.props.classes);
-        html! {
-            <nav class=classes>
-                <p class="panel-heading">{self.props.heading.clone()}</p>
-                {self.props.children.clone()}
-            </nav>
-        }
+#[function_component(Panel)]
+pub fn panel(props: &PanelProps) -> Html {
+    let class = classes!("panel", props.classes.clone());
+    html! {
+        <nav {class}>
+            <p class="panel-heading">{props.heading.clone()}</p>
+            {props.children.clone()}
+        </nav>
     }
 }
 
@@ -62,33 +38,9 @@ pub struct PanelTabsProps {
 /// A container for the navigation tabs of a panel.
 ///
 /// [https://bulma.io/documentation/components/panel/](https://bulma.io/documentation/components/panel/)
-pub struct PanelTabs {
-    props: PanelTabsProps,
-}
-
-impl Component for PanelTabs {
-    type Message = ();
-    type Properties = PanelTabsProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        html! {
-            <p class="panel-tabs">
-                {self.props.children.clone()}
-            </p>
-        }
-    }
+#[function_component(PanelTabs)]
+pub fn panel_tabs(props: &PanelTabsProps) -> Html {
+    html! { <p class="panel-tabs">{props.children.clone()}</p> }
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -105,43 +57,19 @@ pub struct PanelBlockProps {
     #[prop_or_default]
     pub active: bool,
     /// The click handler for this element.
-    #[prop_or_else(Callback::noop)]
+    #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
 }
 
 /// An individual element of the panel.
 ///
 /// [https://bulma.io/documentation/components/panel/](https://bulma.io/documentation/components/panel/)
-pub struct PanelBlock {
-    props: PanelBlockProps,
-}
-
-impl Component for PanelBlock {
-    type Message = ();
-    type Properties = PanelBlockProps;
-
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("panel-block");
-        if self.props.active {
-            classes.push("is-active");
-        }
-        let tag = self.props.tag.clone();
-        html! {
-            <@{tag} class=classes onclick=self.props.onclick.clone()>
-                {self.props.children.clone()}
-            </@>
-        }
+#[function_component(PanelBlock)]
+pub fn panel_block(props: &PanelBlockProps) -> Html {
+    let class = classes!("panel-block", props.active.then_some("is-active"));
+    html! {
+        <@{props.tag.clone()} {class} onclick={props.onclick.clone()}>
+            {props.children.clone()}
+        </@>
     }
 }

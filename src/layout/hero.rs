@@ -1,29 +1,28 @@
 use derive_more::Display;
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct HeroProps {
     /// Extra classes for the hero container.
     #[prop_or_default]
-    pub classes: Option<Classes>,
+    pub classes: Classes,
     /// The contents of the hero-head section.
     #[prop_or_default]
     pub head: Option<Html>,
     /// Optional classes to add to the hero-head container.
     #[prop_or_default]
-    pub head_classes: Option<Classes>,
+    pub head_classes: Classes,
     /// The contents of the hero-body section.
     pub body: Html,
     /// Optional classes to add to the hero-body container.
     #[prop_or_default]
-    pub body_classes: Option<Classes>,
+    pub body_classes: Classes,
     /// The contents of the hero-foot section.
     #[prop_or_default]
     pub foot: Option<Html>,
     /// Optional classes to add to the hero-foot container.
     #[prop_or_default]
-    pub foot_classes: Option<Classes>,
+    pub foot_classes: Classes,
     /// If you are using a [fixed navbar](https://bulma.io/documentation/components/navbar/#fixed-navbar),
     /// you can use the `fixed_nav=true` modifier on the hero for it to occupy the viewport height minus
     /// the navbar height.
@@ -42,72 +41,45 @@ pub struct HeroProps {
 /// An imposing hero banner to showcase something.
 ///
 /// [https://bulma.io/documentation/layout/hero/](https://bulma.io/documentation/layout/hero/)
-pub struct Hero {
-    props: HeroProps,
-}
+#[function_component(Hero)]
+pub fn hero(props: &HeroProps) -> Html {
+    let class = classes!(
+        "hero",
+        props.classes.clone(),
+        props.fixed_nav.then_some("is-fullheight-with-navbar"),
+        props.bold.then_some("is-bold"),
+        props.size.as_ref().map(|size| size.to_string()),
+    );
 
-impl Component for Hero {
-    type Message = ();
-    type Properties = HeroProps;
+    // Build the header section.
+    let head = if let Some(head) = &props.head {
+        let class = classes!("hero-head", props.head_classes.clone());
+        html! {<div {class}>{head.clone()}</div>}
+    } else {
+        html! {}
+    };
+    // Build the footer section.
+    let foot = if let Some(foot) = &props.foot {
+        let class = classes!("hero-foot", props.foot_classes.clone());
+        html! {<div {class}>{foot.clone()}</div>}
+    } else {
+        html! {}
+    };
 
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Self { props }
-    }
-
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        let mut classes = Classes::from("hero");
-        classes.push(&self.props.classes);
-        if self.props.fixed_nav {
-            classes.push("is-fullheight-with-navbar");
-        }
-        if self.props.bold {
-            classes.push("is-bold");
-        }
-        if let Some(size) = &self.props.size {
-            classes.push(&size.to_string());
-        }
-
-        // Build the header section.
-        let head = if let Some(head) = &self.props.head {
-            let mut classes = Classes::from("hero-head");
-            classes.push(&self.props.head_classes);
-            html! {<div class=classes>{head.clone()}</div>}
-        } else {
-            html! {}
-        };
-        // Build the footer section.
-        let foot = if let Some(foot) = &self.props.foot {
-            let mut classes = Classes::from("hero-foot");
-            classes.push(&self.props.foot_classes);
-            html! {<div class=classes>{foot.clone()}</div>}
-        } else {
-            html! {}
-        };
-
-        let mut body_classes = Classes::from("hero-body");
-        body_classes.push(&self.props.body_classes);
-        html! {
-            <section class=classes>
-                {head}
-                <div class=body_classes>{self.props.body.clone()}</div>
-                {foot}
-            </section>
-        }
+    let body_classes = classes!("hero-body", props.body_classes.clone());
+    html! {
+        <section {class}>
+            {head}
+            <div class={body_classes}>{props.body.clone()}</div>
+            {foot}
+        </section>
     }
 }
 
 /// The 4 sizes available for heroes.
 ///
 /// [https://bulma.io/documentation/layout/hero/#sizes](https://bulma.io/documentation/layout/hero/#sizes)
-#[derive(Clone, Debug, Display, PartialEq)]
+#[derive(Clone, Debug, Display, PartialEq, Eq)]
 #[display(fmt = "is-{}")]
 pub enum HeroSize {
     #[display(fmt = "medium")]
