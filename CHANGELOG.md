@@ -2,7 +2,17 @@ changelog
 =========
 This changelog follows the patterns described here: https://keepachangelog.com/en/1.0.0/.
 
+Subheadings to categorize changes are `added, changed, deprecated, removed, fixed, security`.
+
 ## Unreleased
+
+## 0.3.0-beta.0
+The only real change here is that YBC has been updated to Yew 0.19, which included updating basically all components. Huge shoutout to @Follpvosten for all of her work on making this happen.
+
+Once this release has stabilized a bit, we will cut an official `0.3.0`, and will then follow-up with a `0.4.0` for Yew `0.20`.
+
+### changed
+- Updated to Yew 0.19.
 
 ## 0.2.0
 ### added
