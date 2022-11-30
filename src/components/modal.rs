@@ -1,7 +1,7 @@
-use std::collections::HashSet;
+/* use std::collections::HashSet;
 
 use yew::prelude::*;
-use yew_agent::{Agent, AgentLink, Bridge, Bridged, HandlerId};
+use yew_agent::{Bridge, Bridged, HandlerId};
 
 /// Modal actions.
 pub enum ModalMsg {
@@ -269,3 +269,4 @@ impl Agent for ModalCloser {
         self.subscribers.remove(&id);
     }
 }
+ */
