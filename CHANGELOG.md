@@ -6,6 +6,13 @@ Subheadings to categorize changes are `added, changed, deprecated, removed, fixe
 
 ## Unreleased
 
+## 0.4.0-aplha.0
+
+### changed
+- Updated to yew 0.20
+- Updated to yew-agent 0.2
+- Updated to yew-router 0.17
+
 ## 0.3.0-beta.0
 The only real change here is that YBC has been updated to Yew 0.19, which included updating basically all components. Huge shoutout to @Follpvosten for all of her work on making this happen.
 
