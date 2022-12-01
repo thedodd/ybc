@@ -56,7 +56,7 @@ First, add this library to your `Cargo.toml` dependencies.
 
 ```toml
 [dependencies]
-ybc = "0.2"
+ybc = "0.4"
 ```
 
 ### add bulma
