@@ -1,13 +1,15 @@
 use std::collections::HashSet;
+use std::rc::Rc;
 
+use serde::{Deserialize, Serialize};
 use yew::prelude::*;
-use yew_agent::{Agent, AgentLink, Bridge, Bridged, HandlerId};
+use yew_agent::{Bridge, Bridged, HandlerId, Public, Worker, WorkerLink};
 
 /// Modal actions.
 pub enum ModalMsg {
     Open,
     Close,
-    CloseFromAgent(ModalCloseMsg),
+    CloseFromWorker(ModalCloseMsg),
 }
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -41,8 +43,12 @@ impl Component for Modal {
     type Properties = ModalProps;
 
     fn create(ctx: &Context<Self>) -> Self {
-        let callback = ctx.link().callback(ModalMsg::CloseFromAgent);
-        let subscription = ModalCloser::bridge(callback);
+        let link = ctx.link().clone();
+
+        let subscription = ModalCloser::bridge(Rc::new(move |msg| {
+            link.send_message(ModalMsg::CloseFromWorker(msg));
+        }));
+
         Self { subscription, is_active: false }
     }
 
@@ -54,7 +60,7 @@ impl Component for Modal {
             ModalMsg::Open => {
                 self.is_active = true;
             }
-            ModalMsg::CloseFromAgent(id) => {
+            ModalMsg::CloseFromWorker(id) => {
                 if id.0 == ctx.props().id {
                     self.is_active = false;
                 } else {
@@ -130,8 +136,11 @@ impl Component for ModalCard {
     type Properties = ModalCardProps;
 
     fn create(ctx: &Context<Self>) -> Self {
-        let callback = ctx.link().callback(ModalMsg::CloseFromAgent);
-        let subscription = ModalCloser::bridge(callback);
+        let link = ctx.link().clone();
+
+        let subscription = ModalCloser::bridge(Rc::new(move |msg| {
+            link.send_message(ModalMsg::CloseFromWorker(msg));
+        }));
         Self { subscription, is_active: false }
     }
 
@@ -143,7 +152,7 @@ impl Component for ModalCard {
             ModalMsg::Open => {
                 self.is_active = true;
             }
-            ModalMsg::CloseFromAgent(id) => {
+            ModalMsg::CloseFromWorker(id) => {
                 if id.0 == ctx.props().id {
                     self.is_active = false;
                 } else {
@@ -195,7 +204,7 @@ impl Component for ModalCard {
 ///
 /// The ID provided in this message must match the ID of the modal which is to be closed, else
 /// the message will be ignored.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct ModalCloseMsg(pub String);
 
 /// An agent used for being able to close `Modal` & `ModalCard` instances by ID.
@@ -238,18 +247,19 @@ pub struct ModalCloseMsg(pub String);
 ///
 /// This pattern allows you to communicate with a modal by its given ID, allowing
 /// you to close the modal from anywhere in your application.
+// #[derive(Serialize)]
 pub struct ModalCloser {
-    link: AgentLink<Self>,
+    link: WorkerLink<Self>,
     subscribers: HashSet<HandlerId>,
 }
 
-impl Agent for ModalCloser {
-    type Reach = yew_agent::Context<Self>;
+impl Worker for ModalCloser {
+    type Reach = Public<Self>;
     type Message = ();
     type Input = ModalCloseMsg; // The agent receives requests to close modals by ID.
     type Output = ModalCloseMsg; // The agent forwards the input to all registered modals.
 
-    fn create(link: AgentLink<Self>) -> Self {
+    fn create(link: WorkerLink<Self>) -> Self {
         Self { link, subscribers: HashSet::new() }
     }
 

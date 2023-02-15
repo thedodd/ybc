@@ -1,5 +1,5 @@
 use derive_more::Display;
-use yew::events::{Event, FocusEvent, MouseEvent};
+use yew::events::{Event, MouseEvent};
 use yew::prelude::*;
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -244,7 +244,7 @@ pub struct ButtonInputSubmitProps {
     pub classes: Classes,
     /// The submit handler to use for this component.
     #[prop_or_default]
-    pub onsubmit: Callback<FocusEvent>,
+    pub onsubmit: Callback<SubmitEvent>,
     /// Render a loading spinner within this component.
     #[prop_or_default]
     pub loading: bool,
