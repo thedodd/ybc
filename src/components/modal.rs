@@ -217,32 +217,143 @@ pub struct ModalCloseMsg(pub String);
 /// use yew::agent::Dispatcher;
 /// use yew::prelude::*;
 /// // .. snip ..
+/// # use ybc::{Button, ModalCloser, ModalCloseMsg, ModalCard};
+/// #
+/// # #[derive(Properties, Clone, PartialEq)]
+/// # struct MyComponentProps {}
+/// #
+/// # struct MyComponent {
+/// #   link: ComponentLink<Self>,
+/// #   props: MyComponentProps,
+/// #   bridge: Dispatcher<ModalCloser>,
+/// # }
+/// #
+/// # impl Component for MyComponent {
+/// #   type Properties = MyComponentProps;
+/// #   type Message = ModalCloseMsg;
+/// #
 /// fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
 ///     let bridge = ModalCloser::dispatcher();
-///     Self{link, props, bridge}
+///     Self { link, props, bridge }
 /// }
+/// #
+/// # fn update(&mut self, msg: Self::Message) -> ShouldRender {
+/// #     self.bridge.send(msg);
+/// #     true
+/// # }
+/// #
+/// # fn change(&mut self, props: Self::Properties) -> ShouldRender { false }
+/// #
+/// # fn view(&self) -> Html {
+/// # let closer = self.link.callback(|_| ModalCloseMsg("modal-0".into()));
+/// # html! {
+/// # <ModalCard
+/// #     id="modal-0"
+/// #     title="modal-title"
+/// #     // ... snip ...
+/// #     footer=html! {
+/// #         <Button onclick=closer>{ "Close" }</Button>
+/// #     }
+/// # />
+/// # }
+/// # }
+/// # }
 /// ```
 ///
 /// Next, in your component's `view` method, setup a callback to handle your component's close event.
 /// ```rust
+/// # use yew::agent::Dispatcher;
+/// # use yew::prelude::*;
+/// # use ybc::{Button, ModalCloser, ModalCloseMsg, ModalCard};
+/// #
+/// # #[derive(Properties, Clone, PartialEq)]
+/// # struct MyComponentProps {}
+/// #
+/// # struct MyComponent {
+/// #   link: ComponentLink<Self>,
+/// #   props: MyComponentProps,
+/// #   bridge: Dispatcher<ModalCloser>,
+/// # }
+/// #
+/// # impl Component for MyComponent {
+/// #   type Properties = MyComponentProps;
+/// #   type Message = ModalCloseMsg;
+/// #
+/// # fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
+/// #     let bridge = ModalCloser::dispatcher();
+/// #     Self { link, props, bridge }
+/// # }
+/// #
+/// # fn update(&mut self, msg: Self::Message) -> ShouldRender {
+/// #     self.bridge.send(msg);
+/// #     true
+/// # }
+/// #
+/// # fn change(&mut self, props: Self::Properties) -> ShouldRender { false }
+/// #
+/// # fn view(&self) -> Html {
 /// let closer = self.link.callback(|_| ModalCloseMsg("modal-0".into()));
 /// // ... snip ...
+/// # html! {
 /// <ModalCard
 ///     id="modal-0"
+///     title="modal-title"
 ///     // ... snip ...
-///     footer=html!{
-///         <Button onclick=Some(closer)>{"Close"}</Button>
+///     footer=html! {
+///         <Button onclick=closer>{ "Close" }</Button>
 ///     }
 /// />
+/// # }
+/// # }
+/// # }
 /// ```
 ///
 /// Finally, in your component's `update` method, send the `ModalCloseMsg` over to the agent which
 /// will forward the message to the modal to cause it to close.
 /// ```rust
+/// # use yew::agent::Dispatcher;
+/// # use yew::prelude::*;
+/// # use ybc::{Button, ModalCloser, ModalCloseMsg, ModalCard};
+/// #
+/// # #[derive(Properties, Clone, PartialEq)]
+/// # struct MyComponentProps {}
+/// #
+/// # struct MyComponent {
+/// #   link: ComponentLink<Self>,
+/// #   props: MyComponentProps,
+/// #   bridge: Dispatcher<ModalCloser>,
+/// # }
+/// #
+/// # impl Component for MyComponent {
+/// #   type Properties = MyComponentProps;
+/// #   type Message = ModalCloseMsg;
+/// #
+/// # fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
+/// #     let bridge = ModalCloser::dispatcher();
+/// #     Self { link, props, bridge }
+/// # }
+/// #
 /// fn update(&mut self, msg: Self::Message) -> ShouldRender {
 ///     self.bridge.send(msg);
 ///     true
 /// }
+/// #
+/// # fn change(&mut self, props: Self::Properties) -> ShouldRender { false }
+/// #
+/// # fn view(&self) -> Html {
+/// # let closer = self.link.callback(|_| ModalCloseMsg("modal-0".into()));
+/// # html! {
+/// # <ModalCard
+/// #     id="modal-0"
+/// #     title="modal-title"
+/// #     // ... snip ...
+/// #     footer=html! {
+/// #         <Button onclick=closer>{ "Close" }</Button>
+/// #     }
+/// # />
+/// # }
+/// # }
+/// # }
 /// ```
 ///
 /// This pattern allows you to communicate with a modal by its given ID, allowing
