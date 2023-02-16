@@ -1,16 +1,15 @@
 use std::collections::HashSet;
+use std::rc::Rc;
 
 use serde::{Deserialize, Serialize};
-
 use yew::prelude::*;
-
-use yew_agent::{use_bridge, HandlerId, Public, UseBridgeHandle, Worker, WorkerLink};
+use yew_agent::{Bridge, Bridged, HandlerId, Public, Worker, WorkerLink};
 
 /// Modal actions.
 pub enum ModalMsg {
     Open,
     Close,
-    CloseFromAgent(ModalCloseMsg),
+    CloseFromWorker(ModalCloseMsg),
 }
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -33,53 +32,71 @@ pub struct ModalProps {
 ///
 /// See the docs on the `ModalCloser` agent to be able to close your modal instance from anywhere
 /// in your app for maximum flexibility.
-#[function_component(Modal)]
-pub fn modal(props: &ModalProps) -> Html {
-    let is_active = use_state(|| false);
+pub struct Modal {
+    #[allow(dead_code)]
+    subscription: Box<dyn Bridge<ModalCloser>>,
+    is_active: bool,
+}
 
-    let mut class = Classes::from("modal");
+impl Component for Modal {
+    type Message = ModalMsg;
+    type Properties = ModalProps;
 
-    class.push(props.classes.clone());
+    fn create(ctx: &Context<Self>) -> Self {
+        let link = ctx.link().clone();
 
-    let (opencb, closecb) = if *is_active {
-        class.push("is-active");
+        let subscription = ModalCloser::bridge(Rc::new(move |msg| {
+            link.send_message(ModalMsg::CloseFromWorker(msg));
+        }));
 
-        let is_active = is_active.clone();
-
-        (Callback::noop(), Callback::from(move |_| is_active.set(false)))
-    } else {
-        let is_active = is_active.clone();
-
-        (Callback::from(move |_| is_active.set(true)), Callback::noop())
-    };
-
-    {
-        let id = props.id.clone();
-
-        let _bridge: UseBridgeHandle<ModalCloser> = use_bridge(move |response: ModalCloseMsg| {
-            if response.0 == id {
-                is_active.set(false);
-            } else {
-            }
-        });
+        Self { subscription, is_active: false }
     }
 
-    html! {
-        <>
-        <div onclick={opencb}>
-            {props.trigger.clone()}
-        </div>
-        <div id={props.id.clone()} {class}>
-            <div class="modal-background" onclick={closecb.clone()}></div>
-            <div class="modal-content">
-                {props.children.clone()}
+    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
+        match msg {
+            ModalMsg::Close => {
+                self.is_active = false;
+            }
+            ModalMsg::Open => {
+                self.is_active = true;
+            }
+            ModalMsg::CloseFromWorker(id) => {
+                if id.0 == ctx.props().id {
+                    self.is_active = false;
+                } else {
+                }
+            }
+        }
+        true
+    }
+
+    fn view(&self, ctx: &Context<Self>) -> Html {
+        let mut class = Classes::from("modal");
+        class.push(ctx.props().classes.clone());
+        let (opencb, closecb) = if self.is_active {
+            class.push("is-active");
+            (Callback::noop(), ctx.link().callback(|_| ModalMsg::Close))
+        } else {
+            (ctx.link().callback(|_| ModalMsg::Open), Callback::noop())
+        };
+        html! {
+            <>
+            <div onclick={opencb}>
+                {ctx.props().trigger.clone()}
             </div>
-            <button class="modal-close is-large" aria-label="close" onclick={closecb}></button>
-        </div>
-        </>
+            <div id={ctx.props().id.clone()} {class}>
+                <div class="modal-background" onclick={closecb.clone()}></div>
+                <div class="modal-content">
+                    {ctx.props().children.clone()}
+                </div>
+                <button class="modal-close is-large" aria-label="close" onclick={closecb}></button>
+            </div>
+            </>
+        }
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Debug, Properties, PartialEq)]
@@ -108,68 +125,86 @@ pub struct ModalCardProps {
 ///
 /// See the docs on the `ModalCloser` agent to be able to close your modal instance from anywhere
 /// in your app for maximum flexibility.
-#[function_component(ModalCard)]
-pub fn modal_card(props: &ModalCardProps) -> Html {
-    let is_active = use_state(|| false);
+pub struct ModalCard {
+    #[allow(dead_code)]
+    subscription: Box<dyn Bridge<ModalCloser>>,
+    is_active: bool,
+}
 
-    let mut class = Classes::from("modal");
-    class.push(props.classes.clone());
+impl Component for ModalCard {
+    type Message = ModalMsg;
+    type Properties = ModalCardProps;
 
-    let (opencb, closecb) = if *is_active {
-        class.push("is-active");
+    fn create(ctx: &Context<Self>) -> Self {
+        let link = ctx.link().clone();
 
-        let is_active = is_active.clone();
-
-        (Callback::noop(), Callback::from(move |_| is_active.set(false)))
-    } else {
-        let is_active = is_active.clone();
-
-        (Callback::from(move |_| is_active.set(true)), Callback::noop())
-    };
-
-    {
-        let id = props.id.clone();
-
-        let _bridge: UseBridgeHandle<ModalCloser> = use_bridge(move |response: ModalCloseMsg| {
-            if response.0 == id {
-                is_active.set(false);
-            } else {
-            }
-        });
+        let subscription = ModalCloser::bridge(Rc::new(move |msg| {
+            link.send_message(ModalMsg::CloseFromWorker(msg));
+        }));
+        Self { subscription, is_active: false }
     }
 
-    html! {
-    <>
-        <div onclick={opencb}>
-            {props.trigger.clone()}
-        </div>
-        <div id={props.id.clone()} {class}>
-            <div class="modal-background" onclick={closecb.clone()}></div>
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">{props.title.clone()}</p>
-                    <button class="delete" aria-label="close" onclick={closecb.clone()}></button>
-                </header>
-                <section class="modal-card-body">
-                    {props.body.clone()}
-                </section>
-                <footer class="modal-card-foot">
-                    {props.footer.clone()}
-                </footer>
+    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
+        match msg {
+            ModalMsg::Close => {
+                self.is_active = false;
+            }
+            ModalMsg::Open => {
+                self.is_active = true;
+            }
+            ModalMsg::CloseFromWorker(id) => {
+                if id.0 == ctx.props().id {
+                    self.is_active = false;
+                } else {
+                }
+            }
+        }
+        true
+    }
+
+    fn view(&self, ctx: &Context<Self>) -> Html {
+        let mut class = Classes::from("modal");
+        class.push(ctx.props().classes.clone());
+        let (opencb, closecb) = if self.is_active {
+            class.push("is-active");
+            (Callback::noop(), ctx.link().callback(|_| ModalMsg::Close))
+        } else {
+            (ctx.link().callback(|_| ModalMsg::Open), Callback::noop())
+        };
+        html! {
+            <>
+            <div onclick={opencb}>
+                {ctx.props().trigger.clone()}
             </div>
-            <button class="modal-close is-large" aria-label="close" onclick={closecb}></button>
-        </div>
-    </>
+            <div id={ctx.props().id.clone()} {class}>
+                <div class="modal-background" onclick={closecb.clone()}></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">{ctx.props().title.clone()}</p>
+                        <button class="delete" aria-label="close" onclick={closecb.clone()}></button>
+                    </header>
+                    <section class="modal-card-body">
+                        {ctx.props().body.clone()}
+                    </section>
+                    <footer class="modal-card-foot">
+                        {ctx.props().footer.clone()}
+                    </footer>
+                </div>
+                <button class="modal-close is-large" aria-label="close" onclick={closecb}></button>
+            </div>
+            </>
+        }
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 /// A request to close a modal instance by ID.
 ///
 /// The ID provided in this message must match the ID of the modal which is to be closed, else
 /// the message will be ignored.
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct ModalCloseMsg(pub String);
 
 /// An agent used for being able to close `Modal` & `ModalCard` instances by ID.
@@ -184,12 +219,12 @@ pub struct ModalCloseMsg(pub String);
 /// // .. snip ..
 /// fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
 ///     let bridge = ModalCloser::dispatcher();
-///     Self { link, props, bridge }
+///     Self{link, props, bridge}
 /// }
 /// ```
 ///
-/// Next, in your component's `view` method, setup a callback to handle your component's close
-/// event. ```rust
+/// Next, in your component's `view` method, setup a callback to handle your component's close event.
+/// ```rust
 /// let closer = self.link.callback(|_| ModalCloseMsg("modal-0".into()));
 /// // ... snip ...
 /// <ModalCard
@@ -212,19 +247,17 @@ pub struct ModalCloseMsg(pub String);
 ///
 /// This pattern allows you to communicate with a modal by its given ID, allowing
 /// you to close the modal from anywhere in your application.
+// #[derive(Serialize)]
 pub struct ModalCloser {
     link: WorkerLink<Self>,
     subscribers: HashSet<HandlerId>,
 }
 
 impl Worker for ModalCloser {
-    type Input = ModalCloseMsg;
+    type Reach = Public<Self>;
     type Message = ();
-    // The agent receives requests to close modals by ID.
-    type Output = ModalCloseMsg;
-    type Reach = Public<ModalCloser>;
-
-    // The agent forwards the input to all registered modals.
+    type Input = ModalCloseMsg; // The agent receives requests to close modals by ID.
+    type Output = ModalCloseMsg; // The agent forwards the input to all registered modals.
 
     fn create(link: WorkerLink<Self>) -> Self {
         Self { link, subscribers: HashSet::new() }
