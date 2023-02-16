@@ -6,8 +6,8 @@ Subheadings to categorize changes are `added, changed, deprecated, removed, fixe
 
 ## Unreleased
 
-## 0.4.0-aplha.0
-Updated modals to new worker API in yew-agent v0.2 and also changed to new event type for Button.
+## 0.4.0-beta.0
+The only real change here is that YBC has been updated to Yew 0.20, which included updating only a few components.
 
 ### changed
 - Updated to yew 0.20
