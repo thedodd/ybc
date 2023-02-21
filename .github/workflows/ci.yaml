@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-    name: build
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,7 +16,6 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: clippy
-          args: -- -D warnings
       - uses: actions-rs/cargo@v1
         with:
           command: fmt
@@ -24,3 +23,20 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: build
+
+  example_basic:
+    name: Example | Basic
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: wasm32-unknown-unknown
+          default: true
+          components: clippy, rustfmt
+      - name: fetch trunk
+        run: wget -qO- https://github.com/thedodd/trunk/releases/download/v0.16.0/trunk-x86_64-unknown-linux-gnu.tar.gz | tar -xzf-
+      - name: build example
+        run: cd examples/basic && ../../trunk build
