@@ -45,7 +45,7 @@ pub enum ImageSize {
     Is96x96,
     #[display(fmt = "128x128")]
     Is128x128,
-    #[display(fmt = "Square")]
+    #[display(fmt = "square")]
     IsSquare,
     #[display(fmt = "1by1")]
     Is1by1,
