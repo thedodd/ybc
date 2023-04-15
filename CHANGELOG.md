@@ -5,6 +5,8 @@ This changelog follows the patterns described here: https://keepachangelog.com/e
 Subheadings to categorize changes are `added, changed, deprecated, removed, fixed, security`.
 
 ## Unreleased
+### added
+- Configurable character of PaginationEllipsis
 
 ## 0.4.0-beta.0
 The only real change here is that YBC has been updated to Yew 0.20, which included updating only a few components.
