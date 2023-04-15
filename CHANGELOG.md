@@ -5,6 +5,8 @@ This changelog follows the patterns described here: https://keepachangelog.com/e
 Subheadings to categorize changes are `added, changed, deprecated, removed, fixed, security`.
 
 ## Unreleased
+### fixed
+- ImageSize should store `is-square` instead of `is-Square` to html class attribute.
 
 ## 0.4.0-beta.0
 The only real change here is that YBC has been updated to Yew 0.20, which included updating only a few components.
