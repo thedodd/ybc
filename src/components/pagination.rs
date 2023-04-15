@@ -95,7 +95,8 @@ pub enum PaginationItemType {
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-///
+
+/// Properties of [`PaginationEllipsis`] component.
 #[derive(Clone, Debug, Properties, PartialEq)]
 pub struct PaginationEllipsisProps {
     /// Character which will be used as ellipsis (default: `"…"`)
