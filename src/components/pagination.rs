@@ -96,12 +96,20 @@ pub enum PaginationItemType {
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
+/// Properties of [`PaginationEllipsis`] component.
+#[derive(Clone, Debug, Properties, PartialEq)]
+pub struct PaginationEllipsisProps {
+    /// Character which will be used as ellipsis (default: `"…"`)
+    #[prop_or_else(|| "…".into())]
+    pub character: String,
+}
+
 /// A horizontal ellipsis for pagination range separators.
 ///
 /// [https://bulma.io/documentation/components/pagination/](https://bulma.io/documentation/components/pagination/)
 #[function_component(PaginationEllipsis)]
-pub fn pagination_ellipsis() -> Html {
-    html! {<span class="pagination-ellipsis">{"&hellip;"}</span>}
+pub fn pagination_ellipsis(props: &PaginationEllipsisProps) -> Html {
+    html! {<span class="pagination-ellipsis">{&props.character}</span>}
 }
 
 //////////////////////////////////////////////////////////////////////////////
