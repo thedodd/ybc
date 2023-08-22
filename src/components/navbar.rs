@@ -49,6 +49,9 @@ pub struct NavbarProps {
     /// Extra classes for the navbar burger.
     #[prop_or_default]
     pub navburger_classes: Classes,
+    /// Extra classes for the navbar menu.
+    #[prop_or_default]
+    pub navmenu_classes: Classes,
 }
 
 /// A responsive horizontal navbar that can support images, links, buttons, and dropdowns.
@@ -85,6 +88,8 @@ impl Component for Navbar {
 
         // navbar-menu classes
         let mut navclasses = Classes::from("navbar-menu");
+        navclasses.push(ctx.props().navmenu_classes.clone());
+
         let mut burgerclasses = Classes::from("navbar-burger");
         burgerclasses.push(ctx.props().navburger_classes.clone());
         if self.is_menu_open {

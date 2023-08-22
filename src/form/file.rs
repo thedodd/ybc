@@ -74,10 +74,7 @@ pub fn file(props: &FileProps) -> Html {
     let onchange = props.update.reform(|ev: web_sys::Event| {
         let input: HtmlInputElement = ev.target_dyn_into().expect_throw("event target should be an input");
         let list = input.files().expect_throw("input should have a file list");
-        (0..list.length())
-            .into_iter()
-            .filter_map(|idx| list.item(idx))
-            .collect::<Vec<_>>()
+        (0..list.length()).filter_map(|idx| list.item(idx)).collect::<Vec<_>>()
     });
     html! {
         <div {class}>

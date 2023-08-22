@@ -40,6 +40,12 @@ pub struct TextAreaProps {
     /// Make this component static.
     #[prop_or_default]
     pub r#static: bool,
+    /// Extra classes for the textarea control.
+    #[prop_or_default]
+    pub control_classes: Classes,
+    /// The size of the control component.
+    #[prop_or_default]
+    pub control_size: Option<Size>,
 }
 
 /// A multiline textarea component.
@@ -55,15 +61,21 @@ pub fn text_area(props: &TextAreaProps) -> Html {
         "textarea",
         props.classes.clone(),
         props.size.as_ref().map(|size| size.to_string()),
-        props.loading.then_some("is-loading"),
         props.r#static.then_some("is-static"),
         props.fixed_size.then_some("has-fixed-size"),
+    );
+    let controlclasses = classes!(
+        "control",
+        props.control_classes.clone(),
+        props.control_size.as_ref().map(|size| size.to_string()),
+        props.loading.then_some("is-loading")
     );
     let oninput = props.update.reform(|ev: web_sys::InputEvent| {
         let input: HtmlTextAreaElement = ev.target_dyn_into().expect_throw("event target should be a text area");
         input.value()
     });
     html! {
+        <div class={controlclasses}>
         <textarea
             name={props.name.clone()}
             value={props.value.clone()}
@@ -73,6 +85,7 @@ pub fn text_area(props: &TextAreaProps) -> Html {
             placeholder={props.placeholder.clone()}
             disabled={props.disabled}
             readonly={props.readonly}
-            />
+        />
+        </div>
     }
 }

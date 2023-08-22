@@ -124,7 +124,6 @@ pub fn multi_select(props: &MultiSelectProps) -> Html {
         let select: HtmlSelectElement = ev.target_dyn_into().expect_throw("event target should be a select");
         let opts = select.selected_options();
         (0..opts.length())
-            .into_iter()
             .filter_map(|idx| opts.item(idx))
             .filter_map(|elem| elem.get_attribute("value").or_else(|| elem.text_content()))
             .collect::<Vec<_>>()
